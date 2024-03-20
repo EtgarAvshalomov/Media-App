@@ -133,6 +133,7 @@
     <ClCompile Include="Movie.cpp" />
     <ClCompile Include="Series.cpp" />
     <ClCompile Include="User.cpp" />
+    <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Manager.h" />
@@ -140,6 +141,7 @@
     <ClInclude Include="Movie.h" />
     <ClInclude Include="Series.h" />
     <ClInclude Include="User.h" />
+    <ClInclude Include="Viewer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,6 @@
 #pragma once
 #include "User.h"
+using namespace std;
 
 class Manager :public User
 {
