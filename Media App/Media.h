@@ -1,18 +1,19 @@
 #pragma once
-#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
-#include<ctime>
 using namespace std;
 
 class Media
 {
-	time_t ben = time(NULL);
-	string dateofadd = ctime(&ben);
+protected:
+
+	string dateOfAdd;
 	string name;
 	string category;
 	int year;
 	
 public:
+
+	Media() = default;
 
 	Media(string name, string category, int year);
 
@@ -33,7 +34,11 @@ public:
 
 	string getDate() const 
 	{
-		return dateofadd;
+		return dateOfAdd;
+	}
+
+	void setDateOfAdd(string date) {
+		dateOfAdd = date;
 	}
 };
 

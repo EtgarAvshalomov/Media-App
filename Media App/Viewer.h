@@ -1,7 +1,7 @@
 #pragma once
 #include "User.h"
+#include "Series.h"
 #include "Movie.h"
-
 class Viewer :public User
 {
 private:
@@ -9,11 +9,17 @@ private:
 	vector<Media> watchlist;
 
 public:
+
 	Viewer(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string firstName, string lastName);
 
-	void addMovieToWatchlist(Movie& toAdd);
+	void AddMovieToWatchlist(Movie& toAdd);
+
+	void AddSeriesToWatchlist(Series& toAdd);
+
+	void AddMovieToFile(Movie& toAdd);
+
+	void ReadMovieFromFile();
 
 	bool CheckIfEmpty() {if (this->getID() == NULL) return true; else return false;}
-
 
 };
