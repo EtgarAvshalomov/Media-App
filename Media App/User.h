@@ -16,9 +16,10 @@ protected:
 	string lastName;
 
 public:
-	User()=default;
 
 	User(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string firstName, string lastName);
+
+	User() = default;
 
 	int getID() const
 	{
@@ -32,7 +33,7 @@ public:
 	}
 	void SetDayOfBirth()
 	{
-		cout << "Please enter Day, Month and year of birth: ";
+		cout << "Please enter your birthday (Day Month Year): ";
 		cin >> this->dayOfBirth;
 		cin >> this->monthOfBirth;
 		cin >> this->yearOfBirth;
@@ -40,7 +41,7 @@ public:
 
 	void SetFirstName()
 	{
-		cout << "Please enter First and Last name: ";
+		cout << "Please enter First and Last name (First Last): ";
 		cin >> this->firstName;
 		cin >> this->lastName;
 	}

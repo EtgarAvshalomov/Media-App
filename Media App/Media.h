@@ -4,18 +4,22 @@ using namespace std;
 
 class Media
 {
+private:
+
+	friend ostream& operator<<(ostream& out, const Media& m);
+
 protected:
 
-	string dateOfAdd;
+	string dateAdded;
 	string name;
 	string category;
 	int year;
 	
 public:
 
-	Media() = default;
-
 	Media(string name, string category, int year);
+
+	Media() = default;
 
 	string getName() const
 	{
@@ -34,11 +38,11 @@ public:
 
 	string getDate() const 
 	{
-		return dateOfAdd;
+		return dateAdded;
 	}
 
 	void setDateOfAdd(string date) {
-		dateOfAdd = date;
+		dateAdded = date;
 	}
 };
 

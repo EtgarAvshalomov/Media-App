@@ -1,11 +1,11 @@
 #include "Movie.h"
 
-Movie::Movie(string name, string category, int year, int movieLength):Media(name, category, year) {
-	this->movieLength = movieLength;
+Movie::Movie(string name, string category, int year, int length):Media(name, category, year) {
+	this->length = length;
 }
 
 ostream& operator<<(ostream& out, const Movie& m)
 {
-	out <<"(" << m.getName() << ", " << m.getCategory() << ")";
+	out << m.getName() << " " << m.getCategory() << " " << m.getYear() << " " << m.getMovieLength() << endl;
 	return out;
 }

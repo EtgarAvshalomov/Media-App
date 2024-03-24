@@ -3,19 +3,21 @@
 
 class Movie :public Media
 {
-	int movieLength;
+private:
+
+	int length;
 
 	friend ostream& operator<<(ostream& out, const Movie& m);
 
 public:
 
+	Movie(string name, string category, int year, int length);
+	
 	Movie() = default;
-
-	Movie(string name, string category, int year, int movieLength);
 
 	int getMovieLength() const
 	{
-		return movieLength;
+		return length;
 	}
 };
 

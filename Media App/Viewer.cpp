@@ -2,7 +2,6 @@
 #include "Viewer.h"
 #include <vector>
 #include <fstream>
-#include "Movie.h"
 #include <ctime>
 using namespace std;
 
@@ -15,7 +14,7 @@ void Viewer::AddMovieToWatchlist(Movie& toAdd)
 	time_t currentTime = time(nullptr);
 	string timeString = ctime(&currentTime);
 	toAdd.setDateOfAdd(timeString);
-	this->watchlist.emplace_back(toAdd);
+	this->movieWatchlist.emplace_back(toAdd);
 }
 
 void Viewer::AddSeriesToWatchlist(Series& toAdd)
@@ -23,12 +22,12 @@ void Viewer::AddSeriesToWatchlist(Series& toAdd)
 	time_t currentTime = time(nullptr);
 	string timeString = ctime(&currentTime);
 	toAdd.setDateOfAdd(timeString);
-	this->watchlist.emplace_back(toAdd);
+	this->seriesWatchlist.emplace_back(toAdd);
 }
 
 void Viewer::AddMovieToFile(Movie& toAdd)
 {
-	ofstream out("Watchlist.txt", ios::app);
+	ofstream out("Watchlist.txt", ios::trunc);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
 	out.write((char*)&toAdd, sizeof(Movie));
 	out.close();
@@ -37,19 +36,27 @@ void Viewer::AddMovieToFile(Movie& toAdd)
 void Viewer::ReadMovieFromFile()
 {
 	string path = "Watchlist.txt";
-	ifstream fin;
-	Movie currentMovie;
-	fin.open(path, ios::in);
-	if (!fin.is_open()) { cout << "File cannot open!" << endl; }
+	Movie movie;
+	ifstream in(path, ios::in);
+	if (!in.is_open()) { cout << "File cannot open!" << endl; }
 	else
 	{
 		cout << "File open, nice" << endl;
-		while (fin.read((char*)&currentMovie, sizeof(Movie))) {
-			this->watchlist.emplace_back(currentMovie);
+		while (in.read((char*)&movie, sizeof(Movie))) {
+			movieWatchlist.emplace_back(movie);
 		}
-		for (int i = 0; i < 5; i++) {
-			this->watchlist[i];
-		}
+
+		in.close();
+		cout << "File closed, bombastic" << endl;
 	}
-	fin.close();
+}
+
+void Viewer::PrintWatchlist()
+{
+	for (int i = 0; i < this->movieWatchlist.size(); i++) {
+		cout << movieWatchlist[i];
+	}
+	for (int i = 0; i < this->seriesWatchlist.size(); i++) {
+		cout << seriesWatchlist[i];
+	}
 }

@@ -6,7 +6,8 @@ class Viewer :public User
 {
 private:
 
-	vector<Media> watchlist;
+	vector<Movie> movieWatchlist;
+	vector<Series> seriesWatchlist;
 
 public:
 
@@ -22,4 +23,5 @@ public:
 
 	bool CheckIfEmpty() {if (this->getID() == NULL) return true; else return false;}
 
+	void PrintWatchlist();
 };

@@ -11,56 +11,94 @@ using namespace std;
 
 int main()
 {
-	//Viewer Ben(0,0,0,0,"","");
-	//int who=1;
-	//while (who!=NULL)
+	Viewer viewer(0, 0, 0, 0, "", "");
+	Manager manager(0, 0, 0, 0, "", "");
+
+	Movie m1("Finding Nemo", "Sci-Fi", 2000, 120);
+	Movie m2("The Conjuring", "Horror", 2013, 180);
+	Movie m3("American Pie", "Comedy", 1995, 150);
+
+	viewer.AddMovieToFile(m1);
+
+	viewer.ReadMovieFromFile();
+
+	viewer.PrintWatchlist();
+
+	//viewer.PrintWatchlist();
+
+	//int choice = 1;
+	//while (choice!=NULL)
 	//{
-
-
-	//	cout << "Welcome to BambaFlix!" << "\n";
-	//	cout << "1.Viewer" << "\n" << "2.Manager" << "\n" << "0.EXIT" << "\n";
-	//	cin >> who;
-	//	switch (who)
+	//	cout << "Welcome to BambaFlix!" << "\n" << "\n";
+	//	cout << "1. Viewer" << "\n" << "2. Manager" << "\n" << "0. Exit" << "\n" << "\n";
+	//	cin >> choice; // Throw exceptions later
+	//	cout << "\n";
+	//	switch (choice)
 	//	{
 	//	case 0:
 	//		exit(0);
 	//		break;
+
 	//	case 1:
-	//		if (Ben.CheckIfEmpty() == true)
+
+	//		if (viewer.CheckIfEmpty() == true) // Place in ViewerMenu() later
 	//		{
-	//			Ben.SetId();
-	//			Ben.SetDayOfBirth();
-	//			Ben.SetFirstName();
-	//		}
-	//		else
-	//		{
-	//			int action = 0;
-	//			cout << "Welcome " + Ben.getFirstName()<<"\n";
-	//			cout << "1.Add Series to Watch list" << "\n" << "2.Add Movie to Watch list" << "\n" << "3.Search Media by name" << "\n" << "4.Watch a Movie From watch list" << "\n" << "5.Watch a Series From watch list" << "\n" << "6.Delete a Series From watch list" << "\n" << "7.Delete a Movie From watch list" << "\n" << "8.Delete a Series From watch list" << "\n" << "9.Back To main menu";
-	//			cout << "Choose an action: ";
-	//			cin >> action;
-	//			switch (action)
-	//			{
-	//			default:
-	//				cout << "ya homo";
-	//		
-	//			}
+	//			viewer.SetId();
+	//			viewer.SetFirstName();
+	//			viewer.SetDayOfBirth();
 	//		}
 
-	//	case 2:
+	//		cout << "\n" << "Welcome " + viewer.getFirstName() << "!" << "\n" << "\n";
+	//		cout << "1. Add Series To Watchlist" << "\n";
+	//		cout << "2. Add Movie To Watchlist" << "\n";
+	//		cout << "3. Search Media By Name" << "\n";
+	//		cout << "4. Watch Series From Watchlist" << "\n";
+	//		cout << "5. Watch Movie From Watchlist" << "\n";
+	//		cout << "6. Delete Series From Watchlist" << "\n";
+	//		cout << "7. Delete Movie From Watchlist" << "\n";
+	//		cout << "8. Back to Main Menu" << "\n" << "\n";
+	//		cout << "Choose an action: ";
+
+	//		cin >> choice;
+	//		switch (choice)
+	//		{
+	//		default:
+	//			cout << "\n" << "Error! Default switch in viewer menu!" << "\n" << "\n";
+	//			break;
+	//		}
+
 	//		break;
-	//	default:who = NULL;
+
+	//	case 2:
+
+	//		if (manager.CheckIfEmpty() == true)
+	//		{
+	//			manager.SetId();
+	//			manager.SetFirstName();
+	//			manager.SetDayOfBirth();
+	//		}
+
+	//		cout << "\n" << "Welcome " + manager.getFirstName() << "!" << "\n" << "\n";
+	//		cout << "1. Add Series To The Database" << "\n";
+	//		cout << "2. Add Movie To The Database" << "\n";
+	//		cout << "3. Delete Media By Search" << "\n";
+	//		cout << "4. Delete Media By Category" << "\n";
+	//		cout << "5. Back To Main Menu" << "\n" << "\n";
+
+	//		cin >> choice;
+	//		switch (choice)
+	//		{
+	//		default:
+	//			cout << "\n" << "Error! Default switch in manager menu!" << "\n" << "\n";
+	//			break;
+	//		}
+
+	//		break;
+
+	//	default:
 	//		break;
 	//	}
 	//}
-
-	Movie m("Finding Nemo", "Adventure", 2002, 15);
-
-	Viewer v(211390869, 15, 5, 2000, "Johnny", "Cage");
-
-	v.AddMovieToFile(m);
-
-	v.ReadMovieFromFile();
 
 	return 0;
 }
