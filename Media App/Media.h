@@ -1,10 +1,13 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 #include<ctime>
 using namespace std;
 
 class Media
 {
+	time_t ben = time(NULL);
+	string dataofadd = ctime(&ben);
 	string name;
 	string category;
 	int year;
