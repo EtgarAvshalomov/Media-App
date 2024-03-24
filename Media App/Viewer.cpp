@@ -6,6 +6,8 @@ Viewer::Viewer(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string
 
 }
 
+
+
 void Viewer::addMovieToWatchlist(Movie& toAdd)
 {
 	watchlist.emplace_back(toAdd);

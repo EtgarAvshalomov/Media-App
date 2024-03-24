@@ -7,7 +7,7 @@ using namespace std;
 class Media
 {
 	time_t ben = time(NULL);
-	string dataofadd = ctime(&ben);
+	string dateofadd = ctime(&ben);
 	string name;
 	string category;
 	int year;
@@ -31,9 +31,9 @@ public:
 		return year;
 	}
 
-	int getDate() const // Add a date later and then return it (Change the type).
+	string getDate() const 
 	{
-		return 0;
+		return dateofadd;
 	}
 };
 
