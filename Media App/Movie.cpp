@@ -6,6 +6,6 @@ Movie::Movie(string name, string category, int year, int length):Media(name, cat
 
 ostream& operator<<(ostream& out, const Movie& m)
 {
-	out << m.getName() << " " << m.getCategory() << " " << m.getYear() << " " << m.getMovieLength() << endl;
+	out << m.getName() << " " << m.getCategory() << " " << m.getYear() << " " << m.getMovieLength() << " " << m.getDate() << endl;
 	return out;
 }

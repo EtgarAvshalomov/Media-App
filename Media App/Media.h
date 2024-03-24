@@ -4,10 +4,6 @@ using namespace std;
 
 class Media
 {
-private:
-
-	friend ostream& operator<<(ostream& out, const Media& m);
-
 protected:
 
 	string dateAdded;
@@ -43,6 +39,7 @@ public:
 
 	void setDateOfAdd(string date) {
 		dateAdded = date;
+		dateAdded.erase(remove(dateAdded.begin(), dateAdded.end(), '\n'), dateAdded.end());
 	}
 };
 

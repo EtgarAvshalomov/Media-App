@@ -27,6 +27,10 @@ void Viewer::AddSeriesToWatchlist(Series& toAdd)
 
 void Viewer::AddMovieToFile(Movie& toAdd)
 {
+	time_t currentTime = time(nullptr);
+	string timeString = ctime(&currentTime);
+	toAdd.setDateOfAdd(timeString);
+
 	ofstream out("Watchlist.txt", ios::app);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
 	out.write((char*)&toAdd, sizeof(Movie));

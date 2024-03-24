@@ -30,8 +30,6 @@ int main()
 
 	exit(0);
 
-	//viewer.PrintWatchlist();
-
 	//int choice = 1;
 	//while (choice!=NULL)
 	//{
