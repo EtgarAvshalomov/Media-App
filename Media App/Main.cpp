@@ -18,11 +18,17 @@ int main()
 	Movie m2("The Conjuring", "Horror", 2013, 180);
 	Movie m3("American Pie", "Comedy", 1995, 150);
 
+	viewer.ClearFile();
+
 	viewer.AddMovieToFile(m1);
+	viewer.AddMovieToFile(m2);
+	viewer.AddMovieToFile(m3);
 
 	viewer.ReadMovieFromFile();
 
 	viewer.PrintWatchlist();
+
+	exit(0);
 
 	//viewer.PrintWatchlist();
 

@@ -27,7 +27,7 @@ void Viewer::AddSeriesToWatchlist(Series& toAdd)
 
 void Viewer::AddMovieToFile(Movie& toAdd)
 {
-	ofstream out("Watchlist.txt", ios::trunc);
+	ofstream out("Watchlist.txt", ios::app);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
 	out.write((char*)&toAdd, sizeof(Movie));
 	out.close();
@@ -53,10 +53,17 @@ void Viewer::ReadMovieFromFile()
 
 void Viewer::PrintWatchlist()
 {
-	for (int i = 0; i < this->movieWatchlist.size(); i++) {
-		cout << movieWatchlist[i];
+	for (int i = 0; i < movieWatchlist.size(); i++) {
+		cout << i+1 << ". " << movieWatchlist[i];
 	}
-	for (int i = 0; i < this->seriesWatchlist.size(); i++) {
-		cout << seriesWatchlist[i];
+	for (int i = 0; i < seriesWatchlist.size(); i++) {
+		cout << i+1 << ". " << seriesWatchlist[i];
 	}
+}
+
+void Viewer::ClearFile()
+{
+	ofstream out("Watchlist.txt", ios::trunc);
+	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
+	out.close();
 }
