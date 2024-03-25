@@ -10,6 +10,54 @@ Manager::Manager(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, stri
 
 }
 
+void Manager::ManagerMenu()
+{
+	int choice = 1;
+
+	if (CheckIfEmpty() == true)
+	{
+		SetId();
+		SetFirstName();
+		SetDayOfBirth();
+	}
+
+	cout << endl << "Welcome " + getFirstName() << "!" << endl << endl;
+	cout << "1. Add Series To The Database" << endl;
+	cout << "2. Add Movie To The Database" << endl;
+	cout << "3. Delete Media By Name" << endl;
+	cout << "4. Delete Media By Category" << endl;
+	cout << "5. Back To Main Menu" << endl << endl;
+
+	cin >> choice;
+	switch (choice)
+	{
+
+	case 1:
+		ManualAddSeriesToDatabase();
+		break;
+
+	case 2:
+		ManualAddMovieToDatabase();
+		break;
+
+	case 3:
+		DeleteMediaByName(); // Check for lower case sensitivity later
+		break;
+
+	case 4:
+		DeleteMediaByCategory();
+		break;
+
+	case 5:
+		cout << endl;
+		break;
+
+	default:
+		cout << endl << "Error! Default switch in manager menu!" << endl << endl;
+		break;
+	}
+}
+
 void Manager::AddMovieToDatabase(Movie& toAdd)
 {
 	time_t currentTime = time(nullptr);

@@ -38,79 +38,12 @@ int main()
 
 		case 1:
 
-			if (viewer.CheckIfEmpty() == true) // Place in ViewerMenu() later
-			{
-				viewer.SetId();
-				viewer.SetFirstName();
-				viewer.SetDayOfBirth();
-			}
-
-			cout << endl << "Welcome " + viewer.getFirstName() << "!" << endl << endl;
-			cout << "1. Add Series To Watchlist" << endl;
-			cout << "2. Add Movie To Watchlist" << endl;
-			cout << "3. Search Media By Name" << endl;
-			cout << "4. Watch Series From Watchlist" << endl;
-			cout << "5. Watch Movie From Watchlist" << endl;
-			cout << "6. Delete Series From Watchlist" << endl;
-			cout << "7. Delete Movie From Watchlist" << endl;
-			cout << "8. Back to Main Menu" << endl << endl;
-			cout << "Choose an action: ";
-
-			cin >> choice;
-			switch (choice)
-			{
-			default:
-				cout << endl << "Error! Default switch in viewer menu!" << endl << endl;
-				break;
-			}
-
+			viewer.ViewerMenu();
 			break;
 
 		case 2:
 
-			if (manager.CheckIfEmpty() == true)
-			{
-				manager.SetId();
-				manager.SetFirstName();
-				manager.SetDayOfBirth();
-			}
-
-			cout << endl << "Welcome " + manager.getFirstName() << "!" << endl << endl;
-			cout << "1. Add Series To The Database" << endl;
-			cout << "2. Add Movie To The Database" << endl;
-			cout << "3. Delete Media By Name" << endl;
-			cout << "4. Delete Media By Category" << endl;
-			cout << "5. Back To Main Menu" << endl << endl;
-
-			cin >> choice;
-			switch (choice)
-			{
-
-			case 1:
-				manager.ManualAddSeriesToDatabase();
-				break;
-
-			case 2:
-				manager.ManualAddMovieToDatabase();
-				break;
-
-			case 3:
-				manager.DeleteMediaByName(); // Check for lower case sensitivity later
-				break;
-
-			case 4:
-				manager.DeleteMediaByCategory();
-				break;
-				
-			case 5:
-				cout << endl;
-				break;
-
-			default:
-				cout << endl << "Error! Default switch in manager menu!" << endl << endl;
-				break;
-			}
-
+			manager.ManagerMenu();
 			break;
 
 		default:

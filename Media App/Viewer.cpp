@@ -10,6 +10,37 @@ Viewer::Viewer(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string
 
 }
 
+void Viewer::ViewerMenu()
+{
+	int choice = 1;
+
+	if (CheckIfEmpty() == true) // Place in ViewerMenu() later
+	{
+		SetId();
+		SetFirstName();
+		SetDayOfBirth();
+	}
+
+	cout << endl << "Welcome " + getFirstName() << "!" << endl << endl;
+	cout << "1. Add Series To Watchlist" << endl;
+	cout << "2. Add Movie To Watchlist" << endl;
+	cout << "3. Search Media By Name" << endl;
+	cout << "4. Watch Series From Watchlist" << endl;
+	cout << "5. Watch Movie From Watchlist" << endl;
+	cout << "6. Delete Series From Watchlist" << endl;
+	cout << "7. Delete Movie From Watchlist" << endl;
+	cout << "8. Back to Main Menu" << endl << endl;
+	cout << "Choose an action: ";
+
+	cin >> choice;
+	switch (choice)
+	{
+	default:
+		cout << endl << "Error! Default switch in viewer menu!" << endl << endl;
+		break;
+	}
+}
+
 void Viewer::AddMovieToWatchlist(Movie& toAdd)
 {
 	time_t currentTime = time(nullptr);

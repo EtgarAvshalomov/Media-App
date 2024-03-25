@@ -13,6 +13,8 @@ public:
 
 	Viewer(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string firstName, string lastName);
 
+	void ViewerMenu();
+
 	void AddMovieToWatchlist(Movie& toAdd);
 
 	void AddSeriesToWatchlist(Series& toAdd);
