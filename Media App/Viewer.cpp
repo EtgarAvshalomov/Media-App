@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <ctime>
+#include <string>
 using namespace std;
 
 Viewer::Viewer(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string firstName, string lastName):User(id, dayOfBirth, monthOfBirth, yearOfBirth, firstName, lastName) {
@@ -13,7 +14,7 @@ void Viewer::AddMovieToWatchlist(Movie& toAdd)
 {
 	time_t currentTime = time(nullptr);
 	string timeString = ctime(&currentTime);
-	toAdd.setDateOfAdd(timeString);
+	toAdd.setDateAdded(timeString);
 	this->movieWatchlist.emplace_back(toAdd);
 }
 
@@ -21,7 +22,7 @@ void Viewer::AddSeriesToWatchlist(Series& toAdd)
 {
 	time_t currentTime = time(nullptr);
 	string timeString = ctime(&currentTime);
-	toAdd.setDateOfAdd(timeString);
+	toAdd.setDateAdded(timeString);
 	this->seriesWatchlist.emplace_back(toAdd);
 }
 
@@ -29,45 +30,134 @@ void Viewer::AddMovieToFile(Movie& toAdd)
 {
 	time_t currentTime = time(nullptr);
 	string timeString = ctime(&currentTime);
-	toAdd.setDateOfAdd(timeString);
+	toAdd.setDateAdded(timeString);
 
-	ofstream out("Watchlist.txt", ios::app);
+	ofstream out("Movies Watchlist.txt", ios::app);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
-	out.write((char*)&toAdd, sizeof(Movie));
+	out << toAdd.getName() << endl;
+	out << toAdd.getCategory() << endl;
+	out << toAdd.getYear() << endl;
+	out << toAdd.getLength() << endl;
+	out << toAdd.getDateAdded() << endl;
+	out << endl;
+	out.close();
+}
+
+void Viewer::AddSeriesToFile(Series& toAdd)
+{
+	time_t currentTime = time(nullptr);
+	string timeString = ctime(&currentTime);
+	toAdd.setDateAdded(timeString);
+
+	ofstream out("Series Watchlist.txt", ios::app);
+	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
+	out << toAdd.getName() << endl;
+	out << toAdd.getCategory() << endl;
+	out << toAdd.getYear() << endl;
+	out << toAdd.getSeasons() << endl;
+	out << toAdd.getEpisodes() << endl;
+	out << toAdd.getDateAdded() << endl;
+	out << endl;
 	out.close();
 }
 
 void Viewer::ReadMovieFromFile()
 {
-	string path = "Watchlist.txt";
 	Movie movie;
+	string buffer;
+	int numBuffer;
+	string path = "Movies Watchlist.txt";
 	ifstream in(path, ios::in);
 	if (!in.is_open()) { cout << "File cannot open!" << endl; }
 	else
 	{
-		cout << "File open, nice" << endl;
-		while (in.read((char*)&movie, sizeof(Movie))) {
+		cout << "Movies Watchlist.txt open" << endl;
+
+		while (!in.eof()) {
+
+			getline(in, buffer);
+			if (buffer == "") break;
+			movie.setName(buffer);
+
+			getline(in, buffer);
+			movie.setCategory(buffer);
+
+			getline(in, buffer);
+			numBuffer = stoi(buffer);
+			movie.setYear(numBuffer);
+
+			getline(in, buffer);
+			numBuffer = stoi(buffer);
+			movie.setLength(numBuffer);
+
+			getline(in, buffer);
+			movie.setDateAdded(buffer);
+
 			movieWatchlist.emplace_back(movie);
+
+			getline(in, buffer);
 		}
 
 		in.close();
-		cout << "File closed, bombastic" << endl;
+
+		cout << "Movies Watchlist.txt closed" << endl;
+	}
+}
+
+void Viewer::ReadSeriesFromFile()
+{
+	Series series;
+	string buffer;
+	int numBuffer;
+	string path = "Series Watchlist.txt";
+	ifstream in(path, ios::in);
+	if (!in.is_open()) { cout << "File cannot open!" << endl; }
+	else
+	{
+		cout << "Series Watchlist.txt open" << endl;
+
+		while (!in.eof()) {
+
+			getline(in, buffer);
+			if (buffer == "") break;
+			series.setName(buffer);
+
+			getline(in, buffer);
+			series.setCategory(buffer);
+
+			getline(in, buffer);
+			numBuffer = stoi(buffer);
+			series.setYear(numBuffer);
+
+			getline(in, buffer);
+			numBuffer = stoi(buffer);
+			series.setSeasons(numBuffer);
+
+			getline(in, buffer);
+			numBuffer = stoi(buffer);
+			series.setEpisodes(numBuffer);
+
+			getline(in, buffer);
+			series.setDateAdded(buffer);
+
+			seriesWatchlist.emplace_back(series);
+
+			getline(in, buffer);
+		}
+
+		in.close();
+
+		cout << "Movies Watchlist.txt closed" << endl;
 	}
 }
 
 void Viewer::PrintWatchlist()
 {
 	for (int i = 0; i < movieWatchlist.size(); i++) {
-		cout << i+1 << ". " << movieWatchlist[i];
+		cout << movieWatchlist[i];
 	}
-	for (int i = 0; i < seriesWatchlist.size(); i++) {
-		cout << i+1 << ". " << seriesWatchlist[i];
-	}
-}
 
-void Viewer::ClearFile()
-{
-	ofstream out("Watchlist.txt", ios::trunc);
-	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
-	out.close();
+	for (int i = 0; i < seriesWatchlist.size(); i++) {
+		cout << seriesWatchlist[i];
+	}
 }

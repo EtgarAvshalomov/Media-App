@@ -6,10 +6,10 @@ class Media
 {
 protected:
 
-	string dateAdded;
 	string name;
 	string category;
 	int year;
+	string dateAdded;
 	
 public:
 
@@ -32,12 +32,25 @@ public:
 		return year;
 	}
 
-	string getDate() const 
+	string getDateAdded() const 
 	{
 		return dateAdded;
 	}
 
-	void setDateOfAdd(string date) {
+	void setName(string name) {
+		this->name = name;
+	}
+
+	void setCategory(string category) {
+		this->category = category;
+	}
+
+	void setYear(int year)
+	{
+		this->year = year;
+	}
+
+	void setDateAdded(string date) {
 		dateAdded = date;
 		dateAdded.erase(remove(dateAdded.begin(), dateAdded.end(), '\n'), dateAdded.end());
 	}

@@ -19,11 +19,13 @@ public:
 
 	void AddMovieToFile(Movie& toAdd);
 
+	void AddSeriesToFile(Series& toAdd);
+
 	void ReadMovieFromFile();
+
+	void ReadSeriesFromFile();
 
 	bool CheckIfEmpty() {if (this->getID() == NULL) return true; else return false;}
 
 	void PrintWatchlist();
-
-	void ClearFile();
 };

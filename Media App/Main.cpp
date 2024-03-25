@@ -14,95 +14,109 @@ int main()
 	Viewer viewer(0, 0, 0, 0, "", "");
 	Manager manager(0, 0, 0, 0, "", "");
 
-	Movie m1("Finding Nemo", "Sci-Fi", 2000, 120);
-	Movie m2("The Conjuring", "Horror", 2013, 180);
-	Movie m3("American Pie", "Comedy", 1995, 150);
+	//Movie m1("Cychka", "Pizda", 6969, 8);
+	//Series s2("My Little Pony", "Horror", 2013, 4, 12);
+	//Series s3("Breaking Bad", "Comedy", 1995, 5, 62);
 
-	viewer.ClearFile();
+	//viewer.AddSeriesToFile(s2);
+	//viewer.ReadSeriesFromFile();
+	//viewer.PrintWatchlist();
 
-	viewer.AddMovieToFile(m1);
-	viewer.AddMovieToFile(m2);
-	viewer.AddMovieToFile(m3);
+	int choice = 1;
+	while (choice!=NULL)
+	{
+		cout << "Welcome to BambaFlix!" << endl << endl;
+		cout << "1. Viewer" << endl << "2. Manager" << endl << "0. Exit" << endl << endl;
+		cin >> choice; // Throw exceptions later
+		cout << endl;
+		switch (choice)
+		{
+		case 0:
+			cout << "Cya! ;D" << endl;
+			exit(0);
+			break;
 
-	viewer.ReadMovieFromFile();
+		case 1:
 
-	viewer.PrintWatchlist();
+			if (viewer.CheckIfEmpty() == true) // Place in ViewerMenu() later
+			{
+				viewer.SetId();
+				viewer.SetFirstName();
+				viewer.SetDayOfBirth();
+			}
 
-	exit(0);
+			cout << endl << "Welcome " + viewer.getFirstName() << "!" << endl << endl;
+			cout << "1. Add Series To Watchlist" << endl;
+			cout << "2. Add Movie To Watchlist" << endl;
+			cout << "3. Search Media By Name" << endl;
+			cout << "4. Watch Series From Watchlist" << endl;
+			cout << "5. Watch Movie From Watchlist" << endl;
+			cout << "6. Delete Series From Watchlist" << endl;
+			cout << "7. Delete Movie From Watchlist" << endl;
+			cout << "8. Back to Main Menu" << endl << endl;
+			cout << "Choose an action: ";
 
-	//int choice = 1;
-	//while (choice!=NULL)
-	//{
-	//	cout << "Welcome to BambaFlix!" << "\n" << "\n";
-	//	cout << "1. Viewer" << "\n" << "2. Manager" << "\n" << "0. Exit" << "\n" << "\n";
-	//	cin >> choice; // Throw exceptions later
-	//	cout << "\n";
-	//	switch (choice)
-	//	{
-	//	case 0:
-	//		exit(0);
-	//		break;
+			cin >> choice;
+			switch (choice)
+			{
+			default:
+				cout << endl << "Error! Default switch in viewer menu!" << endl << endl;
+				break;
+			}
 
-	//	case 1:
+			break;
 
-	//		if (viewer.CheckIfEmpty() == true) // Place in ViewerMenu() later
-	//		{
-	//			viewer.SetId();
-	//			viewer.SetFirstName();
-	//			viewer.SetDayOfBirth();
-	//		}
+		case 2:
 
-	//		cout << "\n" << "Welcome " + viewer.getFirstName() << "!" << "\n" << "\n";
-	//		cout << "1. Add Series To Watchlist" << "\n";
-	//		cout << "2. Add Movie To Watchlist" << "\n";
-	//		cout << "3. Search Media By Name" << "\n";
-	//		cout << "4. Watch Series From Watchlist" << "\n";
-	//		cout << "5. Watch Movie From Watchlist" << "\n";
-	//		cout << "6. Delete Series From Watchlist" << "\n";
-	//		cout << "7. Delete Movie From Watchlist" << "\n";
-	//		cout << "8. Back to Main Menu" << "\n" << "\n";
-	//		cout << "Choose an action: ";
+			if (manager.CheckIfEmpty() == true)
+			{
+				manager.SetId();
+				manager.SetFirstName();
+				manager.SetDayOfBirth();
+			}
 
-	//		cin >> choice;
-	//		switch (choice)
-	//		{
-	//		default:
-	//			cout << "\n" << "Error! Default switch in viewer menu!" << "\n" << "\n";
-	//			break;
-	//		}
+			cout << endl << "Welcome " + manager.getFirstName() << "!" << endl << endl;
+			cout << "1. Add Series To The Database" << endl;
+			cout << "2. Add Movie To The Database" << endl;
+			cout << "3. Delete Media By Name" << endl;
+			cout << "4. Delete Media By Category" << endl;
+			cout << "5. Back To Main Menu" << endl << endl;
 
-	//		break;
+			cin >> choice;
+			switch (choice)
+			{
 
-	//	case 2:
+			case 1:
+				manager.ManualAddSeriesToDatabase();
+				break;
 
-	//		if (manager.CheckIfEmpty() == true)
-	//		{
-	//			manager.SetId();
-	//			manager.SetFirstName();
-	//			manager.SetDayOfBirth();
-	//		}
+			case 2:
+				manager.ManualAddMovieToDatabase();
+				break;
 
-	//		cout << "\n" << "Welcome " + manager.getFirstName() << "!" << "\n" << "\n";
-	//		cout << "1. Add Series To The Database" << "\n";
-	//		cout << "2. Add Movie To The Database" << "\n";
-	//		cout << "3. Delete Media By Search" << "\n";
-	//		cout << "4. Delete Media By Category" << "\n";
-	//		cout << "5. Back To Main Menu" << "\n" << "\n";
+			case 3:
+				manager.DeleteMediaByName(); // Check for lower case sensitivity later
+				break;
 
-	//		cin >> choice;
-	//		switch (choice)
-	//		{
-	//		default:
-	//			cout << "\n" << "Error! Default switch in manager menu!" << "\n" << "\n";
-	//			break;
-	//		}
+			case 4:
+				manager.DeleteMediaByCategory();
+				break;
+				
+			case 5:
+				cout << endl;
+				break;
 
-	//		break;
+			default:
+				cout << endl << "Error! Default switch in manager menu!" << endl << endl;
+				break;
+			}
 
-	//	default:
-	//		break;
-	//	}
-	//}
+			break;
+
+		default:
+			break;
+		}
+	}
 
 	return 0;
 }

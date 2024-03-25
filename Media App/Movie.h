@@ -15,9 +15,13 @@ public:
 	
 	Movie() = default;
 
-	int getMovieLength() const
+	int getLength() const
 	{
 		return length;
+	}
+
+	void setLength(int length) {
+		this->length = length;
 	}
 };
 
