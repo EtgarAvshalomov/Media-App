@@ -21,7 +21,7 @@ void Manager::ManagerMenu()
 		SetDayOfBirth();
 	}
 
-	cout << endl << "Welcome " + getFirstName() << "!" << endl << endl;
+	cout << endl << "Welcome " + getFirstName() << "!" << endl << endl; // Potentially add username and password for Manager.
 	cout << "1. Add Series To The Database" << endl;
 	cout << "2. Add Movie To The Database" << endl;
 	cout << "3. Delete Media By Name" << endl;
@@ -103,11 +103,11 @@ void Manager::ManualAddMovieToDatabase()
 	cout << "\n" << "Enter a Name For The Movie: ";
 	cin.get();
 	getline(cin, movie_name);
-	cout << "Choose a Category: " << endl;
+	cout << endl << "Choose a Category: " << endl;
 	movie_category = ChooseCategory();
-	cout << "Enter The Year Of Release: ";
+	cout << endl << "Enter The Year Of Release: ";
 	cin >> movie_year;
-	cout << "Enter The Length Of The Movie (In Minutes): ";
+	cout << endl << "Enter The Length Of The Movie (In Minutes): ";
 	cin >> movie_length;
 
 	Movie new_movie(movie_name, movie_category, movie_year, movie_length);

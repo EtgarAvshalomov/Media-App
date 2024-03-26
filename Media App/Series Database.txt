@@ -5,3 +5,31 @@ Thriller
 20
 Mon Mar 25 20:34:56 2024
 
+One Punch Man
+Comedy
+2015
+2
+12
+Tue Mar 26 09:46:41 2024
+
+Game Of Thrones
+Thriller
+2010
+6
+10
+Tue Mar 26 09:53:07 2024
+
+Peaky Blinders
+Thriller
+2011
+6
+6
+Tue Mar 26 09:53:43 2024
+
+Spongebob Squarepants
+Comedy
+2001
+13
+12
+Tue Mar 26 09:54:37 2024
+

@@ -35,6 +35,11 @@ void Viewer::ViewerMenu()
 	cin >> choice;
 	switch (choice)
 	{
+
+	case 3:
+
+		break;
+
 	default:
 		cout << endl << "Error! Default switch in viewer menu!" << endl << endl;
 		break;
@@ -180,6 +185,21 @@ void Viewer::ReadSeriesFromFile()
 
 		cout << "Movies Watchlist.txt closed" << endl;
 	}
+}
+
+void Viewer::SearchMovieByName()
+{
+	
+}
+
+void Viewer::SearchSeriesByName()
+{
+
+}
+
+void Viewer::SearchMediaByName()
+{
+
 }
 
 void Viewer::PrintWatchlist()
