@@ -9,7 +9,7 @@ protected:
 	string name;
 	string category;
 	int year;
-	string dateAdded;
+	int dateAdded;
 	
 public:
 
@@ -32,7 +32,7 @@ public:
 		return year;
 	}
 
-	string getDateAdded() const 
+	int getDateAdded() const 
 	{
 		return dateAdded;
 	}
@@ -50,9 +50,15 @@ public:
 		this->year = year;
 	}
 
-	void setDateAdded(string date) {
+	void setDateAdded(int date) {
 		dateAdded = date;
-		dateAdded.erase(remove(dateAdded.begin(), dateAdded.end(), '\n'), dateAdded.end());
+	}
+
+	static string ChooseCategory();
+
+	bool operator > (const Media& str) const {
+		if (getYear() != str.getYear())    return (getYear() > str.getYear());
+		return (getDateAdded() > str.getDateAdded());
 	}
 };
 

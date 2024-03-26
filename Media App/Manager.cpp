@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <cctype>
+
 using namespace std;
 
 Manager::Manager(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string firstName, string lastName):User(id, dayOfBirth, monthOfBirth, yearOfBirth, firstName, lastName){
@@ -61,8 +62,7 @@ void Manager::ManagerMenu()
 void Manager::AddMovieToDatabase(Movie& toAdd)
 {
 	time_t currentTime = time(nullptr);
-	string timeString = ctime(&currentTime);
-	toAdd.setDateAdded(timeString);
+	toAdd.setDateAdded(currentTime);
 
 	ofstream out("Movies Database.txt", ios::app);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
@@ -78,8 +78,7 @@ void Manager::AddMovieToDatabase(Movie& toAdd)
 void Manager::AddSeriesToDatabase(Series& toAdd)
 {
 	time_t currentTime = time(nullptr);
-	string timeString = ctime(&currentTime);
-	toAdd.setDateAdded(timeString);
+	toAdd.setDateAdded(currentTime);
 
 	ofstream out("Series Database.txt", ios::app);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
@@ -104,7 +103,7 @@ void Manager::ManualAddMovieToDatabase()
 	cin.get();
 	getline(cin, movie_name);
 	cout << endl << "Choose a Category: " << endl;
-	movie_category = ChooseCategory();
+	movie_category = Media::ChooseCategory();
 	cout << endl << "Enter The Year Of Release: ";
 	cin >> movie_year;
 	cout << endl << "Enter The Length Of The Movie (In Minutes): ";
@@ -113,8 +112,7 @@ void Manager::ManualAddMovieToDatabase()
 	Movie new_movie(movie_name, movie_category, movie_year, movie_length);
 
 	time_t currentTime = time(nullptr);
-	string timeString = ctime(&currentTime);
-	new_movie.setDateAdded(timeString);
+	new_movie.setDateAdded(currentTime);
 
 	ofstream out("Movies Database.txt", ios::app);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
@@ -142,7 +140,7 @@ void Manager::ManualAddSeriesToDatabase()
 	cin.get();
 	getline(cin, series_name);
 	cout << endl << "Choose a Category: " << endl;
-	series_category = ChooseCategory();
+	series_category = Media::ChooseCategory();
 	cout << "Enter The Year Of Release: ";
 	cin >> series_year;
 	cout << "Enter The Number Of Seasons: ";
@@ -153,8 +151,7 @@ void Manager::ManualAddSeriesToDatabase()
 	Series new_series(series_name, series_category, series_year, series_seasons, series_episodes);
 
 	time_t currentTime = time(nullptr);
-	string timeString = ctime(&currentTime);
-	new_series.setDateAdded(timeString);
+	new_series.setDateAdded(currentTime);
 
 	ofstream out("Series Database.txt", ios::app);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
@@ -176,7 +173,7 @@ void Manager::DeleteMovieByCategory()
 
 	cout << "Choose a category: " << endl;
 
-	string category = ChooseCategory();
+	string category = Media::ChooseCategory();
 	int choice = 0;
 	int counter = 0;
 	vector<Movie> movieDatabase = Movie::GetMovieDatabase();
@@ -222,7 +219,7 @@ void Manager::DeleteSeriesByCategory()
 
 	cout << "Choose a category: " << endl;
 
-	string category = ChooseCategory();
+	string category = Media::ChooseCategory();
 	int choice = 0;
 	int counter = 0;
 	vector<Series> seriesDatabase = Series::GetSeriesDatabase();
@@ -406,36 +403,4 @@ void Manager::ClearSeriesDatabase() //Move later to series
 	ofstream out("Series Database.txt", ios::trunc);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
 	out.close();
-}
-
-string Manager::ChooseCategory()
-{
-	int choice;
-
-	cout << endl;
-	cout << "1. Sci-Fi" << endl;
-	cout << "2. Horror" << endl;
-	cout << "3. Comedy" << endl;
-	cout << "4. Thriller" << endl;
-	cout << endl;
-	cin >> choice;
-
-	switch (choice) {
-
-	case 1:
-		return "Sci-Fi";
-
-	case 2:
-		return "Horror";
-
-	case 3:
-		return "Comedy";
-
-	case 4:
-		return "Thriller";
-
-	default:
-		cout << "Unable to choose a category when adding a series to database.";
-		break;
-	}
 }

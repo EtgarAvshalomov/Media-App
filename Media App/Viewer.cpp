@@ -4,6 +4,7 @@
 #include <fstream>
 #include <ctime>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 Viewer::Viewer(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string firstName, string lastName):User(id, dayOfBirth, monthOfBirth, yearOfBirth, firstName, lastName) {
@@ -36,8 +37,24 @@ void Viewer::ViewerMenu()
 	switch (choice)
 	{
 
+	case 1:
+		AddSeriesToWatchlist();
+		break;
+
+	case 2:
+		AddMovieToWatchlist();
+		break;
+
 	case 3:
 		SearchMediaByName();
+		break;
+
+	case 4:
+		WatchSeries();
+		break;
+
+	case 5:
+		WatchMovie();
 		break;
 
 	case 6:
@@ -48,33 +65,92 @@ void Viewer::ViewerMenu()
 		DeleteMovieFromWatchlist();
 		break;
 
+	case 8:
+		cout << endl;
+		break;
+
 	default:
 		cout << endl << "Error! Default switch in viewer menu!" << endl << endl;
 		break;
 	}
 }
 
-void Viewer::AddMovieToWatchlist(Movie& toAdd)
+void Viewer::AddMovieToWatchlist()
 {
-	time_t currentTime = time(nullptr);
-	string timeString = ctime(&currentTime);
-	toAdd.setDateAdded(timeString);
-	this->movieWatchlist.emplace_back(toAdd);
+	ReadMovieFromFile();
+
+	Movie::ReadMoviesFromDatabase();
+
+	vector<Movie> movieDatabase = Movie::GetMovieDatabase();
+
+	sort(movieDatabase.begin(), movieDatabase.end(), greater<Movie>());
+
+	string category = Media::ChooseCategory();
+
+	int counter = 0;
+	char c;
+
+	for (int i = 0; i < movieDatabase.size(); i++) {
+		if (movieDatabase[i].getCategory() == category) {
+			counter++;
+			cout << counter << ". " << movieDatabase[i].getName() << endl;
+			cout << endl << "Do you wish do add this movie to your watchlist? Y/N" << endl << endl;
+			cin >> c;
+
+			if (c == 'Y' || c == 'y') {
+				time_t currentTime = time(nullptr);
+				movieDatabase[i].setDateAdded(currentTime);
+				movieWatchlist.emplace_back(movieDatabase[i]);
+
+				WriteMovieToFile();
+				cout << "You have added " << movieDatabase[i].getName() << " to your watchlist!" << endl;
+				return;
+			}
+			else if (c == 'n' || c == 'N') continue;
+		}
+	}
 }
 
-void Viewer::AddSeriesToWatchlist(Series& toAdd)
+void Viewer::AddSeriesToWatchlist()
 {
-	time_t currentTime = time(nullptr);
-	string timeString = ctime(&currentTime);
-	toAdd.setDateAdded(timeString);
-	this->seriesWatchlist.emplace_back(toAdd);
+	ReadSeriesFromFile();
+
+	Series::ReadSeriesFromDatabase();
+
+	vector<Series> seriesDatabase = Series::GetSeriesDatabase();
+
+	sort(seriesDatabase.begin(), seriesDatabase.end(), greater<Series>());
+
+	string category = Media::ChooseCategory();
+
+	int counter = 0;
+	char c;
+
+	for (int i = 0; i < seriesDatabase.size(); i++) {
+		if (seriesDatabase[i].getCategory() == category) {
+			counter++;
+			cout << counter << ". " << seriesDatabase[i].getName() << endl;
+			cout << endl << "Do you wish do add this series to your watchlist? Y/N" << endl << endl;
+			cin >> c;
+
+			if (c == 'Y' || c == 'y') {
+				time_t currentTime = time(nullptr);
+				seriesDatabase[i].setDateAdded(currentTime);
+				seriesWatchlist.emplace_back(seriesDatabase[i]);
+
+				WriteSeriesToFile();
+				cout << "You have added " << seriesDatabase[i].getName() << " to your watchlist!" << endl;
+				return;
+			}
+			else if (c == 'n' || c == 'N') continue;
+		}
+	}
 }
 
 void Viewer::AddMovieToFile(Movie& toAdd)
 {
 	time_t currentTime = time(nullptr);
-	string timeString = ctime(&currentTime);
-	toAdd.setDateAdded(timeString);
+	toAdd.setDateAdded(currentTime);
 
 	ofstream out("Movies Watchlist.txt", ios::app);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
@@ -90,8 +166,7 @@ void Viewer::AddMovieToFile(Movie& toAdd)
 void Viewer::AddSeriesToFile(Series& toAdd)
 {
 	time_t currentTime = time(nullptr);
-	string timeString = ctime(&currentTime);
-	toAdd.setDateAdded(timeString);
+	toAdd.setDateAdded(currentTime);
 
 	ofstream out("Series Watchlist.txt", ios::app);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
@@ -137,7 +212,8 @@ void Viewer::ReadMovieFromFile()
 			movie.setLength(numBuffer);
 
 			getline(in, buffer);
-			movie.setDateAdded(buffer);
+			numBuffer = stoi(buffer);
+			movie.setDateAdded(numBuffer);
 
 			movieWatchlist.emplace_back(movie);
 
@@ -186,7 +262,8 @@ void Viewer::ReadSeriesFromFile()
 			series.setEpisodes(numBuffer);
 
 			getline(in, buffer);
-			series.setDateAdded(buffer);
+			numBuffer = stoi(buffer);
+			series.setDateAdded(numBuffer);
 
 			seriesWatchlist.emplace_back(series);
 
@@ -359,6 +436,60 @@ void Viewer::DeleteMovieFromWatchlist()
 	}
 	else if (movieWatchlist.size() == 0 && seriesWatchlist.size() == 0) cout << endl << "Your watchlist is empty" << endl << endl;
 	else cout << endl << "There are no movies in your watchlist" << endl << endl;
+}
+
+void Viewer::WatchMovie()
+{
+	ReadMovieFromFile();
+
+	char c;
+
+	for (int i = movieWatchlist.size(); i > 0; i--) {
+		cout << endl << "Would you like to watch this movie? Y/N: " << endl;
+		cout << movieWatchlist.size() - (i - 1) << ". " << movieWatchlist[i - 1].getName() << endl << endl;
+		cin >> c;
+
+		if (c == 'Y' || c == 'y') {
+			cout << endl << "Watching: " << movieWatchlist[i - 1].getName() << "..." << endl << endl;
+			cout << endl << "Press any key to continue...";
+			cin.ignore();
+			getchar();
+		}
+		else if (c == 'N' || c == 'n') {
+			cout << endl << "Would you like to continue? Y/N" << endl;
+			cin >> c;
+
+			if (c == 'Y' || c == 'y') continue;
+			else if (c == 'N' || c == 'n') break;
+		}
+	}
+}
+
+void Viewer::WatchSeries()
+{
+	ReadSeriesFromFile();
+
+	char c;
+
+	for (int i = seriesWatchlist.size(); i > 0; i--) {
+		cout << endl << "Would you like to watch this series? Y/N: " << endl;
+		cout << seriesWatchlist.size() - (i - 1) << ". " << seriesWatchlist[i-1].getName() << endl << endl;
+		cin >> c;
+
+		if (c == 'Y' || c == 'y') {
+			cout << endl << "Watching: " << seriesWatchlist[i-1].getName() << "..." << endl << endl;
+			cout << endl << "Press any key to continue...";
+			cin.ignore();
+			getchar();
+		}
+		else if (c == 'N' || c == 'n') {
+			cout << endl << "Would you like to continue? Y/N" << endl;
+			cin >> c;
+
+			if (c == 'Y' || c == 'y') continue;
+			else if (c == 'N' || c == 'n') break;
+		}
+	}
 }
 
 void Viewer::PrintWatchlist()

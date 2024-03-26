@@ -10,7 +10,6 @@ private:
 
 	void ClearMovieDatabase();
 	void ClearSeriesDatabase();
-	string ChooseCategory();
 
 public:
 

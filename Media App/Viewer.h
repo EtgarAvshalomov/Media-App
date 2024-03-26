@@ -18,9 +18,9 @@ public:
 
 	void ViewerMenu();
 
-	void AddMovieToWatchlist(Movie& toAdd);
+	void AddMovieToWatchlist();
 
-	void AddSeriesToWatchlist(Series& toAdd);
+	void AddSeriesToWatchlist();
 
 	void AddMovieToFile(Movie& toAdd);
 
@@ -43,6 +43,10 @@ public:
 	void DeleteSeriesFromWatchlist();
 
 	void DeleteMovieFromWatchlist();
+
+	void WatchMovie();
+
+	void WatchSeries();
 
 	bool CheckIfEmpty() {if (this->getID() == NULL) return true; else return false;}
 

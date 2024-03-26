@@ -53,7 +53,8 @@ void Movie::ReadMoviesFromDatabase()
 			movie.setLength(numBuffer);
 
 			getline(in, buffer);
-			movie.setDateAdded(buffer);
+			numBuffer = stoi(buffer);
+			movie.setDateAdded(numBuffer);
 
 			movieDatabase.emplace_back(movie);
 

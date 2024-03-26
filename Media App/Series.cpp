@@ -57,7 +57,8 @@ void Series::ReadSeriesFromDatabase()
 			series.setEpisodes(numBuffer);
 
 			getline(in, buffer);
-			series.setDateAdded(buffer);
+			numBuffer = stoi(buffer);
+			series.setDateAdded(numBuffer);
 
 			seriesDatabase.emplace_back(series);
 

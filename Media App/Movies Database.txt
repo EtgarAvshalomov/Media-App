@@ -1,18 +1,24 @@
-Batman
-Thriller
-2009
-180
-Mon Mar 25 20:35:23 2024
-
 Cars
 Comedy
-2000
+2003
 120
-Mon Mar 25 20:35:23 2024
+1711472670
 
-The Dark Knight
-Thriller
+Bambi
+Horror
+2000
+150
+1711472709
+
+Rain Of Falafel
+Sci-Fi
 2009
+120
+1711472737
+
+Spiderman
+Sci-Fi
+2002
 180
-Tue Mar 26 09:45:44 2024
+1711488398
 
