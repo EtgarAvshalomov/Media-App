@@ -21,6 +21,7 @@ public:
 
 	User() = default;
 
+
 	int getID() const
 	{
 		return id;
@@ -31,6 +32,7 @@ public:
 		cout << "Please enter an id: ";
 		cin >> this->id;
 	}
+
 	void SetDayOfBirth()
 	{
 		cout << "Please enter your birthday (Day Month Year): ";

@@ -8,9 +8,6 @@ class Manager :public User
 {
 private:
 
-	vector<Movie> movieDatabase;
-	vector<Series> seriesDatabase;
-
 	void ClearMovieDatabase();
 	void ClearSeriesDatabase();
 	string ChooseCategory();
@@ -28,10 +25,6 @@ public:
 	void ManualAddMovieToDatabase();
 
 	void ManualAddSeriesToDatabase();
-
-	void ReadMoviesFromDatabase();
-	
-	void ReadSeriesFromDatabase();
 
 	void DeleteMovieByCategory();
 

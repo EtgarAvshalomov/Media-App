@@ -1,8 +1,11 @@
 #pragma once
 #include "Media.h"
+#include <vector>
+using namespace std;
 
 class Series :public Media
 {
+
 	int seasons;
 	int episodes;
 
@@ -24,6 +27,8 @@ public:
 		return episodes;
 	}
 
+	static vector<Series>& GetSeriesDatabase();
+
 	void setSeasons(int seasons) {
 		this->seasons = seasons;
 	}
@@ -31,5 +36,6 @@ public:
 	void setEpisodes(int episodes) {
 		this->episodes = episodes;
 	}
-};
 
+	static void ReadSeriesFromDatabase();
+};

@@ -1,5 +1,6 @@
 #pragma once
 #include "Media.h"
+#include<vector>
 
 class Movie :public Media
 {
@@ -20,8 +21,11 @@ public:
 		return length;
 	}
 
+	static vector<Movie>& GetMovieDatabase();
+
 	void setLength(int length) {
 		this->length = length;
 	}
-};
 
+	static void ReadMoviesFromDatabase();
+};

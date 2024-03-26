@@ -170,108 +170,16 @@ void Manager::ManualAddSeriesToDatabase()
 	cout << "\n" << "Successfully added a series to the database!!" << "\n" << "\n";
 }
 
-void Manager::ReadMoviesFromDatabase()
-{
-
-	movieDatabase.clear();
-
-	string buffer;
-	int numBuffer;
-	Movie movie;
-	string path = "Movies Database.txt";
-	ifstream in(path, ios::in);
-	if (!in.is_open()) { cout << "File cannot open!" << endl; }
-	else
-	{
-		cout << "Movies Database.txt open" << endl;
-		
-		while (!in.eof()) {
-
-			getline(in, buffer);
-			if (buffer == "") break;
-			movie.setName(buffer);
-
-			getline(in, buffer);
-			movie.setCategory(buffer);
-
-			getline(in, buffer);
-			numBuffer = stoi(buffer);
-			movie.setYear(numBuffer);
-
-			getline(in, buffer);
-			numBuffer = stoi(buffer);
-			movie.setLength(numBuffer);
-
-			getline(in, buffer);
-			movie.setDateAdded(buffer);
-
-			movieDatabase.emplace_back(movie);
-
-			getline(in, buffer);
-		}
-
-		in.close();
-		cout << "Movies Database.txt closed" << endl;
-	}
-}
-
-void Manager::ReadSeriesFromDatabase()
-{
-	seriesDatabase.clear();
-
-	string buffer;
-	int numBuffer;
-	Series series;
-	string path = "Series Database.txt";
-	ifstream in(path, ios::in);
-	if (!in.is_open()) { cout << "File cannot open!" << endl; }
-	else
-	{
-		cout << "Series Database.txt open" << endl;
-		
-		while (!in.eof()) {
-
-			getline(in, buffer);
-			if (buffer == "") break;
-			series.setName(buffer);
-
-			getline(in, buffer);
-			series.setCategory(buffer);
-
-			getline(in, buffer);
-			numBuffer = stoi(buffer);
-			series.setYear(numBuffer);
-
-			getline(in, buffer);
-			numBuffer = stoi(buffer);
-			series.setSeasons(numBuffer);
-
-			getline(in, buffer);
-			numBuffer = stoi(buffer);
-			series.setEpisodes(numBuffer);
-
-			getline(in, buffer);
-			series.setDateAdded(buffer);
-
-			seriesDatabase.emplace_back(series);
-
-			getline(in, buffer);
-		}
-
-		in.close();
-		cout << "Series Database.txt closed" << endl;
-	}
-}
-
 void Manager::DeleteMovieByCategory()
 {
-	ReadMoviesFromDatabase();
+	Movie::ReadMoviesFromDatabase();
 
 	cout << "Choose a category: " << endl;
 
 	string category = ChooseCategory();
 	int choice = 0;
 	int counter = 0;
+	vector<Movie> movieDatabase = Movie::GetMovieDatabase();
 
 	for (int i = 0; i < movieDatabase.size(); i++) {
 		if (movieDatabase[i].getCategory() == category) {
@@ -310,13 +218,14 @@ void Manager::DeleteMovieByCategory()
 
 void Manager::DeleteSeriesByCategory()
 {
-	ReadSeriesFromDatabase();
+	Series::ReadSeriesFromDatabase();
 
 	cout << "Choose a category: " << endl;
 
 	string category = ChooseCategory();
 	int choice = 0;
 	int counter = 0;
+	vector<Series> seriesDatabase = Series::GetSeriesDatabase();
 
 	for (int i = 0; i < seriesDatabase.size(); i++) {
 		if (seriesDatabase[i].getCategory() == category) {
@@ -380,12 +289,13 @@ void Manager::DeleteMediaByCategory() {
 
 void Manager::DeleteMovieByName()
 {
-	ReadMoviesFromDatabase();
+	Movie::ReadMoviesFromDatabase();
 
 	string buffer;
 	bool success = false;
 	cout << "Enter the name of the movie for deletion: ";
 	cin >> buffer;
+	vector<Movie> movieDatabase = Movie::GetMovieDatabase();
 
 	for (vector<Movie>::iterator i = movieDatabase.begin(); i != movieDatabase.end(); ++i) {
 		if (i->getName() == buffer) {
@@ -412,13 +322,14 @@ void Manager::DeleteMovieByName()
 
 void Manager::DeleteSeriesByName()
 {
-	ReadSeriesFromDatabase();
+	Series::ReadSeriesFromDatabase();
 
 	string buffer;
 	bool success = false;
 	cout << "Enter the name of the series for deletion: ";
 	cin.get();
 	getline(cin, buffer);
+	vector<Series> seriesDatabase = Series::GetSeriesDatabase();
 
 	for (vector<Series>::iterator i = seriesDatabase.begin(); i != seriesDatabase.end(); ++i) {
 		if (i->getName() == buffer) {
@@ -468,8 +379,11 @@ void Manager::DeleteMediaByName()
 
 void Manager::PrintDatabase()
 {
-	ReadMoviesFromDatabase();
-	ReadSeriesFromDatabase();
+	Movie::ReadMoviesFromDatabase();
+	Series::ReadSeriesFromDatabase();
+
+	vector<Movie> movieDatabase = Movie::GetMovieDatabase();
+	vector<Series> seriesDatabase = Series::GetSeriesDatabase();
 
 	for (int i = 0; i < movieDatabase.size(); i++) {
 		cout << movieDatabase[i];
@@ -480,14 +394,15 @@ void Manager::PrintDatabase()
 	}
 }
 
-void Manager::ClearMovieDatabase()
+void Manager::ClearMovieDatabase() // Move later to Movie
 {
 	ofstream out("Movies Database.txt", ios::trunc);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
 	out.close();
-}
+} 
 
-void Manager::ClearSeriesDatabase() {
+void Manager::ClearSeriesDatabase() //Move later to series
+{
 	ofstream out("Series Database.txt", ios::trunc);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
 	out.close();
