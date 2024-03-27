@@ -456,6 +456,22 @@ void Manager::DeleteSeriesByName()
 
 			if (choice == 1) {
 				seriesDatabase.erase(i);
+
+				vector<Series> seriesWatchlist = Viewer::getSeriesWatchlist();
+
+				for (vector<Series>::iterator i = seriesWatchlist.begin(); i != seriesWatchlist.end(); ++i) {
+					if (i->getName() == buffer) {
+						seriesWatchlist.erase(i);
+						break;
+					}
+				}
+
+				Viewer::ClearSeriesWatchlist();
+
+				for (int i = 0; i < seriesWatchlist.size(); i++) {
+					Viewer::AddSeriesToFile(seriesWatchlist[i]);
+				}
+
 				break;
 			}
 			else if (choice == 0) break;
