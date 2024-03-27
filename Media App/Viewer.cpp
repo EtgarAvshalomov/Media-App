@@ -192,8 +192,6 @@ void Viewer::ReadMovieFromFile()
 	if (!in.is_open()) { cout << "File cannot open!" << endl; }
 	else
 	{
-		cout << "Movies Watchlist.txt open" << endl;
-
 		while (!in.eof()) {
 
 			getline(in, buffer);
@@ -221,8 +219,6 @@ void Viewer::ReadMovieFromFile()
 		}
 
 		in.close();
-
-		cout << "Movies Watchlist.txt closed" << endl;
 	}
 }
 
@@ -238,8 +234,6 @@ void Viewer::ReadSeriesFromFile()
 	if (!in.is_open()) { cout << "File cannot open!" << endl; }
 	else
 	{
-		cout << "Series Watchlist.txt open" << endl;
-
 		while (!in.eof()) {
 
 			getline(in, buffer);
@@ -271,8 +265,6 @@ void Viewer::ReadSeriesFromFile()
 		}
 
 		in.close();
-
-		cout << "Movies Watchlist.txt closed" << endl;
 	}
 }
 

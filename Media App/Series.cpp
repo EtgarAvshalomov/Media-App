@@ -33,8 +33,6 @@ void Series::ReadSeriesFromDatabase()
 	if (!in.is_open()) { cout << "File cannot open!" << endl; }
 	else
 	{
-		cout << "Series Database.txt open" << endl;
-
 		while (!in.eof()) {
 
 			getline(in, buffer);
@@ -66,6 +64,5 @@ void Series::ReadSeriesFromDatabase()
 		}
 
 		in.close();
-		cout << "Series Database.txt closed" << endl;
 	}
 }
