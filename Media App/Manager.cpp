@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <cctype>
+#include "Viewer.h"
 
 using namespace std;
 
@@ -13,56 +14,63 @@ Manager::Manager(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, stri
 
 void Manager::ManagerMenu()
 {
-	int choice = 1;
+	bool loop = true;
+	while (loop) {
 
-	if (CheckIfEmpty() == true)
-	{
-		SetId();
-		SetFirstName();
-		SetDayOfBirth();
-	}
+		int choice = 1;
 
-	cout << endl << "Welcome " + getFirstName() << "!" << endl << endl; // Potentially add username and password for Manager.
-	cout << "1. Add Series To The Database" << endl;
-	cout << "2. Add Movie To The Database" << endl;
-	cout << "3. Delete Media By Name" << endl;
-	cout << "4. Delete Media By Category" << endl;
-	cout << "5. Back To Main Menu" << endl << endl;
+		if (CheckIfEmpty() == true)
+		{
+			SetId();
+			SetFirstName();
+			SetDayOfBirth();
+			cout << endl << "Welcome " + getFirstName() << "!" << endl; // Potentially add username and password for Manager.
+		}
 
-	cin >> choice;
-	switch (choice)
-	{
+		cout << endl << "1. Add Series To The Database" << endl;
+		cout << "2. Add Movie To The Database" << endl;
+		cout << "3. Delete Media By Name" << endl;
+		cout << "4. Delete Media By Category" << endl;
+		cout << "0. Back To Main Menu" << endl << endl;
 
-	case 1:
-		ManualAddSeriesToDatabase();
-		break;
+		cin >> choice;
+		switch (choice)
+		{
 
-	case 2:
-		ManualAddMovieToDatabase();
-		break;
+		case 1:
+			ManualAddSeriesToDatabase();
+			break;
 
-	case 3:
-		DeleteMediaByName(); // Check for lower case sensitivity later
-		break;
+		case 2:
+			ManualAddMovieToDatabase();
+			break;
 
-	case 4:
-		DeleteMediaByCategory();
-		break;
+		case 3:
+			DeleteMediaByName(); // Check for lower case sensitivity later
+			break;
 
-	case 5:
-		cout << endl;
-		break;
+		case 4:
+			DeleteMediaByCategory();
+			break;
 
-	default:
-		cout << endl << "Error! Default switch in manager menu!" << endl << endl;
-		break;
+		case 0:
+			cout << endl;
+			loop = false;
+			break;
+
+		default:
+			cout << endl << "Error! Default switch in manager menu!" << endl << endl;
+			break;
+		}
 	}
 }
 
 void Manager::AddMovieToDatabase(Movie& toAdd)
 {
-	time_t currentTime = time(nullptr);
-	toAdd.setDateAdded(currentTime);
+	if (toAdd.getDateAdded() == NULL) {
+		time_t currentTime = time(nullptr);
+		toAdd.setDateAdded(currentTime);
+	}
 
 	ofstream out("Movies Database.txt", ios::app);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
@@ -77,8 +85,10 @@ void Manager::AddMovieToDatabase(Movie& toAdd)
 
 void Manager::AddSeriesToDatabase(Series& toAdd)
 {
-	time_t currentTime = time(nullptr);
-	toAdd.setDateAdded(currentTime);
+	if (toAdd.getDateAdded() == NULL) {
+		time_t currentTime = time(nullptr);
+		toAdd.setDateAdded(currentTime);
+	}
 
 	ofstream out("Series Database.txt", ios::app);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
@@ -99,12 +109,12 @@ void Manager::ManualAddMovieToDatabase()
 	int movie_year;
 	int movie_length;
 
-	cout << "\n" << "Enter a Name For The Movie: ";
+	cout << endl << "Enter a Name For The Movie: ";
 	cin.get();
 	getline(cin, movie_name);
 	cout << endl << "Choose a Category: " << endl;
 	movie_category = Media::ChooseCategory();
-	cout << endl << "Enter The Year Of Release: ";
+	cout << endl << "Enter The Year Of Release: " << endl << endl;
 	cin >> movie_year;
 	cout << endl << "Enter The Length Of The Movie (In Minutes): ";
 	cin >> movie_length;
@@ -124,7 +134,7 @@ void Manager::ManualAddMovieToDatabase()
 	out << endl;
 	out.close();
 
-	cout << "\n" << "Successfully added a movie to the database!!" << "\n" << "\n";
+	cout << endl << "Successfully added a movie to the database!!" << endl;
 }
 
 void Manager::ManualAddSeriesToDatabase()
@@ -136,16 +146,16 @@ void Manager::ManualAddSeriesToDatabase()
 	int series_seasons;
 	int series_episodes;
 
-	cout << "\n" << "Enter a Name For The Series: ";
+	cout << endl << "Enter a Name For The Series: ";
 	cin.get();
 	getline(cin, series_name);
 	cout << endl << "Choose a Category: " << endl;
 	series_category = Media::ChooseCategory();
-	cout << "Enter The Year Of Release: ";
+	cout << endl << "Enter The Year Of Release: ";
 	cin >> series_year;
-	cout << "Enter The Number Of Seasons: ";
+	cout << endl << "Enter The Number Of Seasons: ";
 	cin >> series_seasons;
-	cout << "Enter The Number Of Episodes (In Each Season): ";
+	cout << endl << "Enter The Number Of Episodes (In Each Season): ";
 	cin >> series_episodes;
 
 	Series new_series(series_name, series_category, series_year, series_seasons, series_episodes);
@@ -164,123 +174,202 @@ void Manager::ManualAddSeriesToDatabase()
 	out << endl;
 	out.close();
 
-	cout << "\n" << "Successfully added a series to the database!!" << "\n" << "\n";
+	cout << endl << "Successfully added a series to the database!!" << endl;
 }
 
 void Manager::DeleteMovieByCategory()
 {
-	Movie::ReadMoviesFromDatabase();
+	bool loop = true;
+	while (loop) {
 
-	cout << "Choose a category: " << endl;
+		Movie::ReadMoviesFromDatabase();
 
-	string category = Media::ChooseCategory();
-	int choice = 0;
-	int counter = 0;
-	vector<Movie> movieDatabase = Movie::GetMovieDatabase();
+		cout << endl << "Choose a category: " << endl;
 
-	for (int i = 0; i < movieDatabase.size(); i++) {
-		if (movieDatabase[i].getCategory() == category) {
-			counter++;
-			cout << counter << ". " << movieDatabase[i] << endl;
+		string category = Media::ChooseCategory();
+
+		if (category == "Back") {
+			loop = false;
+			break;
 		}
-	}
 
-	if (counter == 0) {
-		cout << endl << "There are no movies in that category in the watchlist." << endl;
-		return;
-	}
+		int choice = 0;
+		int counter = 0;
 
-	cout << endl << "Choose a movie to delete: ";
-	cin >> choice;
+		vector<Movie> movieDatabase = Movie::GetMovieDatabase();
 
-	counter = 0;
-	for (vector<Movie>::iterator i = movieDatabase.begin(); i != movieDatabase.end(); ++i) {
-		if (i->getCategory() == category) {
-			counter++;
-			if (counter == choice) {
-				movieDatabase.erase(i);
+		cout << endl << "Choose a movie to delete: " << endl << endl;
+
+		for (int i = 0; unsigned(i) < movieDatabase.size(); i++) {
+			if (movieDatabase[i].getCategory() == category) {
+				counter++;
+				cout << counter << ". " << movieDatabase[i].getName() << endl;
+			}
+		}
+
+		if (counter == 0) {
+			cout << endl << "There are no movies in that category in the watchlist." << endl;
+			continue;
+		}
+
+		cout << "0. Back" << endl;
+
+		cout << endl;
+		cin >> choice;
+
+		if (choice == 0) continue;
+
+		string erasedMovie;
+		counter = 0;
+
+		for (vector<Movie>::iterator i = movieDatabase.begin(); i != movieDatabase.end(); ++i) { // Delete movie from database
+			if (i->getCategory() == category) {
+				counter++;
+				if (counter == choice) {
+					erasedMovie = i->getName();
+					movieDatabase.erase(i);
+					break;
+				}
+			}
+		}
+
+		vector<Movie> movieWatchlist = Viewer::getMovieWatchlist();
+
+		for (vector<Movie>::iterator i = movieWatchlist.begin(); i != movieWatchlist.end(); ++i) { // Delete movie from watchlist
+			if (i->getName() == erasedMovie) {
+				movieWatchlist.erase(i);
 				break;
 			}
 		}
-	}
 
-	cout << endl << "Movie was erased successfully!" << endl;
+		cout << endl << "Movie was erased successfully!" << endl;
 
-	ClearMovieDatabase();
+		ClearMovieDatabase();
 
-	for (int i = 0; i < movieDatabase.size(); i++) {
-		AddMovieToDatabase(movieDatabase[i]);
+		for (int i = 0; unsigned(i) < movieDatabase.size(); i++) {
+			AddMovieToDatabase(movieDatabase[i]);
+		}
+
+		Viewer::ClearMovieWatchlist();
+
+		for (int i = 0; i < movieWatchlist.size(); i++) {
+			Viewer::AddMovieToFile(movieWatchlist[i]);
+		}
 	}
 }
 
 void Manager::DeleteSeriesByCategory()
 {
-	Series::ReadSeriesFromDatabase();
+	bool loop = true;
+	while (loop) {
 
-	cout << "Choose a category: " << endl;
+		Series::ReadSeriesFromDatabase();
 
-	string category = Media::ChooseCategory();
-	int choice = 0;
-	int counter = 0;
-	vector<Series> seriesDatabase = Series::GetSeriesDatabase();
+		cout << endl << "Choose a category: " << endl;
 
-	for (int i = 0; i < seriesDatabase.size(); i++) {
-		if (seriesDatabase[i].getCategory() == category) {
-			counter++;
-			cout << counter << ". " << seriesDatabase[i] << endl;
+		string category = Media::ChooseCategory();
+
+		if (category == "Back") {
+			loop = false;
+			break;
 		}
-	}
 
-	if (counter == 0) {
-		cout << endl << "There are no series in that category in the watchlist." << endl;
-		return;
-	}
+		int choice = 0;
+		int counter = 0;
+		vector<Series> seriesDatabase = Series::GetSeriesDatabase();
 
-	cout << endl << "Choose a series to delete: ";
-	cin >> choice;
+		cout << endl << "Choose a series to delete: " << endl << endl;
 
-	counter = 0;
-	for (vector<Series>::iterator i = seriesDatabase.begin(); i != seriesDatabase.end(); ++i) {
-		if (i->getCategory() == category) {
-			counter++;
-			if (counter == choice) {
-				seriesDatabase.erase(i);
+		for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) {
+			if (seriesDatabase[i].getCategory() == category) {
+				counter++;
+				cout << counter << ". " << seriesDatabase[i].getName() << endl;
+			}
+		}
+
+		if (counter == 0) {
+			cout << endl << "There are no series in that category in the watchlist." << endl;
+			continue;
+		}
+
+		cout << "0. Back" << endl;
+
+		cout << endl;
+		cin >> choice;
+
+		if (choice == 0) continue;
+
+		string erasedSeries;
+		counter = 0;
+		for (vector<Series>::iterator i = seriesDatabase.begin(); i != seriesDatabase.end(); ++i) {
+			if (i->getCategory() == category) {
+				counter++;
+				if (counter == choice) {
+					erasedSeries = i->getName();
+					seriesDatabase.erase(i);
+					break;
+				}
+			}
+		}
+
+		vector<Series> seriesWatchlist = Viewer::getSeriesWatchlist();
+
+		for (vector<Series>::iterator i = seriesWatchlist.begin(); i != seriesWatchlist.end(); ++i) { // Delete movie from watchlist
+			if (i->getName() == erasedSeries) {
+				seriesWatchlist.erase(i);
 				break;
 			}
 		}
+
+		cout << endl << "Series was erased successfully!" << endl;
+
+		ClearSeriesDatabase();
+
+		for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) {
+			AddSeriesToDatabase(seriesDatabase[i]);
+		}
+
+		Viewer::ClearSeriesWatchlist();
+
+		for (int i = 0; i < seriesWatchlist.size(); i++) {
+			Viewer::AddSeriesToFile(seriesWatchlist[i]);
+		}
 	}
-
-	cout << endl << "Series was erased successfully!" << endl;
-
-	ClearSeriesDatabase();
-
-	for (int i = 0; i < seriesDatabase.size(); i++) {
-		AddSeriesToDatabase(seriesDatabase[i]);
-	}
-
 }
 
 void Manager::DeleteMediaByCategory() {
 
-	int choice = 0;
+	bool loop = true;
+	while (loop) {
 
-	cout << "What would you like to delete?" << endl;
-	cout << "1. Movie" << endl;
-	cout << "2. Series" << endl << endl;
-	cin >> choice;
+		int choice = 0;
 
-	switch (choice) {
+		cout << endl << "What would you like to delete?" << endl << endl;
+		cout << "1. Series" << endl;
+		cout << "2. Movie" << endl;
+		cout << "0. Back" << endl << endl;
+		cin >> choice;
 
-	case 1:
-		DeleteMovieByCategory();
-		break;
+		switch (choice) {
 
-	case 2:
-		DeleteSeriesByCategory();
-		break;
-		
-	default:
-		break;
+		case 1:
+
+			DeleteSeriesByCategory();
+			break;
+
+		case 2:
+
+			DeleteMovieByCategory();
+			break;
+
+		case 0:
+			loop = false;
+			break;
+
+		default:
+			cout << endl << "Default switch while deleting media by category" << endl;
+			break;
+		}
 	}
 }
 
@@ -289,31 +378,56 @@ void Manager::DeleteMovieByName()
 	Movie::ReadMoviesFromDatabase();
 
 	string buffer;
-	bool success = false;
-	cout << "Enter the name of the movie for deletion: ";
-	cin >> buffer;
+	bool movieFound = false;
+	cout << endl << "Enter the name of the movie for deletion: ";
+	cin.get();
+	getline(cin, buffer);
 	vector<Movie> movieDatabase = Movie::GetMovieDatabase();
 
 	for (vector<Movie>::iterator i = movieDatabase.begin(); i != movieDatabase.end(); ++i) {
 		if (i->getName() == buffer) {
-			movieDatabase.erase(i);
-			success = true;
-			break;
+			movieFound = true;
+
+			int choice = 0;
+
+			cout << endl << i->getName() << " Was found! Would you like to delete it from the database?" << endl << endl;
+			cout << "1. Yes" << endl;
+			cout << "2. No" << endl << endl;
+
+			cin >> choice;
+
+			if (choice == 1) {
+				movieDatabase.erase(i);
+
+				vector<Movie> movieWatchlist = Viewer::getMovieWatchlist();
+
+				for (vector<Movie>::iterator i = movieWatchlist.begin(); i != movieWatchlist.end(); ++i) {
+					if (i->getName() == buffer) {
+						movieWatchlist.erase(i);
+						break;
+					}
+				}
+
+				Viewer::ClearMovieWatchlist();
+
+				for (int i = 0; i < movieWatchlist.size(); i++) {
+					Viewer::AddMovieToFile(movieWatchlist[i]);
+				}
+
+				break;
+			}
+			else if (choice == 0) break;
 		}
 	}
 
-	if (!success) {
-		cout << "Movie name not found in database" << endl;
+	if (!movieFound) {
+		cout << endl << "Movie was not found in database" << endl;
 		return;
 	}
 
-	ClearMovieDatabase();
+	WriteMoviesToDatabase(movieDatabase);
 
-	for (int i = 0; i < movieDatabase.size(); i++) {
-		AddMovieToDatabase(movieDatabase[i]);
-	}
-
-	cout << "Successfully deleted a movie from the database!" << endl;
+	cout << endl << "Successfully deleted a movie from the database!" << endl;
 
 }
 
@@ -322,55 +436,72 @@ void Manager::DeleteSeriesByName()
 	Series::ReadSeriesFromDatabase();
 
 	string buffer;
-	bool success = false;
-	cout << "Enter the name of the series for deletion: ";
+	bool seriesFound = false;
+	cout << endl << "Enter the name of the series for deletion: ";
 	cin.get();
 	getline(cin, buffer);
 	vector<Series> seriesDatabase = Series::GetSeriesDatabase();
 
 	for (vector<Series>::iterator i = seriesDatabase.begin(); i != seriesDatabase.end(); ++i) {
 		if (i->getName() == buffer) {
-			seriesDatabase.erase(i);
-			success = true;
-			break;
+			seriesFound = true;
+
+			int choice = 0;
+
+			cout << endl << i->getName() << " Was found! Would you like to delete it from the database?" << endl << endl;
+			cout << "1. Yes" << endl;
+			cout << "2. No" << endl << endl;
+
+			cin >> choice;
+
+			if (choice == 1) {
+				seriesDatabase.erase(i);
+				break;
+			}
+			else if (choice == 0) break;
 		}
 	}
 
-	if (!success) {
-		cout << "Series name not found in database" << endl;
+	if (!seriesFound) {
+		cout << endl << "Series was not found in database" << endl;
 		return;
 	}
 
-	ClearSeriesDatabase();
+	WriteSeriesToDatabase(seriesDatabase);
 
-	for (int i = 0; i < seriesDatabase.size(); i++) {
-		AddSeriesToDatabase(seriesDatabase[i]);
-	}
-
-	cout << "Successfully deleted a series from the database!" << endl;
+	cout << endl << "Successfully deleted a series from the database!" << endl;
 }
 
 void Manager::DeleteMediaByName()
 {
-	int choice = 0;
+	bool loop = true;
+	while (loop) {
 
-	cout << "What would you like to delete?" << endl;
-	cout << "1. Movie" << endl;
-	cout << "2. Series" << endl << endl;
-	cin >> choice;
+		int choice = 0;
 
-	switch (choice) {
+		cout << endl << "What would you like to delete?" << endl << endl;
+		cout << "1. Series" << endl;
+		cout << "2. Movie" << endl;
+		cout << "0. Back" << endl << endl;
+		cin >> choice;
 
-	case 1:
-		DeleteMovieByName();
-		break;
+		switch (choice) {
 
-	case 2:
-		DeleteSeriesByName();
-		break;
+		case 1:
+			DeleteSeriesByName();
+			break;
 
-	default:
-		break;
+		case 2:
+			DeleteMovieByName();
+			break;
+
+		case 0:
+			loop = false;
+			break;
+
+		default:
+			break;
+		}
 	}
 }
 
@@ -382,11 +513,11 @@ void Manager::PrintDatabase()
 	vector<Movie> movieDatabase = Movie::GetMovieDatabase();
 	vector<Series> seriesDatabase = Series::GetSeriesDatabase();
 
-	for (int i = 0; i < movieDatabase.size(); i++) {
+	for (int i = 0; unsigned(i) < movieDatabase.size(); i++) {
 		cout << movieDatabase[i];
 	}
 
-	for (int i = 0; i < seriesDatabase.size(); i++) {
+	for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) {
 		cout << seriesDatabase[i];
 	}
 }
@@ -403,4 +534,22 @@ void Manager::ClearSeriesDatabase() //Move later to series
 	ofstream out("Series Database.txt", ios::trunc);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
 	out.close();
+}
+
+void Manager::WriteMoviesToDatabase(vector<Movie>& movieDatabase)
+{
+	ClearMovieDatabase();
+
+	for (int i = 0; unsigned(i) < movieDatabase.size(); i++) {
+		AddMovieToDatabase(movieDatabase[i]);
+	}
+}
+
+void Manager::WriteSeriesToDatabase(vector<Series>& seriesDatabase)
+{
+	ClearSeriesDatabase();
+
+	for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) {
+		AddSeriesToDatabase(seriesDatabase[i]);
+	}
 }

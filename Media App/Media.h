@@ -50,9 +50,10 @@ public:
 		this->year = year;
 	}
 
-	void setDateAdded(int date) {
-		dateAdded = date;
+	void setDateAdded(int dateAdded) {
+		this->dateAdded = dateAdded;
 	}
+
 
 	static string ChooseCategory();
 

@@ -33,8 +33,6 @@ void Movie::ReadMoviesFromDatabase()
 	if (!in.is_open()) { cout << "File cannot open!" << endl; }
 	else
 	{
-		cout << "Movies Database.txt open" << endl;
-
 		while (!in.eof()) {
 
 			getline(in, buffer);
@@ -62,6 +60,5 @@ void Movie::ReadMoviesFromDatabase()
 		}
 
 		in.close();
-		cout << "Movies Database.txt closed" << endl;
 	}
 }

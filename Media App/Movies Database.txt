@@ -2,29 +2,5 @@ Cars
 Comedy
 2003
 120
-1711472670
-
-Bambi
-Horror
-2000
-150
-1711472709
-
-Rain Of Falafel
-Sci-Fi
-2009
-120
-1711472737
-
-Spiderman
-Sci-Fi
-2002
-180
-1711488398
-
-The Shining
-Horror
-1987
-132
-1711489748
+171154441
 

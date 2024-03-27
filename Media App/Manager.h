@@ -8,19 +8,6 @@ class Manager :public User
 {
 private:
 
-	void ClearMovieDatabase();
-	void ClearSeriesDatabase();
-
-public:
-
-	Manager(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string firstName, string lastName);
-
-	void ManagerMenu();
-
-	void AddMovieToDatabase(Movie& toAdd);
-
-	void AddSeriesToDatabase(Series& toAdd);
-
 	void ManualAddMovieToDatabase();
 
 	void ManualAddSeriesToDatabase();
@@ -29,16 +16,33 @@ public:
 
 	void DeleteSeriesByCategory();
 
-	void DeleteMediaByCategory();
-
 	void DeleteMovieByName();
 
 	void DeleteSeriesByName();
 
-	void DeleteMediaByName();
+	void ClearMovieDatabase();
+
+	void ClearSeriesDatabase();
+
+	void WriteMoviesToDatabase(vector<Movie>& movieDatabase);
+
+	void WriteSeriesToDatabase(vector<Series>& seriesDatabase);
 
 	bool CheckIfEmpty() { if (this->getID() == NULL) return true; else return false; }
 
 	void PrintDatabase();
-};
 
+	void AddSeriesToDatabase(Series& toAdd);
+
+	void AddMovieToDatabase(Movie& toAdd);
+
+	void DeleteMediaByName();
+
+	void DeleteMediaByCategory();
+
+public:
+
+	Manager(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string firstName, string lastName);
+
+	void ManagerMenu();
+};

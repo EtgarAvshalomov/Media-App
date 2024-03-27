@@ -6,11 +6,39 @@ class Viewer :public User
 {
 private:
 
-	vector<Movie> movieWatchlist;
-	vector<Series> seriesWatchlist;
+	static void ReadMovieFromFile();
 
-	void ClearMovieWatchlist();
-	void ClearSeriesWatchlist();
+	static void ReadSeriesFromFile();
+
+	void SearchMovieByName();
+
+	void SearchSeriesByName();
+
+	bool CheckViewerIfEmpty() { if (this->getID() == NULL) return true; else return false; }
+
+	void WriteMovieToFile();
+
+	void WriteSeriesToFile();
+
+	void AddMovieToWatchlist();
+
+	void AddSeriesToWatchlist();
+
+	void SearchMediaByName();
+
+	void DeleteMovieFromWatchlist();
+
+	void DeleteSeriesFromWatchlist();
+
+	void WatchMovie();
+
+	void WatchSeries();
+
+	bool CheckIfMovieExists(string name);
+
+	bool CheckIfSeriesExists(string name);
+
+	void PrintWatchlist();
 
 public:
 
@@ -18,37 +46,15 @@ public:
 
 	void ViewerMenu();
 
-	void AddMovieToWatchlist();
+	static vector<Movie> getMovieWatchlist();
 
-	void AddSeriesToWatchlist();
+	static vector<Series> getSeriesWatchlist();
 
-	void AddMovieToFile(Movie& toAdd);
+	static void ClearMovieWatchlist();
 
-	void AddSeriesToFile(Series& toAdd);
+	static void ClearSeriesWatchlist();
 
-	void ReadMovieFromFile();
+	static void AddMovieToFile(Movie& toAdd);
 
-	void ReadSeriesFromFile();
-
-	void WriteMovieToFile();
-
-	void WriteSeriesToFile();
-
-	void SearchMovieByName();
-
-	void SearchSeriesByName();
-
-	void SearchMediaByName();
-
-	void DeleteSeriesFromWatchlist();
-
-	void DeleteMovieFromWatchlist();
-
-	void WatchMovie();
-
-	void WatchSeries();
-
-	bool CheckIfEmpty() {if (this->getID() == NULL) return true; else return false;}
-
-	void PrintWatchlist();
+	static void AddSeriesToFile(Series& toAdd);
 };

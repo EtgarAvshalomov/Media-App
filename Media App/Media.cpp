@@ -15,6 +15,7 @@ string Media::ChooseCategory()
 	cout << "2. Horror" << endl;
 	cout << "3. Comedy" << endl;
 	cout << "4. Thriller" << endl;
+	cout << "0. Back" << endl;
 	cout << endl;
 	cin >> choice;
 
@@ -31,6 +32,9 @@ string Media::ChooseCategory()
 
 	case 4:
 		return "Thriller";
+
+	case 0:
+		return "Back";
 
 	default:
 		cout << "Unable to choose a category when adding a series to database.";
