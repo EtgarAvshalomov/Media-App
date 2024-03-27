@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-	//PlaySound(TEXT("RiveR - Solo"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC); // Fitgirl
+	PlaySound(TEXT("RiveR - Solo"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC); // Fitgirl
 
 	Viewer viewer(1, 0, 0, 0, "", "");
 	Manager manager(1, 0, 0, 0, "", "");
