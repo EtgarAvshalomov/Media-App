@@ -25,12 +25,15 @@ void Viewer::ViewerMenu()
 		if (CheckViewerIfEmpty() == true)
 		{
 			cout << endl;
-			SetId();
-			SetFirstName();
+			SetId(); // Fix spaces with strings like "Some String"
+			SetFirstName(); // Fix numbers
+			SetLastName(); // Fix numbers
 			SetDayOfBirth();
+			SetMonthOfBirth();
+			setYearOfBirth();
 		}
 
-		cout << endl << "Hello " + getFirstName() << "!" << endl << endl;
+		cout << endl << "Hello " + getFirstName() << " " << getLastName() << "!" << endl << endl;
 		cout << "1. Add Series To Watchlist" << endl;
 		cout << "2. Add Movie To Watchlist" << endl;
 		cout << "3. Search Media By Name" << endl;

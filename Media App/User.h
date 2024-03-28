@@ -53,24 +53,15 @@ public:
 		return lastName;
 	}
 
-	void SetId()
-	{
-		cout << "Please enter an id: ";
-		cin >> this->id;
-	}
+	void SetId();
 
-	void SetDayOfBirth()
-	{
-		cout << "Please enter your birthday (Day Month Year): ";
-		cin >> this->dayOfBirth;
-		cin >> this->monthOfBirth;
-		cin >> this->yearOfBirth;
-	}
+	void SetFirstName();
 
-	void SetFirstName()
-	{
-		cout << "Please enter First and Last name (First Last): ";
-		cin >> this->firstName;
-		cin >> this->lastName;
-	}
+	void SetLastName();
+
+	void SetDayOfBirth();
+
+	void SetMonthOfBirth();
+
+	void setYearOfBirth();
 };

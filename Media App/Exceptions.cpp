@@ -4,7 +4,7 @@
 #include <typeinfo>
 using namespace std;
 
-void Exceptions::CheckMenuInt(int min, int max, string input) throw(out_of_range, invalid_argument)
+void Exceptions::CheckInt(int min, int max, string input) throw(out_of_range, invalid_argument)
 {
 	string buffer = input;
 	int num = 0;
@@ -14,7 +14,7 @@ void Exceptions::CheckMenuInt(int min, int max, string input) throw(out_of_range
 	check = check / num;
 	if (check > 1) throw invalid_argument("");
 
-	if (num > max || num < min) throw out_of_range("");
+	if (num < min || num > max) throw out_of_range("");
 }
 
 int Exceptions::GetMenuInt(int choice, int min, int max) throw (out_of_range, invalid_argument)
@@ -23,14 +23,14 @@ int Exceptions::GetMenuInt(int choice, int min, int max) throw (out_of_range, in
 		string buffer;
 		cin >> buffer;
 
-		Exceptions::CheckMenuInt(min, max, buffer);
+		Exceptions::CheckInt(min, max, buffer);
 
 		choice = stoi(buffer);
 
 		return choice;
 	}
 	catch (const out_of_range e) {
-		cout << endl << "Please enter a number between " << min << " and " << max << endl;
+		cerr << endl << "Please enter a number between " << min << " and " << max << endl;
 		throw out_of_range("");
 	}
 	catch (const invalid_argument& e) {
@@ -40,8 +40,9 @@ int Exceptions::GetMenuInt(int choice, int min, int max) throw (out_of_range, in
 	cout << endl;
 }
 
-int Exceptions::GetOpenInt(int num, int min, int max) throw(out_of_range, invalid_argument)
+void Exceptions::CheckString(string input, int min, int max) throw(out_of_range, invalid_argument)
 {
-	int gay = 0;
-	return num;
+	string buffer = input;
+
+	if (buffer.length() < min || buffer.length() > max) throw out_of_range("");
 }

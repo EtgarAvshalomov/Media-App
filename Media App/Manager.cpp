@@ -25,10 +25,13 @@ void Manager::ManagerMenu()
 			cout << endl;
 			SetId();
 			SetFirstName();
+			SetLastName();
 			SetDayOfBirth();
+			SetMonthOfBirth();
+			setYearOfBirth();
 		}
 
-		cout << endl << "Hello " + getFirstName() << "!" << endl; // Potentially add username and password for Manager.
+		cout << endl << "Hello " + getFirstName() << " " << getLastName() << "!" << endl; // Potentially add username and password for Manager.
 		cout << endl << "1. Add Series To The Database" << endl;
 		cout << "2. Add Movie To The Database" << endl;
 		cout << "3. Delete Media By Name" << endl;
