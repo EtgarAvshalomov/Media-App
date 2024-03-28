@@ -1,4 +1,5 @@
 #include "Media.h"
+#include "Exceptions.h"
 
 Media::Media(string name, string category, int year) {
 	this->name = name;
@@ -8,36 +9,49 @@ Media::Media(string name, string category, int year) {
 
 string Media::ChooseCategory()
 {
-	int choice;
+	bool loop = true;
+	while (loop) {
 
-	cout << endl;
-	cout << "1. Sci-Fi" << endl;
-	cout << "2. Horror" << endl;
-	cout << "3. Comedy" << endl;
-	cout << "4. Thriller" << endl;
-	cout << "0. Back" << endl;
-	cout << endl;
-	cin >> choice;
+		int choice = 0;
 
-	switch (choice) {
+		cout << endl;
+		cout << "1. Sci-Fi" << endl;
+		cout << "2. Horror" << endl;
+		cout << "3. Comedy" << endl;
+		cout << "4. Thriller" << endl;
+		cout << "0. Back" << endl;
+		cout << endl;
 
-	case 1:
-		return "Sci-Fi";
+		try {
+			choice = Exceptions::GetMenuInt(choice, 0, 4);
+		}
+		catch (out_of_range e) {
+			continue;
+		}
+		catch (invalid_argument e) {
+			continue;
+		}
 
-	case 2:
-		return "Horror";
+		switch (choice) {
 
-	case 3:
-		return "Comedy";
+		case 1:
+			return "Sci-Fi";
 
-	case 4:
-		return "Thriller";
+		case 2:
+			return "Horror";
 
-	case 0:
-		return "Back";
+		case 3:
+			return "Comedy";
 
-	default:
-		cout << "Unable to choose a category when adding a series to database.";
-		break;
+		case 4:
+			return "Thriller";
+
+		case 0:
+			return "Back";
+
+		default:
+			cout << "Unable to choose a category when adding a series to database.";
+			break;
+		}
 	}
 }

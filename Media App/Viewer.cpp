@@ -5,6 +5,7 @@
 #include <ctime>
 #include <string>
 #include <algorithm>
+#include "Exceptions.h"
 using namespace std;
 
 static vector<Movie> movieWatchlist;
@@ -21,14 +22,16 @@ void Viewer::ViewerMenu()
 
 		int choice = 1;
 
-		if (CheckViewerIfEmpty() == true) // Place in ViewerMenu() later
+		if (CheckViewerIfEmpty() == true)
 		{
+			cout << endl;
 			SetId();
 			SetFirstName();
 			SetDayOfBirth();
-			cout << endl << "Welcome " + getFirstName() << "!" << endl;
 		}
-		cout << endl << "1. Add Series To Watchlist" << endl;
+
+		cout << endl << "Hello " + getFirstName() << "!" << endl << endl;
+		cout << "1. Add Series To Watchlist" << endl;
 		cout << "2. Add Movie To Watchlist" << endl;
 		cout << "3. Search Media By Name" << endl;
 		cout << "4. Watch Series From Watchlist" << endl;
@@ -38,7 +41,16 @@ void Viewer::ViewerMenu()
 		cout << "0. Back to Main Menu" << endl << endl;
 		cout << "Choose an action: ";
 
-		cin >> choice;
+		try {
+			choice = Exceptions::GetMenuInt(choice, 0, 7);
+		}
+		catch (out_of_range e) {
+			continue;
+		}
+		catch (invalid_argument e) {
+			continue;
+		}
+
 		switch (choice)
 		{
 
@@ -116,8 +128,8 @@ void Viewer::AddMovieToWatchlist()
 				break;
 			}
 
-			int counter = 0;
-			int num;
+			int counter = 1;
+			int choice = 0;
 			bool categoryFound = false;
 			time_t currentTime;
 
@@ -130,15 +142,31 @@ void Viewer::AddMovieToWatchlist()
 						continue;
 					}
 
-					counter++;
-					cout << endl << counter << ". " << movieDatabase[i].getName() << endl;
-					cout << endl << "Do you wish do add this movie to your watchlist?" << endl << endl;
-					cout << "1. Yes" << endl;
-					cout << "2. No" << endl;
-					cout << "0. Back" << endl << endl;
-					cin >> num;
+					bool inner_loop = true;
+					while (inner_loop) {
 
-					switch (num) {
+						cout << endl << counter << ". " << movieDatabase[i].getName() << endl;
+						cout << endl << "Do you wish do add this movie to your watchlist?" << endl << endl;
+						cout << "1. Yes" << endl;
+						cout << "2. No" << endl;
+						cout << "0. Back" << endl << endl;
+
+						try {
+							choice = Exceptions::GetMenuInt(choice, 0, 2);
+							inner_loop = false;
+						}
+						catch (out_of_range e) {
+							continue;
+						}
+						catch (invalid_argument e) {
+							continue;
+						}
+
+					}
+
+					counter++;
+
+					switch (choice) {
 
 					case 1:
 
@@ -155,13 +183,14 @@ void Viewer::AddMovieToWatchlist()
 						continue;
 
 					case 0:
-						counter = 0;
+						counter = 1;
 						i = 0;
 						category = Media::ChooseCategory();
 						if (category == "Back") {
 							loop = false;
+							return;
 						}
-						break;
+						continue;
 
 					default:
 						"Error! Default while adding a movie to watchlist";
@@ -188,7 +217,7 @@ void Viewer::AddMovieToWatchlist()
 
 void Viewer::AddSeriesToWatchlist()
 {
-	bool loop = true; // Check if series already exists in the watchlist.
+	bool loop = true;
 	while (loop) {
 
 		ReadSeriesFromFile();
@@ -208,8 +237,8 @@ void Viewer::AddSeriesToWatchlist()
 				break;
 			}
 
-			int counter = 0;
-			int num;
+			int counter = 1;
+			int choice = 0;
 			bool categoryFound = false;
 			time_t currentTime;
 
@@ -222,15 +251,30 @@ void Viewer::AddSeriesToWatchlist()
 						continue;
 					}
 
-					counter++;
-					cout << endl << counter << ". " << seriesDatabase[i].getName() << endl;
-					cout << endl << "Do you wish do add this series to your watchlist?" << endl << endl;
-					cout << "1. Yes" << endl;
-					cout << "2. No" << endl;
-					cout << "0. Back" << endl << endl;
-					cin >> num;
+					bool inner_loop = true;
+					while (inner_loop) {
 
-					switch (num) {
+						cout << endl << counter << ". " << seriesDatabase[i].getName() << endl;
+						cout << endl << "Do you wish do add this series to your watchlist?" << endl << endl;
+						cout << "1. Yes" << endl;
+						cout << "2. No" << endl;
+						cout << "0. Back" << endl << endl;
+
+						try {
+							choice = Exceptions::GetMenuInt(choice, 0, 2);
+							inner_loop = false;
+						}
+						catch (out_of_range e) {
+							continue;
+						}
+						catch (invalid_argument e) {
+							continue;
+						}
+					}
+
+					counter++;
+
+					switch (choice) {
 
 					case 1:
 
@@ -247,13 +291,14 @@ void Viewer::AddSeriesToWatchlist()
 						continue;
 
 					case 0:
-						counter = 0;
+						counter = 1;
 						i = 0;
 						category = Media::ChooseCategory();
 						if (category == "Back") {
 							loop = false;
+							return;
 						}
-						break;
+						continue;
 
 					default:
 						"Error! Default while adding a series to watchlist";
@@ -437,9 +482,12 @@ void Viewer::SearchMovieByName()
 	for (int i = 0; unsigned(i) < movieDatabase.size(); i++) {
 
 		if (movieDatabase[i].getName() == buffer) {
+
 			nameFound = true;
+
 			cout << endl << movieDatabase[i].getName() << " Has been found!" << endl;
 			cout << endl << "Do you wish to add it to your watchlist? Y/N" << endl << endl;
+
 			cin >> c;
 
 			if (c == 'Y' || c == 'y') {
@@ -526,7 +574,15 @@ void Viewer::SearchMediaByName()
 		cout << "2. Series" << endl;
 		cout << "0. Back" << endl << endl;
 
-		cin >> choice;
+		try {
+			choice = Exceptions::GetMenuInt(choice, 0, 2);
+		}
+		catch (out_of_range e) {
+			continue;
+		}
+		catch (invalid_argument e) {
+			continue;
+		}
 
 		switch (choice) {
 
@@ -551,68 +607,122 @@ void Viewer::SearchMediaByName()
 
 void Viewer::DeleteSeriesFromWatchlist() {
 
-	ReadSeriesFromFile();
+	bool loop = true;
+	while (loop) {
 
-	if (!seriesWatchlist.size() == 0) {
-		cout << endl << "Choose a series to delete" << endl;
+		ReadSeriesFromFile();
 
-		int choice = 0;
+		if (!seriesWatchlist.size() == 0) {
+			cout << endl << "Choose a series to delete" << endl << endl;
 
-		for (int i = 0; unsigned(i) < seriesWatchlist.size(); i++) {
-			cout << i + 1 << ". " << seriesWatchlist[i].getName() << endl;
-		}
+			int choice = 0;
+			int buffer = 0;
 
-		cout << endl;
-		cin >> choice;
-		int counter = 0;
-
-		for (vector<Series>::iterator i = seriesWatchlist.begin(); i != seriesWatchlist.end(); ++i) {
-			counter++;
-			if (counter == choice) {
-				string buffer = i->getName();
-				seriesWatchlist.erase(i);
-				cout << endl << "You have succesfully deleted " << buffer << " from your watchlist!" << endl;
-				break;
+			for (int i = 0; unsigned(i) < seriesWatchlist.size(); i++) {
+				cout << i + 1 << ". " << seriesWatchlist[i].getName() << endl;
+				buffer = i + 1;
 			}
-		}
 
-		WriteSeriesToFile();
+			cout << "0. Back" << endl;
+
+			cout << endl;
+			
+			try {
+				choice = Exceptions::GetMenuInt(choice, 0, buffer);
+			}
+			catch (out_of_range e) {
+				continue;
+			}
+			catch (invalid_argument e) {
+				continue;
+			}
+
+			if (choice == 0) break;
+
+			int counter = 0;
+			for (vector<Series>::iterator i = seriesWatchlist.begin(); i != seriesWatchlist.end(); ++i) {
+				counter++;
+				if (counter == choice) {
+					string buffer = i->getName();
+					seriesWatchlist.erase(i);
+					cout << endl << "You have succesfully deleted " << buffer << " from your watchlist!" << endl;
+					break;
+				}
+			}
+
+			WriteSeriesToFile();
+		}
+		else if (movieWatchlist.size() == 0 && seriesWatchlist.size() == 0) {
+			cout << endl << "Your watchlist is empty" << endl;
+			loop = false;
+			break;
+		}
+		else {
+			cout << endl << "There are no series in your watchlist" << endl;
+			loop = false;
+			break;
+		}
 	}
-	else if(movieWatchlist.size() == 0 && seriesWatchlist.size() == 0) cout << endl << "Your watchlist is empty" << endl << endl;
-	else cout << endl << "There are no series in your watchlist" << endl << endl;
 }
 
 void Viewer::DeleteMovieFromWatchlist()
 {
-	ReadMovieFromFile();
+	bool loop = true;
+	while (loop) {
 
-	if (!movieWatchlist.size() == 0) {
-		cout << endl << "Choose a movie to delete" << endl;
+		ReadMovieFromFile();
 
-		int choice = 0;
+		if (!movieWatchlist.size() == 0) {
+			cout << endl << "Choose a movie to delete" << endl << endl;
 
-		for (int i = 0; unsigned(i) < movieWatchlist.size(); i++) {
-			cout << i + 1 << ". " << movieWatchlist[i].getName() << endl;
-		}
+			int choice = 0;
+			int buffer = 0;
 
-		cout << endl;
-		cin >> choice;
-		int counter = 0;
-
-		for (vector<Movie>::iterator i = movieWatchlist.begin(); i != movieWatchlist.end(); ++i) {
-			counter++;
-			if (counter == choice) {
-				string buffer = i->getName();
-				movieWatchlist.erase(i);
-				cout << endl << "You have succesfully deleted " << buffer << " from your watchlist!" << endl;
-				break;
+			for (int i = 0; unsigned(i) < movieWatchlist.size(); i++) {
+				cout << i + 1 << ". " << movieWatchlist[i].getName() << endl;
+				buffer = i + 1;
 			}
-		}
 
-		WriteMovieToFile();
+			cout << "0. Back" << endl;
+
+			cout << endl;
+			
+			try {
+				choice = Exceptions::GetMenuInt(choice, 0, buffer);
+			}
+			catch (out_of_range e) {
+				continue;
+			}
+			catch (invalid_argument e) {
+				continue;
+			}
+
+			if (choice == 0) break;
+
+			int counter = 0;
+			for (vector<Movie>::iterator i = movieWatchlist.begin(); i != movieWatchlist.end(); ++i) {
+				counter++;
+				if (counter == choice) {
+					string buffer = i->getName();
+					movieWatchlist.erase(i);
+					cout << endl << "You have succesfully deleted " << buffer << " from your watchlist!" << endl;
+					break;
+				}
+			}
+
+			WriteMovieToFile();
+		}
+		else if (movieWatchlist.size() == 0 && seriesWatchlist.size() == 0) {
+			cout << endl << "Your watchlist is empty" << endl;
+			loop = false;
+			break;
+		}
+		else {
+			cout << endl << "There are no movies in your watchlist" << endl;
+			loop = false;
+			break;
+		}
 	}
-	else if (movieWatchlist.size() == 0 && seriesWatchlist.size() == 0) cout << endl << "Your watchlist is empty" << endl << endl;
-	else cout << endl << "There are no movies in your watchlist" << endl << endl;
 }
 
 void Viewer::WatchMovie()
@@ -718,7 +828,7 @@ void Viewer::ClearSeriesWatchlist()
 	out.close();
 }
 
-void Viewer::ClearMovieWatchlist()
+void Viewer::ClearMovieWatchlist() 
 {
 	ofstream out("Movies Watchlist.txt", ios::trunc);
 	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;

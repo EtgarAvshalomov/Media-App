@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "Media.h"
+#include "Exceptions.h"
 using namespace std;
 
 class User
@@ -25,27 +26,6 @@ public:
 	int getID() const
 	{
 		return id;
-	}
-	
-	void SetId() 
-	{
-		cout << "Please enter an id: ";
-		cin >> this->id;
-	}
-
-	void SetDayOfBirth()
-	{
-		cout << "Please enter your birthday (Day Month Year): ";
-		cin >> this->dayOfBirth;
-		cin >> this->monthOfBirth;
-		cin >> this->yearOfBirth;
-	}
-
-	void SetFirstName()
-	{
-		cout << "Please enter First and Last name (First Last): ";
-		cin >> this->firstName;
-		cin >> this->lastName;
 	}
 
 	int getDayOfBirth() const
@@ -71,5 +51,26 @@ public:
 	string getLastName() const
 	{
 		return lastName;
+	}
+
+	void SetId()
+	{
+		cout << "Please enter an id: ";
+		cin >> this->id;
+	}
+
+	void SetDayOfBirth()
+	{
+		cout << "Please enter your birthday (Day Month Year): ";
+		cin >> this->dayOfBirth;
+		cin >> this->monthOfBirth;
+		cin >> this->yearOfBirth;
+	}
+
+	void SetFirstName()
+	{
+		cout << "Please enter First and Last name (First Last): ";
+		cin >> this->firstName;
+		cin >> this->lastName;
 	}
 };

@@ -5,6 +5,7 @@
 #include <string>
 #include <cctype>
 #include "Viewer.h"
+#include "Exceptions.h"
 
 using namespace std;
 
@@ -21,19 +22,29 @@ void Manager::ManagerMenu()
 
 		if (CheckIfEmpty() == true)
 		{
+			cout << endl;
 			SetId();
 			SetFirstName();
 			SetDayOfBirth();
-			cout << endl << "Welcome " + getFirstName() << "!" << endl; // Potentially add username and password for Manager.
 		}
 
+		cout << endl << "Hello " + getFirstName() << "!" << endl; // Potentially add username and password for Manager.
 		cout << endl << "1. Add Series To The Database" << endl;
 		cout << "2. Add Movie To The Database" << endl;
 		cout << "3. Delete Media By Name" << endl;
 		cout << "4. Delete Media By Category" << endl;
 		cout << "0. Back To Main Menu" << endl << endl;
 
-		cin >> choice;
+		try {
+			choice = Exceptions::GetMenuInt(choice, 0, 4);
+		}
+		catch (out_of_range e) {
+			continue;
+		}
+		catch (invalid_argument e) {
+			continue;
+		}
+
 		switch (choice)
 		{
 
@@ -104,77 +115,94 @@ void Manager::AddSeriesToDatabase(Series& toAdd)
 
 void Manager::ManualAddMovieToDatabase()
 {
-	string movie_name;
-	string movie_category;
-	int movie_year;
-	int movie_length;
+	bool loop = true;
+	while (loop) {
 
-	cout << endl << "Enter a Name For The Movie: ";
-	cin.get();
-	getline(cin, movie_name);
-	cout << endl << "Choose a Category: " << endl;
-	movie_category = Media::ChooseCategory();
-	cout << endl << "Enter The Year Of Release: " << endl << endl;
-	cin >> movie_year;
-	cout << endl << "Enter The Length Of The Movie (In Minutes): ";
-	cin >> movie_length;
+		string movie_name;
+		string movie_category;
+		int movie_year;
+		int movie_length;
 
-	Movie new_movie(movie_name, movie_category, movie_year, movie_length);
+		cout << endl << "Enter a Name For The Movie: ";
+		cin.get();
+		getline(cin, movie_name);
+		cout << endl << "Choose a Category: " << endl;
 
-	time_t currentTime = time(nullptr);
-	new_movie.setDateAdded(currentTime);
+		movie_category = Media::ChooseCategory();
+		if (movie_category == "Back") continue;
 
-	ofstream out("Movies Database.txt", ios::app);
-	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
-	out << new_movie.getName() << endl;
-	out << new_movie.getCategory() << endl;
-	out << new_movie.getYear() << endl;
-	out << new_movie.getLength() << endl;
-	out << new_movie.getDateAdded() << endl;
-	out << endl;
-	out.close();
+		cout << endl << "Enter The Year Of Release: " << endl << endl;
+		cin >> movie_year;
+		cout << endl << "Enter The Length Of The Movie (In Minutes): ";
+		cin >> movie_length;
 
-	cout << endl << "Successfully added a movie to the database!!" << endl;
+		Movie new_movie(movie_name, movie_category, movie_year, movie_length);
+
+		time_t currentTime = time(nullptr);
+		new_movie.setDateAdded(currentTime);
+
+		ofstream out("Movies Database.txt", ios::app);
+		if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
+		out << new_movie.getName() << endl;
+		out << new_movie.getCategory() << endl;
+		out << new_movie.getYear() << endl;
+		out << new_movie.getLength() << endl;
+		out << new_movie.getDateAdded() << endl;
+		out << endl;
+		out.close();
+
+		loop = false;
+
+		cout << endl << "Successfully added a movie to the database!!" << endl;
+	}
 }
 
 void Manager::ManualAddSeriesToDatabase()
 {
+	bool loop = true;
+	while (loop) {
 
-	string series_name;
-	string series_category;
-	int series_year;
-	int series_seasons;
-	int series_episodes;
+		string series_name;
+		string series_category;
+		int series_year;
+		int series_seasons;
+		int series_episodes;
 
-	cout << endl << "Enter a Name For The Series: ";
-	cin.get();
-	getline(cin, series_name);
-	cout << endl << "Choose a Category: " << endl;
-	series_category = Media::ChooseCategory();
-	cout << endl << "Enter The Year Of Release: ";
-	cin >> series_year;
-	cout << endl << "Enter The Number Of Seasons: ";
-	cin >> series_seasons;
-	cout << endl << "Enter The Number Of Episodes (In Each Season): ";
-	cin >> series_episodes;
+		cout << endl << "Enter a Name For The Series: ";
+		cin.get();
+		getline(cin, series_name);
+		cout << endl << "Choose a Category: " << endl;
 
-	Series new_series(series_name, series_category, series_year, series_seasons, series_episodes);
+		series_category = Media::ChooseCategory();
+		if (series_category == "Back") continue;
 
-	time_t currentTime = time(nullptr);
-	new_series.setDateAdded(currentTime);
+		cout << endl << "Enter The Year Of Release: ";
+		cin >> series_year;
+		cout << endl << "Enter The Number Of Seasons: ";
+		cin >> series_seasons;
+		cout << endl << "Enter The Number Of Episodes (In Each Season): ";
+		cin >> series_episodes;
 
-	ofstream out("Series Database.txt", ios::app);
-	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
-	out << new_series.getName() << endl;
-	out << new_series.getCategory() << endl;
-	out << new_series.getYear() << endl;
-	out << new_series.getSeasons() << endl;
-	out << new_series.getEpisodes() << endl;
-	out << new_series.getDateAdded() << endl;
-	out << endl;
-	out.close();
+		Series new_series(series_name, series_category, series_year, series_seasons, series_episodes);
 
-	cout << endl << "Successfully added a series to the database!!" << endl;
+		time_t currentTime = time(nullptr);
+		new_series.setDateAdded(currentTime);
+
+		ofstream out("Series Database.txt", ios::app);
+		if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
+		out << new_series.getName() << endl;
+		out << new_series.getCategory() << endl;
+		out << new_series.getYear() << endl;
+		out << new_series.getSeasons() << endl;
+		out << new_series.getEpisodes() << endl;
+		out << new_series.getDateAdded() << endl;
+		out << endl;
+		out.close();
+
+		loop = false;
+
+		cout << endl << "Successfully added a series to the database!!" << endl;
+	}
 }
 
 void Manager::DeleteMovieByCategory()
@@ -198,24 +226,42 @@ void Manager::DeleteMovieByCategory()
 
 		vector<Movie> movieDatabase = Movie::GetMovieDatabase();
 
-		cout << endl << "Choose a movie to delete: " << endl << endl;
+		bool inner_loop = true;
+		while (inner_loop) {
 
-		for (int i = 0; unsigned(i) < movieDatabase.size(); i++) {
-			if (movieDatabase[i].getCategory() == category) {
-				counter++;
-				cout << counter << ". " << movieDatabase[i].getName() << endl;
+			counter = 0;
+
+			cout << endl << "Choose a movie to delete: " << endl << endl;
+
+			for (int i = 0; unsigned(i) < movieDatabase.size(); i++) {
+				if (movieDatabase[i].getCategory() == category) {
+					counter++;
+					cout << counter << ". " << movieDatabase[i].getName() << endl;
+				}
 			}
+
+			if (counter == 0) {
+				cout << "There are no movies in that category in the watchlist." << endl;
+				inner_loop = false;
+				break;
+			}
+
+			cout << "0. Back" << endl;
+
+			cout << endl;
+
+			try {
+				choice = Exceptions::GetMenuInt(choice, 0, counter);
+			}
+			catch (out_of_range e) {
+				continue;
+			}
+			catch (invalid_argument e) {
+				continue;
+			}
+
+			inner_loop = false;
 		}
-
-		if (counter == 0) {
-			cout << endl << "There are no movies in that category in the watchlist." << endl;
-			continue;
-		}
-
-		cout << "0. Back" << endl;
-
-		cout << endl;
-		cin >> choice;
 
 		if (choice == 0) continue;
 
@@ -276,26 +322,45 @@ void Manager::DeleteSeriesByCategory()
 
 		int choice = 0;
 		int counter = 0;
+
 		vector<Series> seriesDatabase = Series::GetSeriesDatabase();
 
-		cout << endl << "Choose a series to delete: " << endl << endl;
+		bool inner_loop = true;
+		while (inner_loop) {
 
-		for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) {
-			if (seriesDatabase[i].getCategory() == category) {
-				counter++;
-				cout << counter << ". " << seriesDatabase[i].getName() << endl;
+			counter = 0;
+
+			cout << endl << "Choose a series to delete: " << endl << endl;
+
+			for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) {
+				if (seriesDatabase[i].getCategory() == category) {
+					counter++;
+					cout << counter << ". " << seriesDatabase[i].getName() << endl;
+				}
 			}
+
+			if (counter == 0) {
+				cout << "There are no series in that category in the watchlist." << endl;
+				inner_loop = false;
+				break;
+			}
+
+			cout << "0. Back" << endl;
+
+			cout << endl;
+
+			try {
+				choice = Exceptions::GetMenuInt(choice, 0, counter);
+			}
+			catch (out_of_range e) {
+				continue;
+			}
+			catch (invalid_argument e) {
+				continue;
+			}
+
+			inner_loop = false;
 		}
-
-		if (counter == 0) {
-			cout << endl << "There are no series in that category in the watchlist." << endl;
-			continue;
-		}
-
-		cout << "0. Back" << endl;
-
-		cout << endl;
-		cin >> choice;
 
 		if (choice == 0) continue;
 
@@ -348,7 +413,16 @@ void Manager::DeleteMediaByCategory() {
 		cout << "1. Series" << endl;
 		cout << "2. Movie" << endl;
 		cout << "0. Back" << endl << endl;
-		cin >> choice;
+		
+		try {
+			choice = Exceptions::GetMenuInt(choice, 0, 2);
+		}
+		catch (out_of_range e) {
+			continue;
+		}
+		catch (invalid_argument e) {
+			continue;
+		}
 
 		switch (choice) {
 
@@ -390,11 +464,25 @@ void Manager::DeleteMovieByName()
 
 			int choice = 0;
 
-			cout << endl << i->getName() << " Was found! Would you like to delete it from the database?" << endl << endl;
-			cout << "1. Yes" << endl;
-			cout << "2. No" << endl << endl;
+			bool loop = true;
+			while (loop) {
 
-			cin >> choice;
+				cout << endl << i->getName() << " Was found! Would you like to delete it from the database?" << endl << endl;
+				cout << "1. Yes" << endl;
+				cout << "2. No" << endl << endl;
+
+				try {
+					choice = Exceptions::GetMenuInt(choice, 1, 2);
+				}
+				catch (out_of_range e) {
+					continue;
+				}
+				catch (invalid_argument e) {
+					continue;
+				}
+
+				loop = false;
+			}
 
 			if (choice == 1) {
 				movieDatabase.erase(i);
@@ -416,7 +504,7 @@ void Manager::DeleteMovieByName()
 
 				break;
 			}
-			else if (choice == 0) break;
+			else if (choice == 2) return;
 		}
 	}
 
@@ -448,11 +536,25 @@ void Manager::DeleteSeriesByName()
 
 			int choice = 0;
 
-			cout << endl << i->getName() << " Was found! Would you like to delete it from the database?" << endl << endl;
-			cout << "1. Yes" << endl;
-			cout << "2. No" << endl << endl;
+			bool loop = true;
+			while (loop) {
 
-			cin >> choice;
+				cout << endl << i->getName() << " Was found! Would you like to delete it from the database?" << endl << endl;
+				cout << "1. Yes" << endl;
+				cout << "2. No" << endl << endl;
+
+				try {
+					choice = Exceptions::GetMenuInt(choice, 1, 2);
+				}
+				catch (out_of_range e) {
+					continue;
+				}
+				catch (invalid_argument e) {
+					continue;
+				}
+
+				loop = false;
+			}
 
 			if (choice == 1) {
 				seriesDatabase.erase(i);
@@ -474,7 +576,7 @@ void Manager::DeleteSeriesByName()
 
 				break;
 			}
-			else if (choice == 0) break;
+			else if (choice == 2) return;
 		}
 	}
 
@@ -499,7 +601,16 @@ void Manager::DeleteMediaByName()
 		cout << "1. Series" << endl;
 		cout << "2. Movie" << endl;
 		cout << "0. Back" << endl << endl;
-		cin >> choice;
+
+		try {
+			choice = Exceptions::GetMenuInt(choice, 0, 2);
+		}
+		catch (out_of_range e) {
+			continue;
+		}
+		catch (invalid_argument e) {
+			continue;
+		}
 
 		switch (choice) {
 

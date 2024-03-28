@@ -1,14 +1,35 @@
-Breaking Bad
-Thriller
-2014
+Stranger Things
+Horror
+2016
 5
-10
-1711561062
+12
+1711630258
 
-Better Call Saul
-Thriller
-2014
+Narcos
+Horror
+2015
+3
+15
+1711631114
+
+Dexter
+Horror
+2006
+8
+14
+1711642302
+
+The Sopranos
+Horror
+1999
 6
-10
-1711561122
+20
+1711642305
+
+Ted Lasso
+Comedy
+2020
+3
+13
+1711644622
 
