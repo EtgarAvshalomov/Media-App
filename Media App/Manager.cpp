@@ -670,7 +670,7 @@ void Manager::DeleteMovieByName()
 	}
 
 	if (!movieFound) {
-		cout << endl << "Movie was not found in database" << endl;
+		cout << endl << "No movie matches this name" << endl;
 		return;
 	}
 
@@ -742,7 +742,7 @@ void Manager::DeleteSeriesByName()
 	}
 
 	if (!seriesFound) {
-		cout << endl << "Series was not found in database" << endl;
+		cout << endl << "No series matches this name" << endl;
 		return;
 	}
 

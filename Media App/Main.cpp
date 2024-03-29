@@ -8,6 +8,7 @@
 #define RESET "\033[0m"
 #define RED "\033[91m" 
 #define CYAN "\033[96m"
+#define YELLOW  "\033[93m"
 
 #pragma comment(lib, "winmm.lib")
 using namespace std;
@@ -16,14 +17,14 @@ int main()
 {
 	PlaySound(TEXT("RiveR - Solo"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC); // Fitgirl //
 
-	Viewer viewer(1, 0, 0, 0, "", "");
-	Manager manager(1, 0, 0, 0, "", "");
+	Viewer viewer(0, 0, 0, 0, "", "");
+	Manager manager(0, 0, 0, 0, "", "");
 
 	int choice = 1;
 	while (choice != NULL)
 	{
 		cout << RESET;
-		cout << "Welcome to BambaFlix!" << endl << endl;
+		cout << YELLOW << "Welcome to BambaFlix!" << endl << endl;
 		cout << CYAN << "1. Viewer" << RESET << endl << RED << "2. Manager" << RESET << endl << "0. Exit" << endl << endl;
 
 		try {
