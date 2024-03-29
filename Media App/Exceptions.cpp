@@ -1,8 +1,6 @@
 #include "Exceptions.h"
-#include <iostream>
 #include <string>
 #include <typeinfo>
-using namespace std;
 
 void Exceptions::OperatorCheck(const string& input) // Check if the input has an operator
 {

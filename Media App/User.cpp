@@ -3,6 +3,7 @@
 #include <string>
 #include <ctime>
 
+
 User::User(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string firstName, string lastName) {
 	this->id = id;
 	this->dayOfBirth = dayOfBirth;
