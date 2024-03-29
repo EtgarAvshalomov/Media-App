@@ -52,11 +52,11 @@ void Manager::ManagerMenu()
 		{
 
 		case 1:
-			ManualAddSeriesToDatabase();
+			ManualAddSeriesToDatabase(); // Check input
 			break;
 
 		case 2:
-			ManualAddMovieToDatabase();
+			ManualAddMovieToDatabase(); // Check input
 			break;
 
 		case 3:
@@ -123,21 +123,85 @@ void Manager::ManualAddMovieToDatabase()
 
 		string movie_name;
 		string movie_category;
-		int movie_year;
-		int movie_length;
+
+		string movie_year_input;
+		string movie_length_input;
+		int movie_year = 0;
+		int movie_length = 0;
 
 		cout << endl << "Enter a Name For The Movie: ";
-		cin.get();
+
+		cin >> ws;
 		getline(cin, movie_name);
+
 		cout << endl << "Choose a Category: " << endl;
 
 		movie_category = Media::ChooseCategory();
 		if (movie_category == "Back") continue;
 
-		cout << endl << "Enter The Year Of Release: " << endl << endl;
-		cin >> movie_year;
-		cout << endl << "Enter The Length Of The Movie (In Minutes): ";
-		cin >> movie_length;
+		bool year_loop = true;
+		while (year_loop) {
+
+			time_t currentTime = time(nullptr);
+			tm* localTime = localtime(&currentTime);
+			int currentYear = localTime->tm_year + 1900;
+
+			cout << endl << "Enter The Year Of Release: " << endl << endl;
+
+			cin >> ws;
+			getline(cin, movie_year_input);
+
+			try {
+				Exceptions::CheckInt(1888, currentYear, movie_year_input);
+			}
+			catch (out_of_range e) {
+
+				cerr << endl << "Please a number between " << 1888 << " and " << currentYear << endl;
+				continue;
+			}
+			catch (invalid_argument e) {
+				if (string(e.what()) == "Space") {
+					cerr << endl << "Spaces are not allowed" << endl;
+					continue;
+				}
+				cerr << endl << "Input must be an integer" << endl;
+				continue;
+			}
+
+			movie_year = stoi(movie_year_input);
+
+			year_loop = false;
+		}
+
+		bool length_loop = true;
+		while (length_loop) {
+
+			cout << endl << "Enter The Length Of The Movie (In Minutes): ";
+
+			cin >> ws;
+			getline(cin, movie_length_input);
+
+			try {
+				Exceptions::CheckInt(1, 5400, movie_length_input);
+			}
+			catch (out_of_range e) {
+
+				cerr << endl << "Please enter a number between 1 and 5400" << endl;
+				continue;
+			}
+			catch (invalid_argument e) {
+				if (string(e.what()) == "Space") {
+					cerr << endl << "Spaces are not allowed" << endl;
+					continue;
+				}
+				cerr << endl << "Input must be an integer" << endl;
+				continue;
+			}
+
+			movie_length = stoi(movie_length_input);
+
+			length_loop = false;
+		}
 
 		Movie new_movie(movie_name, movie_category, movie_year, movie_length);
 
@@ -162,29 +226,123 @@ void Manager::ManualAddMovieToDatabase()
 
 void Manager::ManualAddSeriesToDatabase()
 {
+
+	string series_name;
+	string series_category;
+
+	string series_year_input;
+	string series_seasons_input;
+	string series_episodes_input;
+	int series_year = 0;
+	int series_seasons = 0;
+	int series_episodes = 0;
+
 	bool loop = true;
 	while (loop) {
 
-		string series_name;
-		string series_category;
-		int series_year;
-		int series_seasons;
-		int series_episodes;
-
 		cout << endl << "Enter a Name For The Series: ";
-		cin.get();
+
+		cin >> ws;
 		getline(cin, series_name);
+
 		cout << endl << "Choose a Category: " << endl;
 
 		series_category = Media::ChooseCategory();
 		if (series_category == "Back") continue;
 
-		cout << endl << "Enter The Year Of Release: ";
-		cin >> series_year;
-		cout << endl << "Enter The Number Of Seasons: ";
-		cin >> series_seasons;
-		cout << endl << "Enter The Number Of Episodes (In Each Season): ";
-		cin >> series_episodes;
+		bool year_loop = true;
+		while (year_loop) {
+
+			time_t currentTime = time(nullptr);
+			tm* localTime = localtime(&currentTime);
+			int currentYear = localTime->tm_year + 1900;
+
+			cout << endl << "Enter The Year Of Release: ";
+
+			cin >> ws;
+			getline(cin, series_year_input);
+
+			try {
+				Exceptions::CheckInt(1888, currentYear, series_year_input);
+			}
+			catch (out_of_range e) {
+
+				cerr << endl << "Please a number between " << 1888 << " and " << currentYear << endl;
+				continue;
+			}
+			catch (invalid_argument e) {
+				if (string(e.what()) == "Space") {
+					cerr << endl << "Spaces are not allowed" << endl;
+					continue;
+				}
+				cerr << endl << "Input must be an integer" << endl;
+				continue;
+			}
+
+			series_year = stoi(series_year_input);
+
+			year_loop = false;
+		}
+
+		bool seasons_loop = true;
+		while (seasons_loop) {
+
+			cout << endl << "Enter The Number Of Seasons: ";
+
+			cin >> ws;
+			getline(cin, series_seasons_input);
+
+			try {
+				Exceptions::CheckInt(1, 35, series_seasons_input);
+			}
+			catch (out_of_range e) {
+
+				cerr << endl << "Please enter a number between 1 and 35" << endl;
+				continue;
+			}
+			catch (invalid_argument e) {
+				if (string(e.what()) == "Space") {
+					cerr << endl << "Spaces are not allowed" << endl;
+					continue;
+				}
+				cerr << endl << "Input must be an integer" << endl;
+				continue;
+			}
+
+			series_seasons = stoi(series_seasons_input);
+
+			seasons_loop = false;
+		}
+
+		bool episodes_loop = true;
+		while (episodes_loop) {
+
+			cout << endl << "Enter The Number Of Episodes (In Each Season): ";
+
+			cin >> ws;
+			getline(cin, series_episodes_input);
+
+			try {
+				Exceptions::CheckInt(1, 30, series_episodes_input);
+			}
+			catch (out_of_range e) {
+
+				cerr << endl << "Please enter a number between 1 and 30" << endl;
+				continue;
+			}
+			catch (invalid_argument e) {
+				if (string(e.what()) == "Space") {
+					cerr << endl << "Spaces are not allowed" << endl;
+					continue;
+				}
+				cerr << endl << "Input must be an integer" << endl;
+				continue;
+			}
+
+			series_episodes = stoi(series_episodes_input);
+
+			episodes_loop = false;
+		}
 
 		Series new_series(series_name, series_category, series_year, series_seasons, series_episodes);
 

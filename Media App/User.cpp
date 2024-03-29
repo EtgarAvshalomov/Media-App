@@ -22,7 +22,8 @@ void User::SetId()
 		string buffer;
 		int num = 0;
 
-		cin >> buffer;
+		cin >> ws;
+		getline(cin, buffer);
 
 		try {
 
@@ -41,11 +42,14 @@ void User::SetId()
 			if (digitsNum != 9) throw out_of_range("Digits");
 		}
 		catch (out_of_range e) {
-
 			cerr << endl << "Please enter a 9 digit number" << endl << endl;
 			continue;
 		}
 		catch (invalid_argument e) {
+			if (string(e.what()) == "Space") {
+				cerr << endl << "Spaces are not allowed" << endl << endl;
+				continue;
+			}
 			cerr << endl << "Input must be an integer" << endl << endl;
 			continue;
 		}
@@ -64,13 +68,18 @@ void User::SetFirstName()
 
 		string firstNameInput;
 
-		cin >> firstNameInput;
+		cin >> ws;
+		getline(cin, firstNameInput);
 
 		try {
-			Exceptions::CheckString(firstNameInput, 1, 24);
+			Exceptions::CheckString(firstNameInput, 1, 24, true);
 		}
 		catch (out_of_range e) {
 			cerr << endl << "Please enter between 1 and 24 characters" << endl;
+			continue;
+		}
+		catch (invalid_argument e) {
+			cerr << endl << "Numbers are not allowed" << endl;
 			continue;
 		}
 
@@ -89,13 +98,18 @@ void User::SetLastName()
 
 		string lastNameInput;
 
-		cin >> lastNameInput;
+		cin >> ws;
+		getline(cin, lastNameInput);
 
 		try {
-			Exceptions::CheckString(lastNameInput, 1, 24);
+			Exceptions::CheckString(lastNameInput, 1, 24, true);
 		}
 		catch (out_of_range e) {
 			cerr << endl << "Please enter between 1 and 24 characters" << endl;
+			continue;
+		}
+		catch (invalid_argument e) {
+			cerr << endl << "Numbers are not allowed" << endl;
 			continue;
 		}
 
@@ -116,7 +130,8 @@ void User::SetDayOfBirth() {
 
 		int day = 0;
 
-		cin >> dayInput;
+		cin >> ws;
+		getline(cin, dayInput);
 
 		try {
 
@@ -130,6 +145,10 @@ void User::SetDayOfBirth() {
 			continue;
 		}
 		catch (invalid_argument e) {
+			if (string(e.what()) == "Space") {
+				cerr << endl << "Spaces are not allowed" << endl;
+				continue;
+			}
 			cerr << endl << "Input must be an integer" << endl;
 			continue;
 		}
@@ -149,7 +168,8 @@ void User::SetMonthOfBirth()
 		string monthInput;
 		int month = 0;
 
-		cin >> monthInput;
+		cin >> ws;
+		getline(cin, monthInput);
 
 		try {
 
@@ -163,6 +183,10 @@ void User::SetMonthOfBirth()
 			continue;
 		}
 		catch (invalid_argument e) {
+			if (string(e.what()) == "Space") {
+				cerr << endl << "Spaces are not allowed" << endl;
+				continue;
+			}
 			cerr << endl << "Input must be an integer" << endl;
 			continue;
 		}
@@ -187,7 +211,8 @@ void User::setYearOfBirth()
 		tm* localTime = localtime(&currentTime);
 		int currentYear = localTime->tm_year + 1900;
 
-		cin >> yearInput;
+		cin >> ws;
+		getline(cin, yearInput);
 
 		try {
 
@@ -201,6 +226,10 @@ void User::setYearOfBirth()
 			continue;
 		}
 		catch (invalid_argument e) {
+			if (string(e.what()) == "Space") {
+				cerr << endl << "Spaces are not allowed" << endl;
+				continue;
+			}
 			cerr << endl << "Input must be an integer" << endl;
 			continue;
 		}

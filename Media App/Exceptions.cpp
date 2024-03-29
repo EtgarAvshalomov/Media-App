@@ -4,15 +4,36 @@
 #include <typeinfo>
 using namespace std;
 
+void Exceptions::OperatorCheck(const string& input) // Check if the input has an operator
+{
+	const string operators = "+-*/%^&|<>!=?:,.";
+
+	for (char c : input) {
+		
+		if (operators.find(c) != string::npos) {
+			throw invalid_argument("Operator");
+		}
+	}
+}
+
 void Exceptions::CheckInt(int min, int max, string input) throw(out_of_range, invalid_argument)
 {
 	string buffer = input;
 	int num = 0;
 	num = stoi(buffer);
 
-	float check = stof(buffer); // Check if decimal
-	check = check / num;
-	if (check > 1) throw invalid_argument("");
+	float check = stof(buffer);
+	check = check / num;	// Check if decimal
+	if (check > 1) throw invalid_argument("Decimal");
+
+	for (char c : input) {
+
+			if (c == ' ') throw invalid_argument("Space");
+
+			if (isalpha(c)) throw invalid_argument("Letter");
+	}
+
+	OperatorCheck(buffer);
 
 	if (num < min || num > max) throw out_of_range("");
 }
@@ -20,8 +41,11 @@ void Exceptions::CheckInt(int min, int max, string input) throw(out_of_range, in
 int Exceptions::GetMenuInt(int choice, int min, int max) throw (out_of_range, invalid_argument)
 {
 	try {
+
 		string buffer;
-		cin >> buffer;
+		
+		cin >> ws;
+		getline(cin, buffer);
 
 		Exceptions::CheckInt(min, max, buffer);
 
@@ -34,15 +58,40 @@ int Exceptions::GetMenuInt(int choice, int min, int max) throw (out_of_range, in
 		throw out_of_range("");
 	}
 	catch (const invalid_argument& e) {
+		if (string(e.what()) == "Space") {
+			cerr << endl << "Spaces are not allowed" << endl;
+			throw invalid_argument("");
+		}
 		cerr << endl << "Input must be an integer" << endl;
 		throw invalid_argument("");
 	}
+
 	cout << endl;
 }
 
-void Exceptions::CheckString(string input, int min, int max) throw(out_of_range, invalid_argument)
+void Exceptions::CheckString(string input,int min, int max, bool stringOnly) throw(out_of_range, invalid_argument)
 {
 	string buffer = input;
 
 	if (buffer.length() < min || buffer.length() > max) throw out_of_range("");
+
+	if (stringOnly) {
+		for (char c : input) {
+			if (!isalpha(c)) {
+				if (c == ' ') {
+					continue;
+				}
+				throw invalid_argument("");
+			}
+		}
+	}
+}
+
+void Exceptions::CheckChar(string input)
+{
+	if (input != "Y" && input != "y" && input != "N" && input != "n") {
+		throw invalid_argument("");
+	}
+
+	OperatorCheck(input);
 }

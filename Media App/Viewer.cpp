@@ -6,6 +6,7 @@
 #include <string>
 #include <algorithm>
 #include "Exceptions.h"
+#include <conio.h>
 using namespace std;
 
 static vector<Movie> movieWatchlist;
@@ -25,9 +26,9 @@ void Viewer::ViewerMenu()
 		if (CheckViewerIfEmpty() == true)
 		{
 			cout << endl;
-			SetId(); // Fix spaces with strings like "Some String"
-			SetFirstName(); // Fix numbers
-			SetLastName(); // Fix numbers
+			SetId();
+			SetFirstName();
+			SetLastName();
 			SetDayOfBirth();
 			SetMonthOfBirth();
 			setYearOfBirth();
@@ -737,31 +738,60 @@ void Viewer::WatchMovie()
 		return;
 	}
 
-	char c;
+	string c;
 
 	for (int i = movieWatchlist.size(); i > 0; i--) {
 		cout << endl << "Would you like to watch this movie? Y/N: " << endl;
 		cout << endl << movieWatchlist.size() - (i - 1) << ". " << movieWatchlist[i - 1].getName() << endl << endl;
-		cin >> c;
 
-		if (c == 'Y' || c == 'y') {
+		cin >> ws;
+		getline(cin, c);
+
+		try {
+			Exceptions::CheckChar(c);
+		}
+		catch (invalid_argument) {
+			cout << endl << "Invalid input" << endl;
+			i++;
+			continue;
+		}
+
+		if (c == "Y" || c == "y") {
 			cout << endl << "Watching: " << movieWatchlist[i - 1].getName() << "..." << endl;
 			cout << endl << "Press Enter to continue...";
-			cin.ignore();
-			getchar();
+
+			_getch();
+			cout << endl;
 
 			if (i == 1) cout << endl << "There are no more movies in your watchlist" << endl;
 		}
-		else if (c == 'N' || c == 'n') {
-			cout << endl << "Would you like to continue? Y/N" << endl << endl;
-			cin >> c;
+		else if (c == "N" || c == "n") {
+			
+			bool loop = true;
+			while (loop) {
 
-			if (c == 'Y' || c == 'y') {
+				cout << endl << "Would you like to continue? Y/N" << endl << endl;
+
+				cin >> ws;
+				getline(cin, c);
+
+				try {
+					Exceptions::CheckChar(c);
+				}
+				catch (invalid_argument) {
+					cout << endl << "Invalid input" << endl;
+					continue;
+				}
+
+				loop = false;
+			}
+
+			if (c == "Y" || c == "y") {
 				if (i == 1) cout << endl << "There are no more movies in your watchlist" << endl;
 				continue;
 			}
 
-			else if (c == 'N' || c == 'n') break;
+			else if (c == "N" || c == "n") break;
 		}
 	}
 }
@@ -775,31 +805,63 @@ void Viewer::WatchSeries()
 		return;
 	}
 
-	char c;
+	string c;
 
 	for (int i = seriesWatchlist.size(); i > 0; i--) {
+
 		cout << endl << "Would you like to watch this series? Y/N: " << endl << endl;
 		cout << seriesWatchlist.size() - (i - 1) << ". " << seriesWatchlist[i-1].getName() << endl << endl;
-		cin >> c;
+		
+		cin >> ws;
+		getline(cin, c);
 
-		if (c == 'Y' || c == 'y') {
+		try {
+			Exceptions::CheckChar(c);
+		}
+		catch (invalid_argument) {
+			cout << endl << "Invalid input" << endl;
+			i++;
+			continue;
+		}
+
+		if (c == "Y" || c == "y") {
+
 			cout << endl << "Watching: " << seriesWatchlist[i-1].getName() << "..." << endl;
-			cout << endl << "Press Enter to continue...";
-			cin.ignore();
-			getchar();
+			cout << endl << "Press any key to continue...";
+
+			_getch();
+			cout << endl;
 
 			if (i == 1) cout << endl << "There are no more series in your watchlist" << endl;
 		}
-		else if (c == 'N' || c == 'n') {
-			cout << endl << "Would you like to continue? Y/N" << endl << endl;
-			cin >> c;
+		else if (c == "N" || c == "n") {
 
-			if (c == 'Y' || c == 'y') {
+			bool loop = true;
+			while (loop) {
+
+				cout << endl << "Would you like to continue? Y/N" << endl << endl;
+
+				cin >> ws;
+				getline(cin, c);
+
+				try {
+					Exceptions::CheckChar(c);
+				}
+				catch (invalid_argument) {
+					cout << endl << "Invalid input" << endl;
+					continue;
+				}
+
+				loop = false;
+			}
+
+			if (c == "Y" || c == "y") {
 				if (i == 1) cout << endl << "There are no more series in your watchlist" << endl;
 				continue;
 			}
 
-			else if (c == 'N' || c == 'n') break;
+			else if (c == "N" || c == "n") break;
+			
 		}
 	}
 }

@@ -1,10 +1,3 @@
-Stranger Things
-Horror
-2016
-5
-12
-1711630258
-
 Narcos
 Horror
 2015
@@ -26,10 +19,17 @@ Horror
 20
 1711642305
 
-Ted Lasso
-Comedy
-2020
+Stranger Things
+Horror
+2016
+5
+12
+1711730870
+
+The Finals
+Sci-Fi
+2023
 3
-13
-1711644622
+10
+1711740123
 
