@@ -4,7 +4,7 @@
 
 void Exceptions::OperatorCheck(const string& input) // Checks if the input has an operator
 {
-	const string operators = "+-*/%^&|<>!=?:,.";
+	const string operators = "+-*/%^&|<>!=?:,.()_@#$\"'`~[]{}\\;";
 
 	for (char c : input) {
 		

@@ -80,7 +80,7 @@ void User::SetFirstName()
 			continue;
 		}
 		catch (invalid_argument e) {
-			cerr << endl << "Numbers are not allowed" << endl;
+			cerr << endl << "Only letters are allowed" << endl;
 			continue;
 		}
 
@@ -110,7 +110,7 @@ void User::SetLastName()
 			continue;
 		}
 		catch (invalid_argument e) {
-			cerr << endl << "Numbers are not allowed" << endl;
+			cerr << endl << "Only letters are allowed" << endl;
 			continue;
 		}
 

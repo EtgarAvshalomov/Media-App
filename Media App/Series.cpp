@@ -12,7 +12,7 @@ Series::Series(string name, string category, int year, int seasons, int episodes
 
 ostream& operator<<(ostream& out, const Series& m)
 {
-	out << m.getName() << " " << m.getCategory() << " " << m.getYear() << " " << m.getSeasons() << " " << m.getEpisodes()<< " " << m.getDateAdded() << endl;
+	out << m.getName() << " | Category: " << m.getCategory() << " | Year: " << m.getYear() << " | Seasons: " << m.getSeasons() << " | Episodes: " << m.getEpisodes();
 	return out;
 }
 

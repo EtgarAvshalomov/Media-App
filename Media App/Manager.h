@@ -30,8 +30,6 @@ private:
 
 	bool CheckIfEmpty() { if (this->getID() == NULL) return true; else return false; }
 
-	void PrintDatabase();
-
 	void AddSeriesToDatabase(Series& toAdd);
 
 	void AddMovieToDatabase(Movie& toAdd);
@@ -40,9 +38,13 @@ private:
 
 	void DeleteMediaByCategory();
 
+	void PrintDatabase();
+
 public:
 
 	Manager(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string firstName, string lastName);
 
 	void Menu() override;
+
+
 };

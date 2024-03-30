@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+
 using namespace std;
 
 static vector<Movie> movieDatabase;
@@ -12,7 +13,7 @@ Movie::Movie(string name, string category, int year, int length):Media(name, cat
 
 ostream& operator<<(ostream& out, const Movie& m)
 {
-	out << m.getName() << " " << m.getCategory() << " " << m.getYear() << " " << m.getLength() << " " << m.getDateAdded() << endl;
+	out << m.getName() << " | Category: " << m.getCategory() << " | Year: " << m.getYear() << " | Length (Minutes): " << m.getLength();
 	return out;
 }
 

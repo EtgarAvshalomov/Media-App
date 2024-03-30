@@ -54,12 +54,13 @@ public:
 		this->dateAdded = dateAdded;
 	}
 
-
 	static string ChooseCategory();
 
 	bool operator > (const Media& str) const {
 		if (getYear() != str.getYear())    return (getYear() > str.getYear());
 		return (getDateAdded() > str.getDateAdded());
 	}
+
+	static void Program();
 };
 

@@ -37,10 +37,11 @@ void Manager::Menu()
 		cout << "2. Add Movie To The Database" << endl;
 		cout << "3. Delete Media By Name" << endl;
 		cout << "4. Delete Media By Category" << endl;
+		cout << "5. View Database" << endl;
 		cout << "0. Back To Main Menu" << endl << endl;
 
 		try {
-			choice = Exceptions::GetMenuInt(choice, 0, 4);
+			choice = Exceptions::GetMenuInt(choice, 0, 5);
 		}
 		catch (out_of_range e) {
 			continue;
@@ -66,6 +67,10 @@ void Manager::Menu()
 
 		case 4:
 			DeleteMediaByCategory();
+			break;
+
+		case 5:
+			PrintDatabase();
 			break;
 
 		case 0:
@@ -398,7 +403,7 @@ void Manager::DeleteMovieByCategory()
 			for (int i = 0; unsigned(i) < movieDatabase.size(); i++) {
 				if (movieDatabase[i].getCategory() == category) {
 					counter++;
-					cout << counter << ". " << movieDatabase[i].getName() << endl;
+					cout << counter << ". " << movieDatabase[i] << endl;
 				}
 			}
 
@@ -497,7 +502,7 @@ void Manager::DeleteSeriesByCategory()
 			for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) {
 				if (seriesDatabase[i].getCategory() == category) {
 					counter++;
-					cout << counter << ". " << seriesDatabase[i].getName() << endl;
+					cout << counter << ". " << seriesDatabase[i] << endl;
 				}
 			}
 
@@ -814,23 +819,6 @@ void Manager::DeleteMediaByName()
 	}
 }
 
-void Manager::PrintDatabase()
-{
-	Movie::ReadMoviesFromDatabase();
-	Series::ReadSeriesFromDatabase();
-
-	vector<Movie> movieDatabase = Movie::GetMovieDatabase();
-	vector<Series> seriesDatabase = Series::GetSeriesDatabase();
-
-	for (int i = 0; unsigned(i) < movieDatabase.size(); i++) {
-		cout << movieDatabase[i];
-	}
-
-	for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) {
-		cout << seriesDatabase[i];
-	}
-}
-
 void Manager::ClearMovieDatabase() // Move later to Movie
 {
 	ofstream out("Movies Database.txt", ios::trunc);
@@ -860,5 +848,64 @@ void Manager::WriteSeriesToDatabase(vector<Series>& seriesDatabase)
 
 	for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) {
 		AddSeriesToDatabase(seriesDatabase[i]);
+	}
+}
+
+// Prints the database the same way it is stored in the files.
+void Manager::PrintDatabase()
+{
+	Movie::ReadMoviesFromDatabase();
+	Series::ReadSeriesFromDatabase();
+
+	vector<Movie> movieDatabase = Movie::GetMovieDatabase();
+	vector<Series> seriesDatabase = Series::GetSeriesDatabase();
+
+	int choice = 0;
+
+	cout << endl;
+
+	bool loop = true;
+	while (loop) {
+
+		cout << "1. Series" << endl;
+		cout << "2. Movies" << endl;
+		cout << "0. Back" << endl;
+		cout << endl;
+
+		try {
+			choice = Exceptions::GetMenuInt(choice, 0, 2);
+		}
+		catch (out_of_range e) {
+			cout << endl;
+			continue;
+		}
+		catch (invalid_argument e) {
+			cout << endl;
+			continue;
+		}
+
+		loop = false;
+	}
+
+	cout << endl;
+
+	switch (choice) {
+
+	// Prints the series
+	case 1: 
+		for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) {
+			cout << seriesDatabase[i] << endl;
+		}
+		break;
+
+	// Prints the movies
+	case 2: 
+		for (int i = 0; unsigned(i) < movieDatabase.size(); i++) {
+			cout << movieDatabase[i] << endl;
+		}
+		break;
+
+	default:
+		break;
 	}
 }
