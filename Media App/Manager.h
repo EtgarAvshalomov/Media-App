@@ -44,5 +44,5 @@ public:
 
 	Manager(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string firstName, string lastName);
 
-	void ManagerMenu();
+	void Menu() override;
 };

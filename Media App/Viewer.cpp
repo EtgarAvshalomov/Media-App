@@ -16,7 +16,7 @@ Viewer::Viewer(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string
 
 }
 
-void Viewer::ViewerMenu()
+void Viewer::Menu()
 {
 	bool loop = true;
 	while (loop) {
@@ -37,7 +37,7 @@ void Viewer::ViewerMenu()
 		cout << endl << "Hello " + getFirstName() << " " << getLastName() << "!" << endl << endl;
 		cout << "1. Add Series To Watchlist" << endl;
 		cout << "2. Add Movie To Watchlist" << endl;
-		cout << "3. Search Media By Name" << endl;
+		cout << "3. Search And Add Media By Name" << endl;
 		cout << "4. Watch Series From Watchlist" << endl;
 		cout << "5. Watch Movie From Watchlist" << endl;
 		cout << "6. Delete Series From Watchlist" << endl;
@@ -476,16 +476,24 @@ void Viewer::SearchMovieByName()
 	vector <Movie> movieDatabase = Movie::GetMovieDatabase();
 
 	string buffer;
+	string temp;
 	cout << endl << "Enter a movie name to search: " << endl << endl;
-	cin.get();
+
+	cin >> ws;
 	getline(cin, buffer);
+
+	transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
 
 	char c;
 	bool nameFound = false;
 
 	for (int i = 0; unsigned(i) < movieDatabase.size(); i++) {
 
-		if (movieDatabase[i].getName() == buffer) {
+		temp = movieDatabase[i].getName();
+
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+
+		if (temp == buffer) {
 
 			nameFound = true;
 
@@ -525,16 +533,24 @@ void Viewer::SearchSeriesByName()
 	vector <Series> seriesDatabase = Series::GetSeriesDatabase();
 
 	string buffer;
+	string temp;
 	cout << endl << "Enter a series name to search: " << endl << endl;
-	cin.get();
+
+	cin >> ws;
 	getline(cin, buffer);
+
+	transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
 
 	char c;
 	bool nameFound = false;
 
 	for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) {
 
-		if (seriesDatabase[i].getName() == buffer) {
+		temp = seriesDatabase[i].getName();
+
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+
+		if (temp == buffer) {
 
 			nameFound = true;
 
@@ -574,8 +590,8 @@ void Viewer::SearchMediaByName()
 		int choice = 0;
 
 		cout << endl << "What would you like to search?" << endl << endl;
-		cout << "1. Movies" << endl;
-		cout << "2. Series" << endl;
+		cout << "1. Series" << endl;
+		cout << "2. Movies" << endl;
 		cout << "0. Back" << endl << endl;
 
 		try {
@@ -591,11 +607,11 @@ void Viewer::SearchMediaByName()
 		switch (choice) {
 
 		case 1:
-			SearchMovieByName();
+			SearchSeriesByName();
 			break;
 
 		case 2:
-			SearchSeriesByName();
+			SearchMovieByName();
 			break;
 
 		case 0:
@@ -760,7 +776,7 @@ void Viewer::WatchMovie()
 			cout << endl << "Watching: " << movieWatchlist[i - 1].getName() << "..." << endl;
 			cout << endl << "Press Enter to continue...";
 
-			_getch();
+			(void)_getch();
 			cout << endl;
 
 			if (i == 1) cout << endl << "There are no more movies in your watchlist" << endl;
@@ -829,7 +845,7 @@ void Viewer::WatchSeries()
 			cout << endl << "Watching: " << seriesWatchlist[i-1].getName() << "..." << endl;
 			cout << endl << "Press any key to continue...";
 
-			_getch();
+			(void)_getch();
 			cout << endl;
 
 			if (i == 1) cout << endl << "There are no more series in your watchlist" << endl;

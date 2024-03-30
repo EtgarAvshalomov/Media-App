@@ -15,7 +15,8 @@ using namespace std;
 
 int main()
 {
-	PlaySound(TEXT("RiveR - Solo"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC); // Fitgirl //
+
+	PlaySound(TEXT("RiveR - Solo"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC); // Fitgirl - Music //
 
 	Viewer viewer(0, 0, 0, 0, "", "");
 	Manager manager(0, 0, 0, 0, "", "");
@@ -48,12 +49,12 @@ int main()
 
 		case 1:
 			cout << CYAN;
-			viewer.ViewerMenu();
+			viewer.Menu();
 			break;
 
 		case 2:
 			cout << RED;
-			manager.ManagerMenu();
+			manager.Menu();
 			break;
 
 		default:

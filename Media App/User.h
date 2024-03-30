@@ -22,6 +22,7 @@ public:
 
 	User() = default;
 
+	virtual void Menu() = 0;
 
 	int getID() const
 	{

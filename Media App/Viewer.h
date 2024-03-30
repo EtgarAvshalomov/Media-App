@@ -44,7 +44,7 @@ public:
 
 	Viewer(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string firstName, string lastName);
 
-	void ViewerMenu();
+	void Menu() override;
 
 	static vector<Movie> getMovieWatchlist();
 

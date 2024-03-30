@@ -2,7 +2,7 @@
 #include <string>
 #include <typeinfo>
 
-void Exceptions::OperatorCheck(const string& input) // Check if the input has an operator
+void Exceptions::OperatorCheck(const string& input) // Checks if the input has an operator
 {
 	const string operators = "+-*/%^&|<>!=?:,.";
 
@@ -14,14 +14,14 @@ void Exceptions::OperatorCheck(const string& input) // Check if the input has an
 	}
 }
 
-void Exceptions::CheckInt(int min, int max, string input) throw(out_of_range, invalid_argument)
+void Exceptions::CheckInt(int min, int max, string input) throw(out_of_range, invalid_argument) // Checks integer input
 {
 	string buffer = input;
 	int num = 0;
 	num = stoi(buffer);
 
 	float check = stof(buffer);
-	check = check / num;	// Check if decimal
+	check = check / num;	// Checks if decimal
 	if (check > 1) throw invalid_argument("Decimal");
 
 	for (char c : input) {
@@ -36,7 +36,7 @@ void Exceptions::CheckInt(int min, int max, string input) throw(out_of_range, in
 	if (num < min || num > max) throw out_of_range("");
 }
 
-int Exceptions::GetMenuInt(int choice, int min, int max) throw (out_of_range, invalid_argument)
+int Exceptions::GetMenuInt(int choice, int min, int max) throw (out_of_range, invalid_argument) // Checks the menu's input
 {
 	try {
 
@@ -67,7 +67,7 @@ int Exceptions::GetMenuInt(int choice, int min, int max) throw (out_of_range, in
 	cout << endl;
 }
 
-void Exceptions::CheckString(string input,int min, int max, bool stringOnly) throw(out_of_range, invalid_argument)
+void Exceptions::CheckString(string input,unsigned int min, unsigned int max, bool stringOnly) throw(out_of_range, invalid_argument) // Checks string input
 {
 	string buffer = input;
 
@@ -85,7 +85,7 @@ void Exceptions::CheckString(string input,int min, int max, bool stringOnly) thr
 	}
 }
 
-void Exceptions::CheckChar(string input)
+void Exceptions::CheckChar(string input) // Checks Y/N input
 {
 	if (input != "Y" && input != "y" && input != "N" && input != "n") {
 		throw invalid_argument("");

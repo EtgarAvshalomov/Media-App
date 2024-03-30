@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <cctype>
+#include <algorithm>
 #include "Viewer.h"
 #include "Exceptions.h"
 
@@ -13,7 +14,7 @@ Manager::Manager(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, stri
 
 }
 
-void Manager::ManagerMenu()
+void Manager::Menu()
 {
 	bool loop = true;
 	while (loop) {
@@ -52,15 +53,15 @@ void Manager::ManagerMenu()
 		{
 
 		case 1:
-			ManualAddSeriesToDatabase(); // Check input
+			ManualAddSeriesToDatabase();
 			break;
 
 		case 2:
-			ManualAddMovieToDatabase(); // Check input
+			ManualAddMovieToDatabase();
 			break;
 
 		case 3:
-			DeleteMediaByName(); // Check for lower case sensitivity later
+			DeleteMediaByName();
 			break;
 
 		case 4:
@@ -459,7 +460,7 @@ void Manager::DeleteMovieByCategory()
 
 		Viewer::ClearMovieWatchlist();
 
-		for (int i = 0; i < movieWatchlist.size(); i++) {
+		for (int i = 0; unsigned(i) < movieWatchlist.size(); i++) {
 			Viewer::AddMovieToFile(movieWatchlist[i]);
 		}
 	}
@@ -557,7 +558,7 @@ void Manager::DeleteSeriesByCategory()
 
 		Viewer::ClearSeriesWatchlist();
 
-		for (int i = 0; i < seriesWatchlist.size(); i++) {
+		for (int i = 0; unsigned(i) < seriesWatchlist.size(); i++) {
 			Viewer::AddSeriesToFile(seriesWatchlist[i]);
 		}
 	}
@@ -613,14 +614,24 @@ void Manager::DeleteMovieByName()
 	Movie::ReadMoviesFromDatabase();
 
 	string buffer;
+	string temp;
 	bool movieFound = false;
 	cout << endl << "Enter the name of the movie for deletion: ";
-	cin.get();
+
+	cin >> ws;
 	getline(cin, buffer);
+
+	transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
+
 	vector<Movie> movieDatabase = Movie::GetMovieDatabase();
 
 	for (vector<Movie>::iterator i = movieDatabase.begin(); i != movieDatabase.end(); ++i) {
-		if (i->getName() == buffer) {
+
+		temp = i->getName();
+
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+
+		if (temp == buffer) {
 			movieFound = true;
 
 			int choice = 0;
@@ -659,7 +670,7 @@ void Manager::DeleteMovieByName()
 
 				Viewer::ClearMovieWatchlist();
 
-				for (int i = 0; i < movieWatchlist.size(); i++) {
+				for (int i = 0; unsigned(i) < movieWatchlist.size(); i++) {
 					Viewer::AddMovieToFile(movieWatchlist[i]);
 				}
 
@@ -685,14 +696,24 @@ void Manager::DeleteSeriesByName()
 	Series::ReadSeriesFromDatabase();
 
 	string buffer;
+	string temp;
 	bool seriesFound = false;
 	cout << endl << "Enter the name of the series for deletion: ";
-	cin.get();
+
+	cin >> ws;
 	getline(cin, buffer);
+
+	transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
+
 	vector<Series> seriesDatabase = Series::GetSeriesDatabase();
 
 	for (vector<Series>::iterator i = seriesDatabase.begin(); i != seriesDatabase.end(); ++i) {
-		if (i->getName() == buffer) {
+
+		temp = i->getName();
+
+		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+
+		if (temp == buffer) {
 			seriesFound = true;
 
 			int choice = 0;
@@ -731,7 +752,7 @@ void Manager::DeleteSeriesByName()
 
 				Viewer::ClearSeriesWatchlist();
 
-				for (int i = 0; i < seriesWatchlist.size(); i++) {
+				for (int i = 0; unsigned(i) < seriesWatchlist.size(); i++) {
 					Viewer::AddSeriesToFile(seriesWatchlist[i]);
 				}
 
