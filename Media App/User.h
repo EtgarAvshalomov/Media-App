@@ -22,7 +22,7 @@ public:
 
 	User() = default;
 
-	virtual void Menu() = 0;
+	virtual void Menu() = 0; // A pure virtual method. To be inherited by the viewer and manager.
 
 	int getID() const
 	{

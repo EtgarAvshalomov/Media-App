@@ -10,17 +10,20 @@ Series::Series(string name, string category, int year, int seasons, int episodes
 	this->episodes = episodes;
 }
 
+// Prints the objects data.
 ostream& operator<<(ostream& out, const Series& m)
 {
 	out << m.getName() << " | Category: " << m.getCategory() << " | Year: " << m.getYear() << " | Seasons: " << m.getSeasons() << " | Episodes: " << m.getEpisodes();
 	return out;
 }
 
+// Returns the series database vector.
 vector<Series>& Series::GetSeriesDatabase()
 {
 	return seriesDatabase;
 }
 
+// Updates the series database vector from the Series Database.txt file.
 void Series::ReadSeriesFromDatabase()
 {
 	seriesDatabase.clear();

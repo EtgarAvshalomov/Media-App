@@ -19,6 +19,54 @@ Media::Media(string name, string category, int year) {
 	this->dateAdded = NULL;
 }
 
+void Media::Program()
+{
+	//PlaySound(TEXT("RiveR - Solo"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC); // Music
+
+	Viewer viewer(1, 0, 0, 0, "", "");
+	Manager manager(1, 0, 0, 0, "", "");
+
+	int choice = 1;
+	while (choice != NULL)
+	{
+		cout << RESET;
+		cout << "Welcome to BambaFlix!" << endl << endl;
+		cout << CYAN << "1. Viewer" << RESET << endl << RED << "2. Manager" << RESET << endl << "0. Exit" << endl << endl;
+
+		try {
+			choice = Exceptions::GetMenuInt(choice, 0, 2);
+		}
+		catch (out_of_range e) {
+			cout << endl;
+			continue;
+		}
+		catch (invalid_argument e) {
+			cout << endl;
+			continue;
+		}
+
+		switch (choice)
+		{
+		case 0:
+			cout << endl <<  "Cya! ;D" << endl;
+			exit(0);
+			break;
+
+		case 1:
+			viewer.Menu();
+			break;
+
+		case 2:
+			manager.Menu();
+			break;
+
+		default:
+			break;
+		}
+	}
+}
+
+// Gets an input from the user and returns a string with the chosen category.
 string Media::ChooseCategory()
 {
 	bool loop = true;
@@ -63,55 +111,6 @@ string Media::ChooseCategory()
 
 		default:
 			cout << "Unable to choose a category when adding a series to database.";
-			break;
-		}
-	}
-}
-
-void Media::Program()
-{
-	//PlaySound(TEXT("RiveR - Solo"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC); // Fitgirl - Music //
-
-	Viewer viewer(1, 0, 0, 0, "", "");
-	Manager manager(1, 0, 0, 0, "", "");
-
-	int choice = 1;
-	while (choice != NULL)
-	{
-		cout << RESET;
-		cout << "Welcome to BambaFlix!" << endl << endl;
-		cout << CYAN << "1. Viewer" << RESET << endl << RED << "2. Manager" << RESET << endl << "0. Exit" << endl << endl;
-
-		try {
-			choice = Exceptions::GetMenuInt(choice, 0, 2);
-		}
-		catch (out_of_range e) {
-			cout << endl;
-			continue;
-		}
-		catch (invalid_argument e) {
-			cout << endl;
-			continue;
-		}
-
-		switch (choice)
-		{
-		case 0:
-			cout << endl <<  "Cya! ;D" << endl;
-			exit(0);
-			break;
-
-		case 1:
-			cout << CYAN;
-			viewer.Menu();
-			break;
-
-		case 2:
-			cout << RED;
-			manager.Menu();
-			break;
-
-		default:
 			break;
 		}
 	}

@@ -28,7 +28,7 @@ private:
 
 	void WriteSeriesToDatabase(vector<Series>& seriesDatabase);
 
-	bool CheckIfEmpty() { if (this->getID() == NULL) return true; else return false; }
+	bool CheckIfEmpty() { if (this->getID() == NULL) return true; else return false; } // Checks if the user had already signed in.
 
 	void AddSeriesToDatabase(Series& toAdd);
 
@@ -45,6 +45,4 @@ public:
 	Manager(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string firstName, string lastName);
 
 	void Menu() override;
-
-
 };

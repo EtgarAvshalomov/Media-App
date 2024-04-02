@@ -13,6 +13,7 @@ User::User(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string fir
 	this->lastName = lastName;
 }
 
+// Sets the users id.
 void User::SetId()
 {
 	bool loop = true;
@@ -60,6 +61,7 @@ void User::SetId()
 	}
 }
 
+// Sets the users first name.
 void User::SetFirstName()
 {
 	bool loop = true;
@@ -90,6 +92,7 @@ void User::SetFirstName()
 	}
 }
 
+// Sets users last name.
 void User::SetLastName()
 {
 	bool loop = true;
@@ -120,6 +123,7 @@ void User::SetLastName()
 	}
 }
 
+// Sets the users day of birth.
 void User::SetDayOfBirth() {
 	
 	bool loop = true;
@@ -159,6 +163,7 @@ void User::SetDayOfBirth() {
 	}
 }
 
+// Sets the users month of birth.
 void User::SetMonthOfBirth()
 {
 	bool loop = true;
@@ -197,6 +202,7 @@ void User::SetMonthOfBirth()
 	}
 }
 
+// Sets the users year of birth.
 void User::setYearOfBirth()
 {
 	bool loop = true;

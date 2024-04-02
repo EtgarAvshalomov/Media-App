@@ -56,7 +56,7 @@ public:
 
 	static string ChooseCategory();
 
-	bool operator > (const Media& str) const {
+	bool operator > (const Media& str) const { // Checks which of the objects has the latest release date and addition date.
 		if (getYear() != str.getYear())    return (getYear() > str.getYear());
 		return (getDateAdded() > str.getDateAdded());
 	}

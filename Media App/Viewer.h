@@ -14,7 +14,7 @@ private:
 
 	void SearchSeriesByName();
 
-	bool CheckViewerIfEmpty() { if (this->getID() == NULL) return true; else return false; }
+	bool CheckViewerIfEmpty() { if (this->getID() == NULL) return true; else return false; } // Checks if the user had already signed in.
 
 	void WriteMovieToFile();
 

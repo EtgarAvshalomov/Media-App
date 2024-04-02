@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-	Media::Program(); // Check if movie already exists in the database when adding new media. // Add documentation to all the functions.
+	Media::Program(); // Throw an exception when unable to open file.
 
 	return 0;
 }

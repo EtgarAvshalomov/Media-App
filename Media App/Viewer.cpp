@@ -7,6 +7,8 @@
 #include <algorithm>
 #include "Exceptions.h"
 #include <conio.h>
+#define CYAN "\033[96m"
+
 using namespace std;
 
 static vector<Movie> movieWatchlist;
@@ -16,8 +18,11 @@ Viewer::Viewer(int id, int dayOfBirth, int monthOfBirth, int yearOfBirth, string
 
 }
 
+// Viewer Menu
 void Viewer::Menu()
 {
+	cout << CYAN;
+
 	int choice = 1;
 	bool loop = true;
 	while (loop) {
@@ -104,18 +109,21 @@ void Viewer::Menu()
 	}
 }
 
+// Returns the movie watchlist vector.
 vector<Movie> Viewer::getMovieWatchlist()
 {
 	ReadMovieFromFile();
 	return movieWatchlist;
 }
 
+// Returns the series watchlist vector.
 vector<Series> Viewer::getSeriesWatchlist()
 {
 	ReadSeriesFromFile();
 	return seriesWatchlist;
 }
 
+// Prints movies for the user to add to the watchlist. Adds the chosen movies to the watchlist.
 void Viewer::AddMovieToWatchlist()
 {
 	bool loop = true;
@@ -129,7 +137,7 @@ void Viewer::AddMovieToWatchlist()
 
 		if (movieDatabase.size() != 0) {
 
-			sort(movieDatabase.begin(), movieDatabase.end(), greater<Movie>());
+			sort(movieDatabase.begin(), movieDatabase.end(), greater<Movie>()); // Uses the comparison operator to sort the movies.
 
 			string category = Media::ChooseCategory();
 
@@ -148,7 +156,7 @@ void Viewer::AddMovieToWatchlist()
 
 					categoryFound = true;
 
-					if (CheckIfMovieExists(movieDatabase[i].getName())) {
+					if (CheckIfMovieExists(movieDatabase[i].getName())) { // Skips over movies that are already in the watchlist.
 						continue;
 					}
 
@@ -181,10 +189,12 @@ void Viewer::AddMovieToWatchlist()
 					case 1:
 
 						currentTime = time(nullptr);
-						movieDatabase[i].setDateAdded(currentTime);
-						movieWatchlist.emplace_back(movieDatabase[i]);
+						movieDatabase[i].setDateAdded(currentTime); // Sets the date of addition to the database.
+
+						movieWatchlist.emplace_back(movieDatabase[i]); // Adds the chosen movie to the movie database vector.
 
 						WriteMovieToFile();
+
 						cout << endl << "You have added " << movieDatabase[i].getName() << " to your watchlist!" << endl;
 
 						break;
@@ -238,7 +248,7 @@ void Viewer::AddSeriesToWatchlist()
 
 		if (seriesDatabase.size() != 0) {
 
-			sort(seriesDatabase.begin(), seriesDatabase.end(), greater<Series>());
+			sort(seriesDatabase.begin(), seriesDatabase.end(), greater<Series>()); // Uses the comparison operator to sort the series.
 
 			string category = Media::ChooseCategory();
 
@@ -289,10 +299,12 @@ void Viewer::AddSeriesToWatchlist()
 					case 1:
 
 						currentTime = time(nullptr);
-						seriesDatabase[i].setDateAdded(currentTime);
-						seriesWatchlist.emplace_back(seriesDatabase[i]);
+						seriesDatabase[i].setDateAdded(currentTime); // Sets the date of addition to the database.
+
+						seriesWatchlist.emplace_back(seriesDatabase[i]); // Adds the chosen series to the series database vector.
 
 						WriteSeriesToFile();
+
 						cout << endl << "You have added " << seriesDatabase[i].getName() << " to your watchlist!" << endl;
 
 						break;
@@ -332,15 +344,16 @@ void Viewer::AddSeriesToWatchlist()
 	}
 }
 
+// Takes a Movie object and adds it to the watchlist.
 void Viewer::AddMovieToFile(Movie& toAdd)
 {
 	if (toAdd.getDateAdded() == NULL) {
 		time_t currentTime = time(nullptr);
-		toAdd.setDateAdded(currentTime);
+		toAdd.setDateAdded(currentTime); // Sets the date of addition to the watchlist.
 	}
 
 	ofstream out("Movies Watchlist.txt", ios::app);
-	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
+	if (!out.is_open()) cout << "Unable to open file!";
 	out << toAdd.getName() << endl;
 	out << toAdd.getCategory() << endl;
 	out << toAdd.getYear() << endl;
@@ -350,15 +363,16 @@ void Viewer::AddMovieToFile(Movie& toAdd)
 	out.close();
 }
 
+// Takes a Series object and adds it to the database.
 void Viewer::AddSeriesToFile(Series& toAdd)
 {
 	if (toAdd.getDateAdded() == NULL) {
 		time_t currentTime = time(nullptr);
-		toAdd.setDateAdded(currentTime);
+		toAdd.setDateAdded(currentTime); // Sets the date of addition to the watchlist.
 	}
 
 	ofstream out("Series Watchlist.txt", ios::app);
-	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
+	if (!out.is_open()) cout << "Unable to open file!";
 	out << toAdd.getName() << endl;
 	out << toAdd.getCategory() << endl;
 	out << toAdd.getYear() << endl;
@@ -369,6 +383,7 @@ void Viewer::AddSeriesToFile(Series& toAdd)
 	out.close();
 }
 
+// Updates the movie watchlist vector from the Movies Watchlist.txt file.
 void Viewer::ReadMovieFromFile()
 {
 	movieWatchlist.clear();
@@ -411,6 +426,7 @@ void Viewer::ReadMovieFromFile()
 	}
 }
 
+// Updates the series watchlist vector from the Series Watchlist.txt file.
 void Viewer::ReadSeriesFromFile()
 {
 	seriesWatchlist.clear();
@@ -457,6 +473,7 @@ void Viewer::ReadSeriesFromFile()
 	}
 }
 
+// Updates the Movies Watchlist.txt file from the movie watchlist vector.
 void Viewer::WriteMovieToFile() {
 
 	ClearMovieWatchlist();
@@ -466,6 +483,7 @@ void Viewer::WriteMovieToFile() {
 	}
 }
 
+// Updates the Series Watchlist.txt file from the series watchlist vector.
 void Viewer::WriteSeriesToFile(){
 
 	ClearSeriesWatchlist();
@@ -475,6 +493,7 @@ void Viewer::WriteSeriesToFile(){
 	}
 }
 
+// Searches for a movie from the database by name. Adds the chosen movie to the watchlist.
 void Viewer::SearchMovieByName()
 {
 	Movie::ReadMoviesFromDatabase();
@@ -499,7 +518,7 @@ void Viewer::SearchMovieByName()
 
 		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
-		if (temp == buffer) {
+		if (temp == buffer) { // Checks if the name matches a name in the database.
 
 			nameFound = true;
 
@@ -528,6 +547,7 @@ void Viewer::SearchMovieByName()
 				}
 
 				AddMovieToFile(movieDatabase[i]);
+
 				cout << endl << "You have added " << movieDatabase[i].getName() << " to your watchlist!" << endl;
 				return;
 			}
@@ -542,6 +562,7 @@ void Viewer::SearchMovieByName()
 	}
 }
 
+// Searches for a series from the database by name. Adds the chosen series to the watchlist.
 void Viewer::SearchSeriesByName()
 {
 	Series::ReadSeriesFromDatabase();
@@ -566,7 +587,7 @@ void Viewer::SearchSeriesByName()
 
 		transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
 
-		if (temp == buffer) {
+		if (temp == buffer) { // Checks if the name matches a name in the database.
 
 			nameFound = true;
 
@@ -609,6 +630,7 @@ void Viewer::SearchSeriesByName()
 	}
 }
 
+// Search media by name menu.
 void Viewer::SearchMediaByName()
 {
 	bool loop = true;
@@ -652,6 +674,7 @@ void Viewer::SearchMediaByName()
 	}
 }
 
+// Deletes a series from the watchlist.
 void Viewer::DeleteSeriesFromWatchlist() {
 
 	bool loop = true;
@@ -660,12 +683,13 @@ void Viewer::DeleteSeriesFromWatchlist() {
 		ReadSeriesFromFile();
 
 		if (!seriesWatchlist.size() == 0) {
+
 			cout << endl << "Choose a series to delete" << endl << endl;
 
 			int choice = 0;
 			int buffer = 0;
 
-			for (int i = 0; unsigned(i) < seriesWatchlist.size(); i++) {
+			for (int i = 0; unsigned(i) < seriesWatchlist.size(); i++) { // Prints the series from the watchlist.
 				cout << i + 1 << ". " << seriesWatchlist[i] << endl;
 				buffer = i + 1;
 			}
@@ -687,7 +711,7 @@ void Viewer::DeleteSeriesFromWatchlist() {
 			if (choice == 0) break;
 
 			int counter = 0;
-			for (vector<Series>::iterator i = seriesWatchlist.begin(); i != seriesWatchlist.end(); ++i) {
+			for (vector<Series>::iterator i = seriesWatchlist.begin(); i != seriesWatchlist.end(); ++i) { // Itirates through the series watchlist vector and deletes the chosen series.
 				counter++;
 				if (counter == choice) {
 					string buffer = i->getName();
@@ -712,6 +736,7 @@ void Viewer::DeleteSeriesFromWatchlist() {
 	}
 }
 
+// Deletes a movie from the watchlist.
 void Viewer::DeleteMovieFromWatchlist()
 {
 	bool loop = true;
@@ -725,7 +750,7 @@ void Viewer::DeleteMovieFromWatchlist()
 			int choice = 0;
 			int buffer = 0;
 
-			for (int i = 0; unsigned(i) < movieWatchlist.size(); i++) {
+			for (int i = 0; unsigned(i) < movieWatchlist.size(); i++) { // Prints the movies from the watchlist.
 				cout << i + 1 << ". " << movieWatchlist[i] << endl;
 				buffer = i + 1;
 			}
@@ -747,7 +772,7 @@ void Viewer::DeleteMovieFromWatchlist()
 			if (choice == 0) break;
 
 			int counter = 0;
-			for (vector<Movie>::iterator i = movieWatchlist.begin(); i != movieWatchlist.end(); ++i) {
+			for (vector<Movie>::iterator i = movieWatchlist.begin(); i != movieWatchlist.end(); ++i) { // Itirates through the movies watchlist vector and deletes the chosen movie.
 				counter++;
 				if (counter == choice) {
 					string buffer = i->getName();
@@ -772,6 +797,7 @@ void Viewer::DeleteMovieFromWatchlist()
 	}
 }
 
+// Allows the viewer to "watch" a movie.
 void Viewer::WatchMovie()
 {
 	ReadMovieFromFile();
@@ -783,7 +809,7 @@ void Viewer::WatchMovie()
 
 	string c;
 
-	for (int i = movieWatchlist.size(); i > 0; i--) {
+	for (int i = movieWatchlist.size(); i > 0; i--) { // Prints the movies from the watchlist (latest addition date is printed first).
 		cout << endl << "Would you like to watch this movie? Y/N: " << endl;
 		cout << endl << movieWatchlist.size() - (i - 1) << ". " << movieWatchlist[i - 1] << endl << endl;
 
@@ -800,7 +826,7 @@ void Viewer::WatchMovie()
 		}
 
 		if (c == "Y" || c == "y") {
-			cout << endl << "Watching: " << movieWatchlist[i - 1].getName() << "..." << endl;
+			cout << endl << "Watching: " << movieWatchlist[i - 1].getName() << "..." << endl; // "Plays" the chosen movie to the viewer.
 			cout << endl << "Press Enter to continue...";
 
 			(void)_getch();
@@ -839,6 +865,7 @@ void Viewer::WatchMovie()
 	}
 }
 
+// Allows the viewer to "watch" a series.
 void Viewer::WatchSeries()
 {
 	ReadSeriesFromFile();
@@ -850,7 +877,7 @@ void Viewer::WatchSeries()
 
 	string c;
 
-	for (int i = seriesWatchlist.size(); i > 0; i--) {
+	for (int i = seriesWatchlist.size(); i > 0; i--) { // Prints the series from the watchlist (latest addition date is printed first).
 
 		cout << endl << "Would you like to watch this series? Y/N: " << endl << endl;
 		cout << seriesWatchlist.size() - (i - 1) << ". " << seriesWatchlist[i-1] << endl << endl;
@@ -869,7 +896,7 @@ void Viewer::WatchSeries()
 
 		if (c == "Y" || c == "y") {
 
-			cout << endl << "Watching: " << seriesWatchlist[i-1].getName() << "..." << endl;
+			cout << endl << "Watching: " << seriesWatchlist[i-1].getName() << "..." << endl; // "Plays" the chosen series to the viewer.
 			cout << endl << "Press any key to continue...";
 
 			(void)_getch();
@@ -909,6 +936,7 @@ void Viewer::WatchSeries()
 	}
 }
 
+// Checks if a movie exists in the movie watchlist and returns a boolean.
 bool Viewer::CheckIfMovieExists(string name)
 {
 	for (int i = 0; unsigned(i) < movieWatchlist.size(); i++) {
@@ -919,6 +947,7 @@ bool Viewer::CheckIfMovieExists(string name)
 	return false;
 }
 
+// Checks if a series exists in the series watchlist and returns a boolean.
 bool Viewer::CheckIfSeriesExists(string name)
 {
 	for (int i = 0; unsigned(i) < seriesWatchlist.size(); i++) {
@@ -929,6 +958,7 @@ bool Viewer::CheckIfSeriesExists(string name)
 	return false;
 }
 
+// Opens the Series Watchlist.txt file in "trunc" mode and deletes all the data.
 void Viewer::ClearSeriesWatchlist()
 {
 	ofstream out("Series Watchlist.txt", ios::trunc);
@@ -984,13 +1014,13 @@ void Viewer::PrintWatchlist()
 
 	switch (choice) {
 	case 1:
-		for (int i = 0; unsigned(i) < seriesWatchlist.size(); i++) {
+		for (int i = 0; unsigned(i) < seriesWatchlist.size(); i++) { // Prints the series watchlist.
 			cout << seriesWatchlist[i] << endl;
 		}
 		break;
 
 	case 2:
-		for (int i = 0; unsigned(i) < movieWatchlist.size(); i++) {
+		for (int i = 0; unsigned(i) < movieWatchlist.size(); i++) { // Prints the movie watchlist.
 			cout << movieWatchlist[i] << endl;
 		}
 		break;
