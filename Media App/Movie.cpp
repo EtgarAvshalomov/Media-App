@@ -67,3 +67,12 @@ void Movie::ReadMoviesFromDatabase() throw(ifstream::failure)
 		in.close();
 	}
 }
+
+bool Movie::MovieDatabaseIsEmpty()
+{
+	ReadMoviesFromDatabase();
+
+	if (movieDatabase.size() == 0) return true;
+
+	return false;
+}

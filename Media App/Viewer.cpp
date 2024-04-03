@@ -706,7 +706,7 @@ void Viewer::SearchSeriesByName()
 				}
 
 				try {
-					AddSeriesToFile(seriesWatchlist[i]);
+					AddSeriesToFile(seriesDatabase[i]);
 				}
 				catch (ifstream::failure) {
 					cout << endl << "Unable to open file!" << endl;
@@ -1081,6 +1081,24 @@ bool Viewer::CheckIfSeriesExists(string name)
 	return false;
 }
 
+bool Viewer::MovieWatchlistIsEmpty()
+{
+	ReadMovieFromFile();
+
+	if (movieWatchlist.size() == 0) return true;
+
+	return false;
+}
+
+bool Viewer::SeriesWatchlistIsEmpty()
+{
+	ReadSeriesFromFile();
+
+	if (seriesWatchlist.size() == 0) return true;
+
+	return false;
+}
+
 // Opens the Series Watchlist.txt file in "trunc" mode and deletes all the data.
 void Viewer::ClearSeriesWatchlist() throw(ofstream::failure)
 {
@@ -1133,6 +1151,10 @@ void Viewer::PrintWatchlist()
 	switch (choice) {
 	case 1:
 
+		if (SeriesWatchlistIsEmpty()) {
+			cout << "The watchlist is empty" << endl;
+		}
+
 		try {
 			ReadSeriesFromFile();
 		}
@@ -1149,6 +1171,10 @@ void Viewer::PrintWatchlist()
 		break;
 
 	case 2:
+
+		if (MovieWatchlistIsEmpty()) {
+			cout << "The watchlist is empty" << endl;
+		}
 
 		try {
 			ReadMovieFromFile();

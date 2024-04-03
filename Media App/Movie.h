@@ -28,4 +28,6 @@ public:
 	}
 
 	static void ReadMoviesFromDatabase();
+
+	static bool MovieDatabaseIsEmpty();
 };

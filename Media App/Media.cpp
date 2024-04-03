@@ -21,10 +21,10 @@ Media::Media(string name, string category, int year) {
 
 void Media::Program()
 {
-	PlaySound(TEXT("RiveR - Solo"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC); // Music
+	//PlaySound(TEXT("RiveR - Solo"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC); // Music
 
-	Viewer viewer(0, 0, 0, 0, "", "");
-	Manager manager(0, 0, 0, 0, "", "");
+	Viewer viewer(1, 0, 0, 0, "", "");
+	Manager manager(1, 0, 0, 0, "", "");
 
 	int choice = 1;
 	while (choice != NULL)

@@ -800,7 +800,12 @@ void Manager::DeleteMovieByName()
 				vector<Movie> movieWatchlist = Viewer::getMovieWatchlist();
 
 				for (vector<Movie>::iterator i = movieWatchlist.begin(); i != movieWatchlist.end(); ++i) { // Deletes the movie from the movie watchlist.
-					if (i->getName() == buffer) {
+
+					temp = i->getName();
+
+					transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+
+					if (temp == buffer) {
 						movieWatchlist.erase(i);
 						break;
 					}
@@ -904,7 +909,12 @@ void Manager::DeleteSeriesByName()
 				vector<Series> seriesWatchlist = Viewer::getSeriesWatchlist();
 
 				for (vector<Series>::iterator i = seriesWatchlist.begin(); i != seriesWatchlist.end(); ++i) { // Deletes the series from the series watchlist.
-					if (i->getName() == buffer) {
+
+					temp = i->getName();
+
+					transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+
+					if (temp == buffer) {
 						seriesWatchlist.erase(i);
 						break;
 					}
@@ -1103,12 +1113,22 @@ void Manager::PrintDatabase()
 	switch (choice) {
 
 	case 1: 
+
+		if (Series::SeriesDatabaseIsEmpty()) {
+			cout << "The database is empty" << endl;
+		}
+
 		for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) { // Prints the series database.
 			cout << seriesDatabase[i] << endl;
 		}
 		break;
 
 	case 2: 
+
+		if (Movie::MovieDatabaseIsEmpty()) {
+			cout << "The database is empty" << endl;
+		}
+
 		for (int i = 0; unsigned(i) < movieDatabase.size(); i++) { // Prints the movies database.
 			cout << movieDatabase[i] << endl;
 		}

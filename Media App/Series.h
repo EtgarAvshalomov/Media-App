@@ -38,4 +38,6 @@ public:
 	}
 
 	static void ReadSeriesFromDatabase();
+
+	static bool SeriesDatabaseIsEmpty();
 };

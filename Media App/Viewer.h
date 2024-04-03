@@ -38,6 +38,10 @@ private:
 
 	bool CheckIfSeriesExists(string name);
 
+	bool MovieWatchlistIsEmpty();
+
+	bool SeriesWatchlistIsEmpty();
+
 	void PrintWatchlist();
 
 public:

@@ -1,133 +1,140 @@
+Courage The Cowardly Dog
+Horror
+1999
+4
+13
+1712158269
+
+The Walking Dead
+Horror
+2010
+11
+16
+1712158307
+
 Stranger Things
 Horror
 2016
-5
-12
-1711401274
-
-Narcos
-Horror
-2015
-3
-15
-1711401304
-
-Better Call Saul
-Thriller
-2015
-6
-12
-1711401051
-
-Rick and Morty
-Sci-fi
-2013
-8
-8
-1711401208
-
-Gravity Falls
-Sci-fi
-2012
-2
-26
-1711401246
-
-Game of Thrones
-Thriller
-2011
-8
-12
-1711401000
-
-Sherlock
-Thriller
-2010
 4
-5
-1711401033
+8
+1712158331
 
-The Mentalist
-Thriller
-2008
-7
-18
-1711401067
+Supernatural
+Horror
+2005
+15
+23
+1712158349
+
+Servant
+Horror
+2019
+4
+10
+1712158366
 
 Breaking Bad
 Thriller
 2008
 5
 13
-1711400135
+1712158380
 
-Dexter
-Horror
-2006
+Better Call Saul
+Thriller
+2015
+6
+10
+1712158401
+
+Vikings
+Thriller
+2013
+6
+20
+1712158417
+
+Lucifer
+Thriller
+2016
+6
+15
+1712158435
+
+Peaky Blinders
+Thriller
+2013
+6
+6
+1712158449
+
+The Boys
+Comedy
+2019
+4
 8
-14
-1711401289
+1712158463
 
 The Office
 Comedy
 2005
 9
-15
-1711401083
+22
+1712158477
 
-House
-Horror
-2004
-8
-17
-1711401259
-
-Scrubs
+The Big Bang Theory
 Comedy
-2001
-9
-11
-1711401139
-
-The Sopranos
-Horror
-1999
-6
-20
-1711401318
-
-Spider Man
-Sci-fi
-1994
-5
-23
-1711401226
+2007
+12
+24
+1712158496
 
 Friends
 Comedy
 1994
 10
-14
-1711401098
+24
+1712158508
 
-Tom and Jerry
-Sci-fi
-1940
-1
-50
-1711401194
-
-Spongebob Squarepants
+Two and a Half Men
 Comedy
-1998
-80
-10
-1711634179
+2003
+12
+22
+1712158525
 
-The Finals
+Rick and Morty
 Sci-Fi
-2023
-3
+2013
+7
 10
-1711740111
+1712158541
+
+The Flash
+Sci-Fi
+2014
+9
+23
+1712158553
+
+Arrow
+Sci-Fi
+2012
+8
+23
+1712158564
+
+Black Mirror
+Sci-Fi
+2011
+6
+4
+1712158582
+
+Westworld
+Sci-Fi
+2016
+3
+9
+1712158595
 

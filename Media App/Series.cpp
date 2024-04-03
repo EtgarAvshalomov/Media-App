@@ -69,3 +69,12 @@ void Series::ReadSeriesFromDatabase() throw(ifstream::failure)
 		in.close();
 	}
 }
+
+bool Series::SeriesDatabaseIsEmpty()
+{
+	ReadSeriesFromDatabase();
+
+	if (seriesDatabase.size() == 0) return true;
+
+	return false;
+}
