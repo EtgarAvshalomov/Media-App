@@ -112,14 +112,24 @@ void Viewer::Menu()
 // Returns the movie watchlist vector.
 vector<Movie> Viewer::getMovieWatchlist()
 {
-	ReadMovieFromFile();
+	try {
+		ReadMovieFromFile();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+	}
 	return movieWatchlist;
 }
 
 // Returns the series watchlist vector.
 vector<Series> Viewer::getSeriesWatchlist()
 {
-	ReadSeriesFromFile();
+	try {
+		ReadSeriesFromFile();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+	}
 	return seriesWatchlist;
 }
 
@@ -129,9 +139,21 @@ void Viewer::AddMovieToWatchlist()
 	bool loop = true;
 	while (loop) {
 
-		ReadMovieFromFile();
+		try {
+			ReadMovieFromFile();
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
 
-		Movie::ReadMoviesFromDatabase();
+		try {
+			Movie::ReadMoviesFromDatabase();
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
 
 		vector<Movie> movieDatabase = Movie::GetMovieDatabase();
 
@@ -240,9 +262,21 @@ void Viewer::AddSeriesToWatchlist()
 	bool loop = true;
 	while (loop) {
 
-		ReadSeriesFromFile();
+		try {
+			ReadSeriesFromFile();
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
 
-		Series::ReadSeriesFromDatabase();
+		try {
+			Series::ReadSeriesFromDatabase();
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
 
 		vector<Series> seriesDatabase = Series::GetSeriesDatabase();
 
@@ -345,7 +379,7 @@ void Viewer::AddSeriesToWatchlist()
 }
 
 // Takes a Movie object and adds it to the watchlist.
-void Viewer::AddMovieToFile(Movie& toAdd)
+void Viewer::AddMovieToFile(Movie& toAdd) throw(ofstream::failure)
 {
 	if (toAdd.getDateAdded() == NULL) {
 		time_t currentTime = time(nullptr);
@@ -353,7 +387,7 @@ void Viewer::AddMovieToFile(Movie& toAdd)
 	}
 
 	ofstream out("Movies Watchlist.txt", ios::app);
-	if (!out.is_open()) cout << "Unable to open file!";
+	if (!out.is_open()) throw ofstream::failure("");
 	out << toAdd.getName() << endl;
 	out << toAdd.getCategory() << endl;
 	out << toAdd.getYear() << endl;
@@ -364,7 +398,7 @@ void Viewer::AddMovieToFile(Movie& toAdd)
 }
 
 // Takes a Series object and adds it to the database.
-void Viewer::AddSeriesToFile(Series& toAdd)
+void Viewer::AddSeriesToFile(Series& toAdd) throw(ofstream::failure)
 {
 	if (toAdd.getDateAdded() == NULL) {
 		time_t currentTime = time(nullptr);
@@ -372,7 +406,7 @@ void Viewer::AddSeriesToFile(Series& toAdd)
 	}
 
 	ofstream out("Series Watchlist.txt", ios::app);
-	if (!out.is_open()) cout << "Unable to open file!";
+	if (!out.is_open()) throw ofstream::failure("");
 	out << toAdd.getName() << endl;
 	out << toAdd.getCategory() << endl;
 	out << toAdd.getYear() << endl;
@@ -384,7 +418,7 @@ void Viewer::AddSeriesToFile(Series& toAdd)
 }
 
 // Updates the movie watchlist vector from the Movies Watchlist.txt file.
-void Viewer::ReadMovieFromFile()
+void Viewer::ReadMovieFromFile() throw(ifstream::failure)
 {
 	movieWatchlist.clear();
 
@@ -393,7 +427,7 @@ void Viewer::ReadMovieFromFile()
 	int numBuffer;
 	string path = "Movies Watchlist.txt";
 	ifstream in(path, ios::in);
-	if (!in.is_open()) { cout << "File cannot open!" << endl; }
+	if (!in.is_open()) throw ifstream::failure("");
 	else
 	{
 		while (!in.eof()) {
@@ -427,7 +461,7 @@ void Viewer::ReadMovieFromFile()
 }
 
 // Updates the series watchlist vector from the Series Watchlist.txt file.
-void Viewer::ReadSeriesFromFile()
+void Viewer::ReadSeriesFromFile() throw(ifstream::failure)
 {
 	seriesWatchlist.clear();
 
@@ -436,7 +470,7 @@ void Viewer::ReadSeriesFromFile()
 	int numBuffer;
 	string path = "Series Watchlist.txt";
 	ifstream in(path, ios::in);
-	if (!in.is_open()) { cout << "File cannot open!" << endl; }
+	if (!in.is_open()) throw ifstream::failure("");
 	else
 	{
 		while (!in.eof()) {
@@ -476,27 +510,59 @@ void Viewer::ReadSeriesFromFile()
 // Updates the Movies Watchlist.txt file from the movie watchlist vector.
 void Viewer::WriteMovieToFile() {
 
-	ClearMovieWatchlist();
+	try {
+		Viewer::ClearMovieWatchlist();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+		return;
+	}
 
 	for (int i = 0; unsigned(i) < movieWatchlist.size(); i++) {
-		AddMovieToFile(movieWatchlist[i]);
+
+		try {
+			Viewer::AddMovieToFile(movieWatchlist[i]);
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
 	}
 }
 
 // Updates the Series Watchlist.txt file from the series watchlist vector.
 void Viewer::WriteSeriesToFile(){
 
-	ClearSeriesWatchlist();
+	try {
+		Viewer::ClearSeriesWatchlist();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+		return;
+	}
 
 	for (int i = 0; unsigned(i) < seriesWatchlist.size(); i++) {
-		AddSeriesToFile(seriesWatchlist[i]);
+
+		try {
+			Viewer::AddSeriesToFile(seriesWatchlist[i]);
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
 	}
 }
 
 // Searches for a movie from the database by name. Adds the chosen movie to the watchlist.
 void Viewer::SearchMovieByName()
 {
-	Movie::ReadMoviesFromDatabase();
+	try {
+		Movie::ReadMoviesFromDatabase();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+		return;
+	}
 
 	vector <Movie> movieDatabase = Movie::GetMovieDatabase();
 
@@ -539,14 +605,26 @@ void Viewer::SearchMovieByName()
 
 			if (c == "Y" || c == "y") {
 
-				ReadMovieFromFile();
+				try {
+					ReadMovieFromFile();
+				}
+				catch (ifstream::failure) {
+					cout << endl << "Unable to open file!" << endl;
+					break;
+				}
 
 				if (CheckIfMovieExists(movieDatabase[i].getName())) {
 					cout << endl << movieDatabase[i].getName() << " Is already in your watchlist" << endl;
 					break;
 				}
 
-				AddMovieToFile(movieDatabase[i]);
+				try {
+					AddMovieToFile(movieWatchlist[i]);
+				}
+				catch (ifstream::failure) {
+					cout << endl << "Unable to open file!" << endl;
+					break;
+				}
 
 				cout << endl << "You have added " << movieDatabase[i].getName() << " to your watchlist!" << endl;
 				return;
@@ -565,7 +643,13 @@ void Viewer::SearchMovieByName()
 // Searches for a series from the database by name. Adds the chosen series to the watchlist.
 void Viewer::SearchSeriesByName()
 {
-	Series::ReadSeriesFromDatabase();
+	try {
+		Series::ReadSeriesFromDatabase();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+		return;
+	}
 
 	vector <Series> seriesDatabase = Series::GetSeriesDatabase();
 
@@ -608,14 +692,27 @@ void Viewer::SearchSeriesByName()
 
 			if (c == "Y" || c == "y") {
 
-				ReadSeriesFromFile();
+				try {
+					ReadSeriesFromFile();
+				}
+				catch (ifstream::failure) {
+					cout << endl << "Unable to open file!" << endl;
+					break;
+				}
 
 				if (CheckIfSeriesExists(seriesDatabase[i].getName())) {
 					cout << endl << seriesDatabase[i].getName() << " Is already in your watchlist" << endl;
 					break;
 				}
 
-				AddSeriesToFile(seriesDatabase[i]);
+				try {
+					AddSeriesToFile(seriesWatchlist[i]);
+				}
+				catch (ifstream::failure) {
+					cout << endl << "Unable to open file!" << endl;
+					break;
+				}
+
 				cout << endl << "You have added " << seriesDatabase[i].getName() << " to your watchlist!" << endl;
 				return;
 			}
@@ -680,7 +777,14 @@ void Viewer::DeleteSeriesFromWatchlist() {
 	bool loop = true;
 	while (loop) {
 
-		ReadSeriesFromFile();
+		try {
+			ReadSeriesFromFile();
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
+
 
 		if (!seriesWatchlist.size() == 0) {
 
@@ -742,7 +846,13 @@ void Viewer::DeleteMovieFromWatchlist()
 	bool loop = true;
 	while (loop) {
 
-		ReadMovieFromFile();
+		try {
+			ReadMovieFromFile();
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
 
 		if (!movieWatchlist.size() == 0) {
 			cout << endl << "Choose a movie to delete" << endl << endl;
@@ -800,7 +910,13 @@ void Viewer::DeleteMovieFromWatchlist()
 // Allows the viewer to "watch" a movie.
 void Viewer::WatchMovie()
 {
-	ReadMovieFromFile();
+	try {
+		ReadMovieFromFile();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+		return;
+	}
 
 	if (movieWatchlist.size() == 0) {
 		cout << endl << "There are no movies in your watchlist" << endl;
@@ -868,7 +984,14 @@ void Viewer::WatchMovie()
 // Allows the viewer to "watch" a series.
 void Viewer::WatchSeries()
 {
-	ReadSeriesFromFile();
+
+	try {
+		ReadSeriesFromFile();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+		return;
+	}
 
 	if (seriesWatchlist.size() == 0) {
 		cout << endl << "There are no series in your watchlist" << endl;
@@ -959,29 +1082,24 @@ bool Viewer::CheckIfSeriesExists(string name)
 }
 
 // Opens the Series Watchlist.txt file in "trunc" mode and deletes all the data.
-void Viewer::ClearSeriesWatchlist()
+void Viewer::ClearSeriesWatchlist() throw(ofstream::failure)
 {
 	ofstream out("Series Watchlist.txt", ios::trunc);
-	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
+	if (!out.is_open()) throw ofstream::failure("");
 	out.close();
 }
 
 // Opens the Movies Watchlist.txt file in "trunc" mode and deletes all the data.
-void Viewer::ClearMovieWatchlist() 
+void Viewer::ClearMovieWatchlist() throw(ofstream::failure)
 {
 	ofstream out("Movies Watchlist.txt", ios::trunc);
-	if (!out.is_open()) cout << "Unable to open file!"; // Throw an exception here later;
+	if (!out.is_open()) throw ofstream::failure("");
 	out.close();
 }
 
 // Prints the watchlist. Sorted by the year of release, and then by addition date.
 void Viewer::PrintWatchlist()
 {
-	ReadSeriesFromFile();
-	ReadMovieFromFile();
-
-	sort(seriesWatchlist.begin(), seriesWatchlist.end(), greater<Series>());
-	sort(movieWatchlist.begin(), movieWatchlist.end(), greater<Movie>());
 
 	int choice = 0;
 
@@ -1014,12 +1132,34 @@ void Viewer::PrintWatchlist()
 
 	switch (choice) {
 	case 1:
+
+		try {
+			ReadSeriesFromFile();
+		}
+		catch (ifstream::failure) {
+			cout << "Unable to open file!" << endl;
+			break;
+		}
+
+		sort(seriesWatchlist.begin(), seriesWatchlist.end(), greater<Series>());
+
 		for (int i = 0; unsigned(i) < seriesWatchlist.size(); i++) { // Prints the series watchlist.
 			cout << seriesWatchlist[i] << endl;
 		}
 		break;
 
 	case 2:
+
+		try {
+			ReadMovieFromFile();
+		}
+		catch (ifstream::failure) {
+			cout << "Unable to open file!" << endl;
+			break;
+		}
+
+		sort(movieWatchlist.begin(), movieWatchlist.end(), greater<Movie>());
+
 		for (int i = 0; unsigned(i) < movieWatchlist.size(); i++) { // Prints the movie watchlist.
 			cout << movieWatchlist[i] << endl;
 		}

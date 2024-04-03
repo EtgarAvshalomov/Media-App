@@ -24,7 +24,7 @@ vector<Series>& Series::GetSeriesDatabase()
 }
 
 // Updates the series database vector from the Series Database.txt file.
-void Series::ReadSeriesFromDatabase()
+void Series::ReadSeriesFromDatabase() throw(ifstream::failure)
 {
 	seriesDatabase.clear();
 
@@ -33,7 +33,7 @@ void Series::ReadSeriesFromDatabase()
 	Series series;
 	string path = "Series Database.txt";
 	ifstream in(path, ios::in);
-	if (!in.is_open()) { cout << "File cannot open!" << endl; }
+	if (!in.is_open()) throw ifstream::failure("");
 	else
 	{
 		while (!in.eof()) {

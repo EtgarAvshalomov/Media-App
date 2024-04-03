@@ -24,7 +24,7 @@ vector<Movie>& Movie::GetMovieDatabase() {
 }
 
 // Updates the movie database vector from the Movies Database.txt file.
-void Movie::ReadMoviesFromDatabase()
+void Movie::ReadMoviesFromDatabase() throw(ifstream::failure)
 {
 
 	movieDatabase.clear();
@@ -35,7 +35,7 @@ void Movie::ReadMoviesFromDatabase()
 	string path = "Movies Database.txt";
 
 	ifstream in(path, ios::in);
-	if (!in.is_open()) { cout << "File cannot open!" << endl; }
+	if (!in.is_open()) throw ifstream::failure("");
 	else
 	{
 		while (!in.eof()) {

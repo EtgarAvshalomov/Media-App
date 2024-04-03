@@ -14,5 +14,5 @@ public:
 
 	static void CheckString(string input, unsigned int min, unsigned int max, bool stringOnly) throw(out_of_range, invalid_argument);
 
-	static void CheckChar(string input);
+	static void CheckChar(string input) throw (invalid_argument);
 };

@@ -90,7 +90,7 @@ void Manager::Menu()
 }
 
 // Takes a Movie object and adds it to the database.
-void Manager::AddMovieToDatabase(Movie& toAdd)
+void Manager::AddMovieToDatabase(Movie& toAdd) throw(ofstream::failure)
 {
 	if (toAdd.getDateAdded() == NULL) { // Adds date of addition.
 		time_t currentTime = time(nullptr);
@@ -98,7 +98,7 @@ void Manager::AddMovieToDatabase(Movie& toAdd)
 	}
 
 	ofstream out("Movies Database.txt", ios::app);
-	if (!out.is_open()) cout << "Unable to open file!";
+	if (!out.is_open()) throw ofstream::failure("");
 	out << toAdd.getName() << endl;
 	out << toAdd.getCategory() << endl;
 	out << toAdd.getYear() << endl;
@@ -109,7 +109,7 @@ void Manager::AddMovieToDatabase(Movie& toAdd)
 }
 
 // Takes a Series object and adds it to the database.
-void Manager::AddSeriesToDatabase(Series& toAdd)
+void Manager::AddSeriesToDatabase(Series& toAdd) throw(ofstream::failure)
 {
 	if (toAdd.getDateAdded() == NULL) { // Adds date of addition.
 		time_t currentTime = time(nullptr);
@@ -117,7 +117,7 @@ void Manager::AddSeriesToDatabase(Series& toAdd)
 	}
 
 	ofstream out("Series Database.txt", ios::app);
-	if (!out.is_open()) cout << "Unable to open file!";
+	if (!out.is_open()) throw ofstream::failure("");
 	out << toAdd.getName() << endl;
 	out << toAdd.getCategory() << endl;
 	out << toAdd.getYear() << endl;
@@ -131,7 +131,14 @@ void Manager::AddSeriesToDatabase(Series& toAdd)
 // Adds a movie to the database with user input.
 void Manager::ManualAddMovieToDatabase()
 {
-	Movie::ReadMoviesFromDatabase();
+
+	try {
+		Movie::ReadMoviesFromDatabase();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+		return;
+	}
 
 	vector<Movie> movieDatabase = Movie::GetMovieDatabase();
 
@@ -241,18 +248,13 @@ void Manager::ManualAddMovieToDatabase()
 
 		Movie new_movie(movie_name, movie_category, movie_year, movie_length); // Creates a movie with the input data.
 
-		time_t currentTime = time(nullptr);
-		new_movie.setDateAdded(currentTime); // Sets the date of addition.
-
-		ofstream out("Movies Database.txt", ios::app); // Adds the movie to the database.
-		if (!out.is_open()) cout << "Unable to open file!";
-		out << new_movie.getName() << endl;
-		out << new_movie.getCategory() << endl;
-		out << new_movie.getYear() << endl;
-		out << new_movie.getLength() << endl;
-		out << new_movie.getDateAdded() << endl;
-		out << endl;
-		out.close();
+		try {
+			AddMovieToDatabase(new_movie);
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
 
 		loop = false;
 
@@ -263,7 +265,14 @@ void Manager::ManualAddMovieToDatabase()
 // Adds a series to the database with user input.
 void Manager::ManualAddSeriesToDatabase()
 {
-	Series::ReadSeriesFromDatabase();
+
+	try {
+		Series::ReadSeriesFromDatabase();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+		return;
+	}
 
 	vector<Series> seriesDatabase = Series::GetSeriesDatabase();
 
@@ -406,19 +415,13 @@ void Manager::ManualAddSeriesToDatabase()
 
 		Series new_series(series_name, series_category, series_year, series_seasons, series_episodes); // Creates a series with the input data.
 
-		time_t currentTime = time(nullptr);
-		new_series.setDateAdded(currentTime); // Sets the date of addition.
-
-		ofstream out("Series Database.txt", ios::app); // Adds the series to the database.
-		if (!out.is_open()) cout << "Unable to open file!";
-		out << new_series.getName() << endl;
-		out << new_series.getCategory() << endl;
-		out << new_series.getYear() << endl;
-		out << new_series.getSeasons() << endl;
-		out << new_series.getEpisodes() << endl;
-		out << new_series.getDateAdded() << endl;
-		out << endl;
-		out.close();
+		try {
+			AddSeriesToDatabase(new_series);
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			return;
+		}
 
 		loop = false;
 
@@ -432,7 +435,13 @@ void Manager::DeleteMovieByCategory()
 	bool loop = true;
 	while (loop) {
 
-		Movie::ReadMoviesFromDatabase();
+		try {
+			Movie::ReadMoviesFromDatabase();
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
 
 		cout << endl << "Choose a category: " << endl;
 
@@ -512,16 +521,42 @@ void Manager::DeleteMovieByCategory()
 
 		cout << endl << "Movie was erased successfully!" << endl;
 
-		ClearMovieDatabase();
-
-		for (int i = 0; unsigned(i) < movieDatabase.size(); i++) { // Updates the movie database from the vector.
-			AddMovieToDatabase(movieDatabase[i]);
+		try {
+			ClearMovieDatabase();
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
 		}
 
-		Viewer::ClearMovieWatchlist();
+		for (int i = 0; unsigned(i) < movieDatabase.size(); i++) { // Updates the movie database from the vector.
+
+			try {
+				AddMovieToDatabase(movieDatabase[i]);
+			}
+			catch (ifstream::failure) {
+				cout << endl << "Unable to open file!" << endl;
+				break;
+			}
+		}
+
+		try {
+			Viewer::ClearMovieWatchlist();
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
 
 		for (int i = 0; unsigned(i) < movieWatchlist.size(); i++) { // Updates the movie watchlist from the vector.
-			Viewer::AddMovieToFile(movieWatchlist[i]);
+
+			try {
+				Viewer::AddMovieToFile(movieWatchlist[i]);
+			}
+			catch (ifstream::failure) {
+				cout << endl << "Unable to open file!" << endl;
+				break;
+			}
 		}
 	}
 }
@@ -532,7 +567,13 @@ void Manager::DeleteSeriesByCategory()
 	bool loop = true;
 	while (loop) {
 
-		Series::ReadSeriesFromDatabase();
+		try {
+			Series::ReadSeriesFromDatabase();
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
 
 		cout << endl << "Choose a category: " << endl;
 
@@ -612,16 +653,42 @@ void Manager::DeleteSeriesByCategory()
 
 		cout << endl << "Series was erased successfully!" << endl;
 
-		ClearSeriesDatabase();
-
-		for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) { // Updates the series database from the vector.
-			AddSeriesToDatabase(seriesDatabase[i]);
+		try {
+			ClearSeriesDatabase();
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
 		}
 
-		Viewer::ClearSeriesWatchlist();
+		for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) { // Updates the series database from the vector.
+
+			try {
+				AddSeriesToDatabase(seriesDatabase[i]);
+			}
+			catch (ifstream::failure) {
+				cout << endl << "Unable to open file!" << endl;
+				break;
+			}
+		}
+
+		try {
+			Viewer::ClearSeriesWatchlist();
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
 
 		for (int i = 0; unsigned(i) < seriesWatchlist.size(); i++) { // Updates the series watchlist from the vector.
-			Viewer::AddSeriesToFile(seriesWatchlist[i]);
+
+			try {
+				Viewer::AddSeriesToFile(seriesWatchlist[i]);
+			}
+			catch (ifstream::failure) {
+				cout << endl << "Unable to open file!" << endl;
+				break;
+			}
 		}
 	}
 }
@@ -675,7 +742,13 @@ void Manager::DeleteMediaByCategory() {
 // Deletes a movie from the database by name.
 void Manager::DeleteMovieByName()
 {
-	Movie::ReadMoviesFromDatabase();
+	try {
+		Movie::ReadMoviesFromDatabase();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+		return;
+	}
 
 	string buffer;
 	string temp;
@@ -733,10 +806,23 @@ void Manager::DeleteMovieByName()
 					}
 				}
 
-				Viewer::ClearMovieWatchlist();
+				try {
+					Viewer::ClearMovieWatchlist();
+				}
+				catch (ifstream::failure) {
+					cout << endl << "Unable to open file!" << endl;
+					break;
+				}
 
 				for (int i = 0; unsigned(i) < movieWatchlist.size(); i++) { // Updates the movie watchlist.
-					Viewer::AddMovieToFile(movieWatchlist[i]);
+
+					try {
+						Viewer::AddMovieToFile(movieWatchlist[i]);
+					}
+					catch (ifstream::failure) {
+						cout << endl << "Unable to open file!" << endl;
+						break;
+					}
 				}
 
 				break;
@@ -759,7 +845,14 @@ void Manager::DeleteMovieByName()
 // Deletes a series from the database by name.
 void Manager::DeleteSeriesByName()
 {
-	Series::ReadSeriesFromDatabase();
+
+	try {
+		Series::ReadSeriesFromDatabase();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+		return;
+	}
 
 	string buffer;
 	string temp;
@@ -817,10 +910,23 @@ void Manager::DeleteSeriesByName()
 					}
 				}
 
-				Viewer::ClearSeriesWatchlist();
+				try {
+					Viewer::ClearSeriesWatchlist();
+				}
+				catch (ifstream::failure) {
+					cout << endl << "Unable to open file!" << endl;
+					break;
+				}
 
 				for (int i = 0; unsigned(i) < seriesWatchlist.size(); i++) { // Updates the series watchlist.
-					Viewer::AddSeriesToFile(seriesWatchlist[i]);
+					
+					try {
+						Viewer::AddSeriesToFile(seriesWatchlist[i]);
+					}
+					catch (ifstream::failure) {
+						cout << endl << "Unable to open file!" << endl;
+						return;
+					}
 				}
 
 				break;
@@ -883,49 +989,87 @@ void Manager::DeleteMediaByName()
 }
 
 // Opens the Movies Database.txt file in trunc mode to clear the file and closes it.
-void Manager::ClearMovieDatabase()
+void Manager::ClearMovieDatabase() throw(ofstream::failure)
 {
 	ofstream out("Movies Database.txt", ios::trunc);
-	if (!out.is_open()) cout << "Unable to open file!";
+	if (!out.is_open()) throw ofstream::failure("");
 	out.close();
 } 
 
 // Opens the Series Database.txt file in trunc mode to clear the file and closes it.
-void Manager::ClearSeriesDatabase()
+void Manager::ClearSeriesDatabase() throw(ofstream::failure)
 {
 	ofstream out("Series Database.txt", ios::trunc);
-	if (!out.is_open()) cout << "Unable to open file!";
+	if (!out.is_open()) throw ofstream::failure("");
 	out.close();
 }
 
 // Updates the Movies Database.txt file by writing to it from the vector.
 void Manager::WriteMoviesToDatabase(vector<Movie>& movieDatabase)
 {
-	ClearMovieDatabase();
+	try {
+		ClearMovieDatabase();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+		return;
+	}
 
 	for (int i = 0; unsigned(i) < movieDatabase.size(); i++) {
-		AddMovieToDatabase(movieDatabase[i]);
+
+		try {
+			AddMovieToDatabase(movieDatabase[i]);
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
 	}
 }
 
 // Updates the Series Database.txt file by writing to it from the vector.
 void Manager::WriteSeriesToDatabase(vector<Series>& seriesDatabase)
 {
-	ClearSeriesDatabase();
+	try {
+		ClearSeriesDatabase();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+		return;
+	}
 
 	for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) {
-		AddSeriesToDatabase(seriesDatabase[i]);
+		try {
+			AddSeriesToDatabase(seriesDatabase[i]);
+		}
+		catch (ifstream::failure) {
+			cout << endl << "Unable to open file!" << endl;
+			break;
+		}
 	}
 }
 
 // Database print menu. Prints the database the same way it is stored in the files.
 void Manager::PrintDatabase()
 {
-	Movie::ReadMoviesFromDatabase();
-	Series::ReadSeriesFromDatabase();
+	try {
+		Series::ReadSeriesFromDatabase();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+		return;
+	}
 
-	vector<Movie> movieDatabase = Movie::GetMovieDatabase();
+	try {
+		Movie::ReadMoviesFromDatabase();
+	}
+	catch (ifstream::failure) {
+		cout << endl << "Unable to open file!" << endl;
+		return;
+	}
+	
 	vector<Series> seriesDatabase = Series::GetSeriesDatabase();
+	vector<Movie> movieDatabase = Movie::GetMovieDatabase();
 
 	int choice = 0;
 

@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-	Media::Program(); // Throw an exception when unable to open file.
+	Media::Program();
 
 	return 0;
 }

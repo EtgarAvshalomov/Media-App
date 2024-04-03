@@ -90,7 +90,7 @@ void Exceptions::CheckString(string input,unsigned int min, unsigned int max, bo
 }
 
 // Checks Y/N input
-void Exceptions::CheckChar(string input)
+void Exceptions::CheckChar(string input) throw (invalid_argument)
 {
 	if (input != "Y" && input != "y" && input != "N" && input != "n") {
 		throw invalid_argument("");
