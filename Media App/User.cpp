@@ -146,7 +146,7 @@ void User::SetDayOfBirth() {
 		}
 		catch (out_of_range e) {
 
-			cerr << endl << "Please a number between 1 and 31" << endl;
+			cerr << endl << "Please enter a number between 1 and 31" << endl;
 			continue;
 		}
 		catch (invalid_argument e) {
@@ -185,7 +185,7 @@ void User::SetMonthOfBirth()
 		}
 		catch (out_of_range e) {
 
-			cerr << endl << "Please a number between 1 and 12" << endl;
+			cerr << endl << "Please enter a number between 1 and 12" << endl;
 			continue;
 		}
 		catch (invalid_argument e) {
@@ -229,7 +229,7 @@ void User::setYearOfBirth()
 		}
 		catch (out_of_range e) {
 
-			cerr << endl << "Please a number between " << currentYear - 124 << " and " << currentYear << endl;
+			cerr << endl << "Please enter a number between " << currentYear - 124 << " and " << currentYear << endl;
 			continue;
 		}
 		catch (invalid_argument e) {

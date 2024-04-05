@@ -1116,6 +1116,7 @@ void Manager::PrintDatabase()
 
 		if (Series::SeriesDatabaseIsEmpty()) {
 			cout << "The database is empty" << endl;
+			break;
 		}
 
 		for (int i = 0; unsigned(i) < seriesDatabase.size(); i++) { // Prints the series database.
@@ -1127,6 +1128,7 @@ void Manager::PrintDatabase()
 
 		if (Movie::MovieDatabaseIsEmpty()) {
 			cout << "The database is empty" << endl;
+			break;
 		}
 
 		for (int i = 0; unsigned(i) < movieDatabase.size(); i++) { // Prints the movies database.

@@ -1153,13 +1153,14 @@ void Viewer::PrintWatchlist()
 
 		if (SeriesWatchlistIsEmpty()) {
 			cout << "The watchlist is empty" << endl;
+			break;
 		}
 
 		try {
 			ReadSeriesFromFile();
 		}
 		catch (ifstream::failure) {
-			cout << "Unable to open file!" << endl;
+			cerr << "Unable to open file!" << endl;
 			break;
 		}
 
@@ -1174,13 +1175,14 @@ void Viewer::PrintWatchlist()
 
 		if (MovieWatchlistIsEmpty()) {
 			cout << "The watchlist is empty" << endl;
+			break;
 		}
 
 		try {
 			ReadMovieFromFile();
 		}
 		catch (ifstream::failure) {
-			cout << "Unable to open file!" << endl;
+			cerr << "Unable to open file!" << endl;
 			break;
 		}
 
