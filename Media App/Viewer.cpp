@@ -619,7 +619,7 @@ void Viewer::SearchMovieByName()
 				}
 
 				try {
-					AddMovieToFile(movieWatchlist[i]);
+					AddMovieToFile(movieDatabase[i]);
 				}
 				catch (ifstream::failure) {
 					cout << endl << "Unable to open file!" << endl;
