@@ -116,7 +116,7 @@ vector<Movie> Viewer::getMovieWatchlist()
 		ReadMovieFromFile();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 	}
 	return movieWatchlist;
 }
@@ -128,7 +128,7 @@ vector<Series> Viewer::getSeriesWatchlist()
 		ReadSeriesFromFile();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 	}
 	return seriesWatchlist;
 }
@@ -143,7 +143,7 @@ void Viewer::AddMovieToWatchlist()
 			ReadMovieFromFile();
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 
@@ -151,7 +151,7 @@ void Viewer::AddMovieToWatchlist()
 			Movie::ReadMoviesFromDatabase();
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 
@@ -266,7 +266,7 @@ void Viewer::AddSeriesToWatchlist()
 			ReadSeriesFromFile();
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 
@@ -274,7 +274,7 @@ void Viewer::AddSeriesToWatchlist()
 			Series::ReadSeriesFromDatabase();
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 
@@ -514,7 +514,7 @@ void Viewer::WriteMovieToFile() {
 		Viewer::ClearMovieWatchlist();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 		return;
 	}
 
@@ -524,7 +524,7 @@ void Viewer::WriteMovieToFile() {
 			Viewer::AddMovieToFile(movieWatchlist[i]);
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 	}
@@ -537,7 +537,7 @@ void Viewer::WriteSeriesToFile(){
 		Viewer::ClearSeriesWatchlist();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 		return;
 	}
 
@@ -547,7 +547,7 @@ void Viewer::WriteSeriesToFile(){
 			Viewer::AddSeriesToFile(seriesWatchlist[i]);
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 	}
@@ -560,7 +560,7 @@ void Viewer::SearchMovieByName()
 		Movie::ReadMoviesFromDatabase();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 		return;
 	}
 
@@ -598,7 +598,7 @@ void Viewer::SearchMovieByName()
 				Exceptions::CheckChar(c);
 			}
 			catch (invalid_argument) {
-				cout << endl << "Invalid input" << endl;
+				cerr << endl << "Invalid input" << endl;
 				i--;
 				continue;
 			}
@@ -609,7 +609,7 @@ void Viewer::SearchMovieByName()
 					ReadMovieFromFile();
 				}
 				catch (ifstream::failure) {
-					cout << endl << "Unable to open file!" << endl;
+					cerr << endl << "Unable to open file!" << endl;
 					break;
 				}
 
@@ -622,7 +622,7 @@ void Viewer::SearchMovieByName()
 					AddMovieToFile(movieDatabase[i]);
 				}
 				catch (ifstream::failure) {
-					cout << endl << "Unable to open file!" << endl;
+					cerr << endl << "Unable to open file!" << endl;
 					break;
 				}
 
@@ -647,7 +647,7 @@ void Viewer::SearchSeriesByName()
 		Series::ReadSeriesFromDatabase();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 		return;
 	}
 
@@ -685,7 +685,7 @@ void Viewer::SearchSeriesByName()
 				Exceptions::CheckChar(c);
 			}
 			catch (invalid_argument) {
-				cout << endl << "Invalid input" << endl;
+				cerr << endl << "Invalid input" << endl;
 				i--;
 				continue;
 			}
@@ -696,7 +696,7 @@ void Viewer::SearchSeriesByName()
 					ReadSeriesFromFile();
 				}
 				catch (ifstream::failure) {
-					cout << endl << "Unable to open file!" << endl;
+					cerr << endl << "Unable to open file!" << endl;
 					break;
 				}
 
@@ -709,7 +709,7 @@ void Viewer::SearchSeriesByName()
 					AddSeriesToFile(seriesDatabase[i]);
 				}
 				catch (ifstream::failure) {
-					cout << endl << "Unable to open file!" << endl;
+					cerr << endl << "Unable to open file!" << endl;
 					break;
 				}
 
@@ -781,7 +781,7 @@ void Viewer::DeleteSeriesFromWatchlist() {
 			ReadSeriesFromFile();
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 
@@ -850,7 +850,7 @@ void Viewer::DeleteMovieFromWatchlist()
 			ReadMovieFromFile();
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 
@@ -914,7 +914,7 @@ void Viewer::WatchMovie()
 		ReadMovieFromFile();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 		return;
 	}
 
@@ -936,7 +936,7 @@ void Viewer::WatchMovie()
 			Exceptions::CheckChar(c);
 		}
 		catch (invalid_argument) {
-			cout << endl << "Invalid input" << endl;
+			cerr << endl << "Invalid input" << endl;
 			i++;
 			continue;
 		}
@@ -964,7 +964,7 @@ void Viewer::WatchMovie()
 					Exceptions::CheckChar(c);
 				}
 				catch (invalid_argument) {
-					cout << endl << "Invalid input" << endl;
+					cerr << endl << "Invalid input" << endl;
 					continue;
 				}
 
@@ -989,7 +989,7 @@ void Viewer::WatchSeries()
 		ReadSeriesFromFile();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 		return;
 	}
 
@@ -1012,7 +1012,7 @@ void Viewer::WatchSeries()
 			Exceptions::CheckChar(c);
 		}
 		catch (invalid_argument) {
-			cout << endl << "Invalid input" << endl;
+			cerr << endl << "Invalid input" << endl;
 			i++;
 			continue;
 		}
@@ -1041,7 +1041,7 @@ void Viewer::WatchSeries()
 					Exceptions::CheckChar(c);
 				}
 				catch (invalid_argument) {
-					cout << endl << "Invalid input" << endl;
+					cerr << endl << "Invalid input" << endl;
 					continue;
 				}
 

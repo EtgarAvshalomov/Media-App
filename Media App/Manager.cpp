@@ -136,7 +136,7 @@ void Manager::ManualAddMovieToDatabase()
 		Movie::ReadMoviesFromDatabase();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 		return;
 	}
 
@@ -252,7 +252,7 @@ void Manager::ManualAddMovieToDatabase()
 			AddMovieToDatabase(new_movie);
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 
@@ -270,7 +270,7 @@ void Manager::ManualAddSeriesToDatabase()
 		Series::ReadSeriesFromDatabase();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 		return;
 	}
 
@@ -419,7 +419,7 @@ void Manager::ManualAddSeriesToDatabase()
 			AddSeriesToDatabase(new_series);
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			return;
 		}
 
@@ -439,7 +439,7 @@ void Manager::DeleteMovieByCategory()
 			Movie::ReadMoviesFromDatabase();
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 
@@ -525,7 +525,7 @@ void Manager::DeleteMovieByCategory()
 			ClearMovieDatabase();
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 
@@ -535,7 +535,7 @@ void Manager::DeleteMovieByCategory()
 				AddMovieToDatabase(movieDatabase[i]);
 			}
 			catch (ifstream::failure) {
-				cout << endl << "Unable to open file!" << endl;
+				cerr << endl << "Unable to open file!" << endl;
 				break;
 			}
 		}
@@ -544,7 +544,7 @@ void Manager::DeleteMovieByCategory()
 			Viewer::ClearMovieWatchlist();
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 
@@ -554,7 +554,7 @@ void Manager::DeleteMovieByCategory()
 				Viewer::AddMovieToFile(movieWatchlist[i]);
 			}
 			catch (ifstream::failure) {
-				cout << endl << "Unable to open file!" << endl;
+				cerr << endl << "Unable to open file!" << endl;
 				break;
 			}
 		}
@@ -571,7 +571,7 @@ void Manager::DeleteSeriesByCategory()
 			Series::ReadSeriesFromDatabase();
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 
@@ -657,7 +657,7 @@ void Manager::DeleteSeriesByCategory()
 			ClearSeriesDatabase();
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 
@@ -667,7 +667,7 @@ void Manager::DeleteSeriesByCategory()
 				AddSeriesToDatabase(seriesDatabase[i]);
 			}
 			catch (ifstream::failure) {
-				cout << endl << "Unable to open file!" << endl;
+				cerr << endl << "Unable to open file!" << endl;
 				break;
 			}
 		}
@@ -676,7 +676,7 @@ void Manager::DeleteSeriesByCategory()
 			Viewer::ClearSeriesWatchlist();
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 
@@ -686,7 +686,7 @@ void Manager::DeleteSeriesByCategory()
 				Viewer::AddSeriesToFile(seriesWatchlist[i]);
 			}
 			catch (ifstream::failure) {
-				cout << endl << "Unable to open file!" << endl;
+				cerr << endl << "Unable to open file!" << endl;
 				break;
 			}
 		}
@@ -746,7 +746,7 @@ void Manager::DeleteMovieByName()
 		Movie::ReadMoviesFromDatabase();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 		return;
 	}
 
@@ -815,7 +815,7 @@ void Manager::DeleteMovieByName()
 					Viewer::ClearMovieWatchlist();
 				}
 				catch (ifstream::failure) {
-					cout << endl << "Unable to open file!" << endl;
+					cerr << endl << "Unable to open file!" << endl;
 					break;
 				}
 
@@ -825,7 +825,7 @@ void Manager::DeleteMovieByName()
 						Viewer::AddMovieToFile(movieWatchlist[i]);
 					}
 					catch (ifstream::failure) {
-						cout << endl << "Unable to open file!" << endl;
+						cerr << endl << "Unable to open file!" << endl;
 						break;
 					}
 				}
@@ -855,7 +855,7 @@ void Manager::DeleteSeriesByName()
 		Series::ReadSeriesFromDatabase();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 		return;
 	}
 
@@ -924,7 +924,7 @@ void Manager::DeleteSeriesByName()
 					Viewer::ClearSeriesWatchlist();
 				}
 				catch (ifstream::failure) {
-					cout << endl << "Unable to open file!" << endl;
+					cerr << endl << "Unable to open file!" << endl;
 					break;
 				}
 
@@ -934,7 +934,7 @@ void Manager::DeleteSeriesByName()
 						Viewer::AddSeriesToFile(seriesWatchlist[i]);
 					}
 					catch (ifstream::failure) {
-						cout << endl << "Unable to open file!" << endl;
+						cerr << endl << "Unable to open file!" << endl;
 						return;
 					}
 				}
@@ -1021,7 +1021,7 @@ void Manager::WriteMoviesToDatabase(vector<Movie>& movieDatabase)
 		ClearMovieDatabase();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 		return;
 	}
 
@@ -1031,7 +1031,7 @@ void Manager::WriteMoviesToDatabase(vector<Movie>& movieDatabase)
 			AddMovieToDatabase(movieDatabase[i]);
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 	}
@@ -1044,7 +1044,7 @@ void Manager::WriteSeriesToDatabase(vector<Series>& seriesDatabase)
 		ClearSeriesDatabase();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 		return;
 	}
 
@@ -1053,7 +1053,7 @@ void Manager::WriteSeriesToDatabase(vector<Series>& seriesDatabase)
 			AddSeriesToDatabase(seriesDatabase[i]);
 		}
 		catch (ifstream::failure) {
-			cout << endl << "Unable to open file!" << endl;
+			cerr << endl << "Unable to open file!" << endl;
 			break;
 		}
 	}
@@ -1066,7 +1066,7 @@ void Manager::PrintDatabase()
 		Series::ReadSeriesFromDatabase();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 		return;
 	}
 
@@ -1074,7 +1074,7 @@ void Manager::PrintDatabase()
 		Movie::ReadMoviesFromDatabase();
 	}
 	catch (ifstream::failure) {
-		cout << endl << "Unable to open file!" << endl;
+		cerr << endl << "Unable to open file!" << endl;
 		return;
 	}
 	
