@@ -200,14 +200,15 @@ void Manager::ManualAddMovieToDatabase()
 			}
 			catch (out_of_range e) {
 
-				cerr << endl << "Please a number between " << 1888 << " and " << currentYear << endl; // 1888 is the year when the first ever movie was made.
+				cerr << endl << "Please enter a number between " << 1888 << " and " << currentYear << endl; // 1888 is the year when the first ever movie was made.
+				continue;
 			}
 			catch (invalid_argument e) {
 				if (string(e.what()) == "Space") {
 					cerr << endl << "Spaces are not allowed" << endl;
 					continue;
 				}
-				cerr << endl << "Input must be an integer" << endl;
+				cerr << endl << "Input must be a positive integer" << endl;
 				continue;
 			}
 
@@ -237,7 +238,7 @@ void Manager::ManualAddMovieToDatabase()
 					cerr << endl << "Spaces are not allowed" << endl;
 					continue;
 				}
-				cerr << endl << "Input must be an integer" << endl;
+				cerr << endl << "Input must be a positive integer" << endl;
 				continue;
 			}
 
@@ -344,7 +345,7 @@ void Manager::ManualAddSeriesToDatabase()
 					cerr << endl << "Spaces are not allowed" << endl;
 					continue;
 				}
-				cerr << endl << "Input must be an integer" << endl;
+				cerr << endl << "Input must be a positive integer" << endl;
 				continue;
 			}
 
@@ -374,7 +375,7 @@ void Manager::ManualAddSeriesToDatabase()
 					cerr << endl << "Spaces are not allowed" << endl;
 					continue;
 				}
-				cerr << endl << "Input must be an integer" << endl;
+				cerr << endl << "Input must be a positive integer" << endl;
 				continue;
 			}
 
@@ -404,7 +405,7 @@ void Manager::ManualAddSeriesToDatabase()
 					cerr << endl << "Spaces are not allowed" << endl;
 					continue;
 				}
-				cerr << endl << "Input must be an integer" << endl;
+				cerr << endl << "Input must be a positive integer" << endl;
 				continue;
 			}
 

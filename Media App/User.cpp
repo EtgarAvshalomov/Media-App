@@ -52,7 +52,7 @@ void User::SetId()
 				cerr << endl << "Spaces are not allowed" << endl << endl;
 				continue;
 			}
-			cerr << endl << "Input must be an integer" << endl << endl;
+			cerr << endl << "Input must be a positive integer" << endl << endl;
 			continue;
 		}
 
@@ -154,7 +154,7 @@ void User::SetDayOfBirth() {
 				cerr << endl << "Spaces are not allowed" << endl;
 				continue;
 			}
-			cerr << endl << "Input must be an integer" << endl;
+			cerr << endl << "Input must be a positive integer" << endl;
 			continue;
 		}
 
@@ -193,7 +193,7 @@ void User::SetMonthOfBirth()
 				cerr << endl << "Spaces are not allowed" << endl;
 				continue;
 			}
-			cerr << endl << "Input must be an integer" << endl;
+			cerr << endl << "Input must be a positive integer" << endl;
 			continue;
 		}
 
@@ -237,7 +237,7 @@ void User::setYearOfBirth()
 				cerr << endl << "Spaces are not allowed" << endl;
 				continue;
 			}
-			cerr << endl << "Input must be an integer" << endl;
+			cerr << endl << "Input must be a positive integer" << endl;
 			continue;
 		}
 

@@ -63,7 +63,7 @@ int Exceptions::GetMenuInt(int choice, int min, int max) throw (out_of_range, in
 			cerr << endl << "Spaces are not allowed" << endl;
 			throw invalid_argument("");
 		}
-		cerr << endl << "Input must be an integer" << endl;
+		cerr << endl << "Input must be a positive integer" << endl;
 		throw invalid_argument("");
 	}
 
