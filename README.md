@@ -8,7 +8,5 @@ Let's do this!
 
 How To Access The Program:
 
-1. Open a new project in Visual Studio.
-2. Copy the files to the project folder.
-3. Add the files in Visual Studio.
-4. Run it.
+1. Open the "Release" folder
+2. Run BambaFlix.EXE
