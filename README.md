@@ -8,5 +8,5 @@ Let's do this!
 
 How To Access The Program:
 
-1. Open the "Release" folder
-2. Run BambaFlix.EXE
+1. Open the "Media App" folder
+2. Run BambaFlix.exe
