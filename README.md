@@ -1,4 +1,4 @@
-# Media-App
+# BambaFlix Media-App
 
 ## Intro
 
