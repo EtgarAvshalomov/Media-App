@@ -12,7 +12,7 @@ Let's do this!
 
 ## How To Access The Program
 
-1. Click on the green "Code" button
+1. Click on the green `Code` button
 2. Download the ZIP file and extract it
-3. Open the "Media App" folder
-4. Run BambaFlix.exe
+3. Open the `Media App` folder
+4. Run `BambaFlix.exe`
