@@ -1,5 +1,7 @@
 # BambaFlix Media-App
 
+![Image](https://github.com/user-attachments/assets/d0fd4d81-7248-4d2b-97e7-eea72c75cd3b)
+
 ## Intro
 
 Our C++ Project - a mini Netflix!
